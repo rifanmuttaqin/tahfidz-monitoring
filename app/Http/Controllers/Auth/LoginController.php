@@ -3,7 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use Illuminate\Support\Facades\Redirect;
+
+use Auth;
+
+use Illuminate\Http\Request;
+
 
 class LoginController extends Controller
 {
@@ -25,7 +33,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,4 +44,36 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|max:255',
+            'password' => 'required',
+        ]);
+
+        $crendentials = [ 'username' => $request->username , 'password' => $request->password ];
+
+        if(Auth::attempt($crendentials,$request->remember)){ 
+            
+            return redirect('/');
+        }
+        else
+        {
+            return Redirect::back()->withErrors(['username dan password tidak sesuai', 'error_login']);
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/auth/login');
+    }
+
 }

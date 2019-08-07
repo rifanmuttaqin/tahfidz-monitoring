@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Untuk Auth controller
+$router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($router) {
+    $router->get('/login',  ['uses' => 'LoginController@showLoginForm']);
+    $router->post('/login',  ['as'=>'login', 'uses' => 'LoginController@login']);
+    $router->get('/logout',  ['uses' => 'LoginController@logout']);
 });
+
+
+Route::get('/', 'HomeController@index');
+Route::get('/user', ['as'=>'user', 'uses' => 'UserController@index']);
