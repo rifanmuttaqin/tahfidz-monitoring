@@ -25,7 +25,6 @@ class UserController extends Controller
         $this->user = $request->auth;
     }
 
-
     /**
      * Show the application index.
      *
@@ -40,7 +39,7 @@ class UserController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){  
-                        $btn = '<button id="'.$row->id.'" name="btnUbah" type="button" class="btn btn-info">UBAH</button>';
+                        $btn = '<button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-info">DETAIL</button>';
                         return $btn;
                     })
                     ->rawColumns(['action'])
@@ -48,6 +47,29 @@ class UserController extends Controller
         }
 
         return view('user.index', ['active'=>'user']);
+    }
+
+    /**
+     * @return void
+     */
+    public function show()
+    {
+        if ($this->request->ajax()) {
+
+            if($this->request->iduser != null)
+            {
+                $user_id = $this->request->iduser;
+                $userModel = User::findOrFail($user_id);
+
+                // Need Resource
+
+                return $this->getResponse(true,200,$userModel,'Akses Berhasil');
+            }
+            else
+            {
+                return $this->getResponse(false,500,'','Akses gagal dilakukan');
+            }
+        }
     }
 
     /**

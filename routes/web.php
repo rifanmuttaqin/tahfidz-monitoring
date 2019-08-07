@@ -21,3 +21,4 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
 
 Route::get('/', 'HomeController@index');
 Route::get('/user', ['as'=>'user', 'uses' => 'UserController@index']);
+Route::post('/user/get-detail', ['as'=>'detail', 'uses' => 'UserController@show']);

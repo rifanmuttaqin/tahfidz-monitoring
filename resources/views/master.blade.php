@@ -94,6 +94,7 @@
     </div>
 </div>
 
+@yield('modal')
 
 </body>
     
@@ -114,7 +115,7 @@
 	<script src="<?= URL::to('/'); ?>/layout/assets/js/demo.js"></script>
 
 	<script type="text/javascript">
-    	
+    	var base_url = {!! json_encode(url('/')) !!}
 	</script>
 
 </html>
