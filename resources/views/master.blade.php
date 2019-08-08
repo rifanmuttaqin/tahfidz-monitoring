@@ -10,15 +10,21 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-    <!-- Jquery -->
+    <!-- Bootrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <!--   Core JS Files   -->
+    <script src="<?= URL::to('/'); ?>/layout/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!-- Sweat Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- DataTable -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
+
 
     @stack('scripts')
 
@@ -47,7 +53,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-image="<?= URL::to('/'); ?>/layout/assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="azure" data-image="<?= URL::to('/'); ?>/layout/assets/img/sidebar-4.jpg">
 
     <!--
 
@@ -98,9 +104,6 @@
 
 </body>
     
-    <!--   Core JS Files   -->
-    <script src="<?= URL::to('/'); ?>/layout/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-	<script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Charts Plugin -->
 	<script src="<?= URL::to('/'); ?>/layout/assets/js/chartist.min.js"></script>

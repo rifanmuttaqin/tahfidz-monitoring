@@ -91,6 +91,25 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * 
+     */
+    public static function getAccountMeaning($acount)
+    {
+        switch ($acount) {
+            case static::ACCOUNT_TYPE_CREATOR:
+               return 'Developer';
+            case static::ACCOUNT_TYPE_PARENT:
+               return 'Orangtua';
+            case static::ACCOUNT_TYPE_TEACHER:
+               return 'Guru';
+            case static::ACCOUNT_TYPE_USER:
+               return 'User Umum';
+            default:
+                return '';
+        }
+    }
+
 
     /**
      * @var Bol

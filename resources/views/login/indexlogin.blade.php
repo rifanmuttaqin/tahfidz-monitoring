@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="<?= URL::to('/'); ?>/layout_login/css/main.css">
 <!--===============================================================================================-->
 </head>
+
 <body>
     
     <div class="limiter">
@@ -32,9 +33,7 @@
             </div>
         </div>
     </div>
-    
-    
-
+ 
     
 <!--===============================================================================================-->  
     <script src="<?= URL::to('/'); ?>/layout_login/vendor/jquery/jquery-3.2.1.min.js"></script>
