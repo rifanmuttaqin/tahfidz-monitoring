@@ -27,4 +27,18 @@ class PasswordRequest extends FormRequest
             'password' => 'required|confirmed|min:6',       
         ];
     }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'password.required' => 'Anda belum melengkapi pengisisan Password',
+            'password.confirmed' => 'Password tidak sesuai',
+            'password.min' => 'Password minimal terdiri dari 6 Karakter',
+        ];
+    }
 }

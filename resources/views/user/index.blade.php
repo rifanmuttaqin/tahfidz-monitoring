@@ -1,6 +1,38 @@
 @extends('master')
  
 @section('title', '')
+
+@section('alert')
+
+<!-- Alert Component -->
+
+@if(Session::has('alert_success'))
+  @component('components.alert')
+        @slot('class')
+            success
+        @endslot
+        @slot('title')
+            Terimakasih
+        @endslot
+        @slot('message')
+            {{ session('alert_success') }}
+        @endslot
+  @endcomponent
+@elseif(Session::has('alert_error'))
+  @component('components.alert')
+        @slot('class')
+            error
+        @endslot
+        @slot('title')
+            Cek Kembali
+        @endslot
+        @slot('message')
+            {{ session('alert_error') }}
+        @endslot
+  @endcomponent 
+@endif
+
+@endsection
  
 @section('content')
 
@@ -22,7 +54,6 @@
 
 @endsection
 
-
 @section('modal')
 
 <div class="modal fade" id="detailModal" role="dialog">
@@ -30,7 +61,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">User Detail</h4>
+      <p class="modal-title">User Detail</p>
     </div>
     <div class="modal-body">
 
@@ -49,30 +80,33 @@
 		<input type="text" class="form-control" value="" id="nama_lengkap">
 	</div>
 
-	<div class="form-group">
-		<label>Tipe Akun</label>
-		<input type="text" class="form-control" value="" id="tipe_akun" disabled>
-	</div>
+  <div class="form-group">
+    <label for="sel1">Tipe Akun</label>
+    <select class="form-control" id="tipe_akun">
+      <option value="{{ User::ACCOUNT_TYPE_USER }}" >User</option>
+      <option value="{{ User::ACCOUNT_TYPE_TEACHER }}" >Guru</option>
+      <option value="{{ User::ACCOUNT_TYPE_PARENT }}" >Orangtua</option>
+    </select>
+  </div>
 
 	<label>Alamat</label>
 	<textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Delete</button>
+      <button type="button" class="btn btn-danger pull-right">Non Aktifkan</button>
       <button type="button" id="update_data" class="btn btn-default pull-left">Update</button>
     </div>
   </div>
 </div>
 </div>
 
-
 <div class="modal fade" id="updatePassword" role="dialog">
 <div class="modal-dialog modal-md">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Update Password</h4>
+      <p class="modal-title">Update Password</p>
     </div>
     <div class="modal-body">
         <div class="form-group">
@@ -171,8 +205,18 @@ function btnPass(id){
         {
           swal(data.message, { button:false, icon: "error", timer: 1000});
         }
-
-      }
+      },
+        error: function(error) {
+          var err = eval("(" + error.responseText + ")");
+          var array_1 = $.map(err, function(value, index) {
+              return [value];
+          });
+          var array_2 = $.map(array_1, function(value, index) {
+              return [value];
+          });
+          var message = JSON.stringify(array_2);
+          swal(message, { button:false, icon: "error", timer: 1000});
+        }
     });
   })
 }
@@ -189,10 +233,10 @@ function btnUbah(id){
 	   data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
 	   success:function(data) {
 	      $('#username').val(data.data.username);
-        $('#tipe_akun').val(data.data.account_type);
 	      $('#email').val(data.data.email);
 	   		$('#nama_lengkap').val(data.data.full_name);
 	   		$('#alamat').val(data.data.address);
+        $('#tipe_akun').val(data.data.account_type);
 	   }
 	});
 
@@ -202,6 +246,7 @@ function btnUbah(id){
       var email = $('#email').val();
       var full_name = $('#nama_lengkap').val();
       var address = $('#alamat').val();
+      var account_type = $('#tipe_akun').val();
 
       $.ajax({
         type:'POST',
@@ -212,10 +257,10 @@ function btnUbah(id){
           username : username,
           email : email,
           full_name : full_name,
-          address : address
+          address : address,
+          account_type : account_type
         },
         success:function(data) {
-
           if(data.status != false)
           {
             table.ajax.reload();
@@ -223,7 +268,17 @@ function btnUbah(id){
             swal(data.message, { button:false, icon: "success", timer: 1000});
             $("#detailModal .close").click()
           }
-
+        },
+        error: function(error) {
+          var err = eval("(" + error.responseText + ")");
+          var array_1 = $.map(err, function(value, index) {
+              return [value];
+          });
+          var array_2 = $.map(array_1, function(value, index) {
+              return [value];
+          });
+          var message = JSON.stringify(array_2);
+          swal(message, { button:false, icon: "error", timer: 1000});
         }
       });
   })

@@ -128,19 +128,6 @@ class User extends Authenticatable
         }
     }
 
-     /**
-     * @var array
-     */
-     public static function validateLogin($password,$input_password)
-     {
-        if(!Hash::check($password, $input_password))
-        {
-            return false;
-        }
-
-        return true;
-     }
-
     public function getClass()
     {
         return $this->belongsTo('App\Model\Class\Class');

@@ -4,8 +4,6 @@ namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Model\User\User;
-
 class UserResource extends JsonResource
 {
 	/**
@@ -21,7 +19,7 @@ class UserResource extends JsonResource
             'address' => $this->address,
             'email' => $this->email,
             'full_name' => $this->full_name,
-            'account_type' => User::getAccountMeaning($this->account_type),
+            'account_type' => $this->account_type,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

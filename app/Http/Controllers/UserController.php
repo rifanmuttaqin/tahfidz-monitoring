@@ -8,7 +8,6 @@ use App\Http\Requests\User\PasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\StoreUserRequest;
 
-
 use Yajra\Datatables\Datatables;
 
 use App\Model\User\User;
@@ -41,7 +40,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = User::all();
+            $data = User::all()->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR]);
            
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -71,7 +70,27 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        dd($request->all());
+        DB::beginTransaction();
+        
+        $user = new User();
+
+        $user->username = $request->get('username');
+        $user->email = $request->get('email');
+        $user->address = $request->get('address');
+        $user->full_name = $request->get('full_name');
+        $user->password = Hash::make($request->get('password'));
+        $user->status = $request->get('status');
+        $user->account_type = $request->get('account_type');
+        $user->status = User::USER_STATUS_ACTIVE;
+
+        if(!$user->save())
+        {
+            DB::rollBack();
+            return redirect('user')->with('alert_error', 'Gagal Disimpan');
+        }
+
+        DB::commit();
+        return redirect('user')->with('alert_success', 'Berhasil Disimpan');
     }
 
     /**
@@ -110,6 +129,7 @@ class UserController extends Controller
             $user->email = $request->get('email');
             $user->address = $request->get('address');
             $user->full_name = $request->get('full_name');
+            $user->account_type = $request->get('account_type');
                         
             if(!$user->save())
             {
