@@ -22,9 +22,16 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
 Route::get('/', 'HomeController@index');
 
 // Untuk User
-Route::get('/user', ['as'=>'user', 'uses' => 'UserController@index']);
+Route::get('/user', ['as'=>'index-user', 'uses' => 'UserController@index']);
 Route::post('/user/get-detail', ['as'=>'detail', 'uses' => 'UserController@show']);
-Route::post('/user/update', ['as'=>'update', 'uses' => 'UserController@update']);
-Route::post('/user/store', ['as'=>'store', 'uses' => 'UserController@store']);
-Route::get('/user/create', ['as'=>'create', 'uses' => 'UserController@create']);
-Route::post('/user/update-password', ['as'=>'update-password', 'uses' => 'UserController@updatePassword']);
+Route::post('/user/update', ['as'=>'update-user', 'uses' => 'UserController@update']);
+Route::post('/user/store', ['as'=>'store-user', 'uses' => 'UserController@store']);
+Route::get('/user/create', ['as'=>'create-user', 'uses' => 'UserController@create']);
+Route::post('/user/update-password', ['as'=>'update-password-user', 'uses' => 'UserController@updatePassword']);
+Route::post('/user/delete', ['as'=>'delete-user', 'uses' => 'UserController@delete']);
+
+// Untuk Class
+Route::get('/student-class', ['as'=>'student-class', 'uses' => 'StudentClassController@index']);
+Route::get('/student-class/create', ['as'=>'create-student-class', 'uses' => 'StudentClassController@create']);
+Route::post('/student-class/store', ['as'=>'store-student-class', 'uses' => 'StudentClassController@store']);
+Route::get('/student-class/get-user-teacher', ['as'=>'get-user-teacher', 'uses' => 'StudentClassController@getUserTeacher']);

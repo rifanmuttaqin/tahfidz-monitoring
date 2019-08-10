@@ -22,16 +22,12 @@
                             <i class="fa fa-bell"></i>
                             <b class="caret hidden-lg hidden-md"></b>
 							<p class="hidden-lg hidden-md">
-								5 Notifications
+								Notifications
 								<b class="caret"></b>
 							</p>
                       </a>
                       <ul class="dropdown-menu">
                         <li><a href="#">Notification 1</a></li>
-                        <li><a href="#">Notification 2</a></li>
-                        <li><a href="#">Notification 3</a></li>
-                        <li><a href="#">Notification 4</a></li>
-                        <li><a href="#">Another notification</a></li>
                       </ul>
                 </li>
                 <li>
@@ -45,24 +41,19 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                    <a href="">
-                       <p>Account</p>
+                       <p>Profile</p>
                     </a>
                 </li>
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <p>
-								Dropdown
+								Pengaturan
 								<b class="caret"></b>
 							</p>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">Umum</a></li>
+                        <li><a href="#">Lembaga</a></li>  
                       </ul>
                 </li>
                 <li>

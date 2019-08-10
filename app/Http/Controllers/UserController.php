@@ -40,7 +40,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = User::all()->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR]);
+            $data = User::getUser();
            
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -96,6 +96,28 @@ class UserController extends Controller
     /**
      * @return void
      */
+    public function delete(Request $request)
+    {
+        if ($request->ajax()) {
+
+            DB::beginTransaction();
+            $userModel = User::findOrFail($request->iduser);
+            $userModel->status = User::USER_STATUS_NOT_ACTIVE;
+
+            if(!$userModel->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,'','User gagal dinonaktifkan');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','User berhasil dinonaktifkan');
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function show(Request $request)
     {
         if ($request->ajax()) {
@@ -133,7 +155,7 @@ class UserController extends Controller
                         
             if(!$user->save())
             {
-                DB::commit();
+                DB::rollBack();
                 return $this->getResponse(true,400,null,'User gagal diupdate');
             }
 
@@ -164,5 +186,7 @@ class UserController extends Controller
             return $this->getResponse(true,200,'','Password berhasil diupdate');   
         }
     }
+
+    // ------------------------------ Aditional Function -------------------
 
 }

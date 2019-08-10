@@ -17,19 +17,19 @@
     <li class="<?= $active == 'user' ? 'active' : '' ?>">
         <a href="<?= URL::to('/user'); ?>">
             <i class="pe-7s-user"></i>
-            <p>Manajemen Pengguna</p>
+            <p>Pengguna</p>
         </a>
     </li>
-    <li>
-        <a href="table.html">
+    <li class="<?= $active == 'student_class' ? 'active' : '' ?>">
+        <a href="<?= URL::to('/student-class'); ?>">
             <i class="pe-7s-note2"></i>
-            <p>Table List</p>
+            <p>Kelas</p>
         </a>
     </li>
     <li>
         <a href="typography.html">
             <i class="pe-7s-news-paper"></i>
-            <p>Typography</p>
+            <p>Siswa</p>
         </a>
     </li>
     <li>

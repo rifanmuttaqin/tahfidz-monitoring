@@ -4,8 +4,6 @@
 
 @section('alert')
 
-<!-- Alert Component -->
-
 @if(Session::has('alert_success'))
   @component('components.alert')
         @slot('class')
@@ -37,7 +35,7 @@
 @section('content')
 
 <div style="padding-bottom: 20px">
-  <a  href="{{ route('create') }}" type="button" class="btn btn-info"> TAMBAH </a>
+  <a  href="{{ route('create-user') }}" type="button" class="btn btn-info"> TAMBAH </a>
 </div>
 
 <table class="table table-bordered data-table display nowrap" style="width:100%">
@@ -94,7 +92,7 @@
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-right">Non Aktifkan</button>
+      <button type="button" class="btn btn-danger pull-right" id="non_aktif_button">Non Aktifkan</button>
       <button type="button" id="update_data" class="btn btn-default pull-left">Update</button>
     </div>
   </div>
@@ -155,7 +153,7 @@ $(function () {
           selector: 'td:nth-child(2)'
       },
       responsive: true,
-      ajax: "{{ route('user') }}",
+      ajax: "{{ route('index-user') }}",
       columns: [
           {data: 'full_name', name: 'full_name'},
           {data: 'email', name: 'email'},
@@ -163,6 +161,46 @@ $(function () {
       ]
   });
 });
+
+function btnDel(id)
+{
+  iduser = id;
+  
+  swal({
+      title: "Menon Aktifkan User",
+      text: 'User yang telah dinon aktifkan tidak dapat diaktifkan kembali', 
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      $.ajax({
+        type:'POST',
+        url: base_url + '/user/delete',
+        data:{
+          iduser:iduser, 
+          "_token": "{{ csrf_token() }}",},
+        success:function(data) {
+          
+          if(data.status != false)
+          {
+            swal(data.message, { button:false, icon: "success", timer: 1000});
+          }
+          else
+          {
+            swal(data.message, { button:false, icon: "error", timer: 1000});
+          }
+
+          table.ajax.reload();
+        },
+        error: function(error) {
+          swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+        }
+      });      
+    }
+  });
+}
 
 function btnPass(id){
 
@@ -176,7 +214,10 @@ function btnPass(id){
      data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
      success:function(data) {
         $('#username_password').val(data.data.username);
-     }
+     },
+     error: function(error) {
+      swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+    }
   });
 
   $('#update_data_password').click(function() {
@@ -240,6 +281,11 @@ function btnUbah(id){
 	   }
 	});
 
+  $('#non_aktif_button').click(function() { 
+      btnDel(iduser)
+      $("#detailModal .close").click()
+  })
+
   $('#update_data').click(function() { 
 
       var username = $('#username').val();
@@ -282,7 +328,6 @@ function btnUbah(id){
         }
       });
   })
-
 }
 
 </script>

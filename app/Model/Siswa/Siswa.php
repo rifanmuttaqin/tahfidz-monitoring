@@ -2,7 +2,6 @@
 
 namespace App\Model\Siswa;
 
-use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,14 +16,6 @@ class Siswa extends Model
     const TYPE_IQRO = 10;
     const TYPE_QURAN = 20;
        
-     /**
-     * modelFilter Function
-     */
-    public function modelFilter()
-    {
-        return $this->provideFilter(App\ModelFilters\SiswaFilter\SiswaFilter::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *

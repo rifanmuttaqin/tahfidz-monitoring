@@ -4,13 +4,7 @@
 
 @section('content')
 
-	@if (session('success'))
-		<div class="alert alert-success">
-		    {{ session('success') }}
-		</div>
-	@endif
-
-	<form method="post" action="{{ route('store') }}">
+	<form method="post" action="{{ route('store-user') }}">
 
 		@csrf
 

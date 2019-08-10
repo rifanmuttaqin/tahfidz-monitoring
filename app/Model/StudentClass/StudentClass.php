@@ -2,26 +2,16 @@
 
 namespace App\Model\StudentClass;
 
-use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class StudentClass extends Model
 {
-    use Filterable;
+    // use Filterable;
 
     protected $table = 'tbl_class';
     protected $guard_name = 'api';
     
-     /**
-     * modelFilter Function
-     */
-    public function modelFilter()
-    {
-        return $this->provideFilter(App\ModelFilters\StudentClassFilter\StudentClassFilter::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -53,6 +43,21 @@ class StudentClass extends Model
     /**
      * 
      */
+    public static function validateClass($angkatan, $class_name, $guru)
+    {
+        $data = self::where('angkatan',$angkatan)->where('class_name',$class_name)->where('teacher_id',$guru)->first();
+
+        if($data != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 
+     */
     public function getTeacher()
     {
         return $this->hasOne('App\Model\User\User','id','teacher_id');
@@ -62,5 +67,4 @@ class StudentClass extends Model
     {
         return $this->belongsTo('App\Model\Siswa\Siswa');
     }
-
 }

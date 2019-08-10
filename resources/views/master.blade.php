@@ -25,8 +25,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 
-    @stack('scripts')
+    
 
     <!-- Bootstrap core CSS     -->
     <link href="<?= URL::to('/'); ?>/layout/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -47,7 +49,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?= URL::to('/'); ?>/layout/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
-    
+    @stack('scripts')
     
 </head>
 <body>

@@ -2,7 +2,6 @@
 
 namespace App\Model\User;
 
-use EloquentFilter\Filterable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +13,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     // use Authenticatable, Authorizable;
-    // use Filterable;
     // use HasRoles;
 
     protected $table = 'tbl_user';
@@ -55,6 +53,22 @@ class User extends Authenticatable
         'account_type' => 'required | integer',
         'status' => 'required | integer'
     ];
+
+     /**
+     * 
+     */
+     public static function getUser()
+     {
+        return self::all()->where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR]);
+     }
+
+     /**
+     * 
+     */
+     public static function getTeacher()
+     {
+        return self::all()->where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_TEACHER);
+     }
 
     /**
      * The attributes excluded from the model's JSON form.
