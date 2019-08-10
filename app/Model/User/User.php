@@ -59,15 +59,15 @@ class User extends Authenticatable
      */
      public static function getUser()
      {
-        return self::all()->where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR]);
+        return self::where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR])->get();
      }
 
      /**
      * 
      */
-     public static function getTeacher()
+     public static function getTeacher($search=null)
      {
-        return self::all()->where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_TEACHER);
+        return self::where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_TEACHER)->where('full_name', 'like', '%'.$search.'%')->get();
      }
 
     /**
@@ -76,7 +76,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'id'
+        'password'
     ];
 
     /**

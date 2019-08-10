@@ -55,78 +55,78 @@
 @section('modal')
 
 <div class="modal fade" id="detailModal" role="dialog">
-<div class="modal-dialog modal-md">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <p class="modal-title">User Detail</p>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <p class="modal-title">User Detail</p>
+      </div>
+      <div class="modal-body">
+
+  	<div class="form-group">
+  		<label>Username</label>
+  		<input type="text" class="form-control" value="" id="username">
+  	</div>
+
+  	<div class="form-group">
+  		<label>Email</label>
+  		<input type="text" class="form-control" value="" id="email">
+  	</div>
+
+  	<div class="form-group">
+  		<label>Nama</label>
+  		<input type="text" class="form-control" value="" id="nama_lengkap">
+  	</div>
+
+    <div class="form-group">
+      <label for="sel1">Tipe Akun</label>
+      <select class="form-control" id="tipe_akun">
+        <option value="{{ User::ACCOUNT_TYPE_USER }}" >User</option>
+        <option value="{{ User::ACCOUNT_TYPE_TEACHER }}" >Guru</option>
+        <option value="{{ User::ACCOUNT_TYPE_PARENT }}" >Orangtua</option>
+      </select>
     </div>
-    <div class="modal-body">
 
-	<div class="form-group">
-		<label>Username</label>
-		<input type="text" class="form-control" value="" id="username">
-	</div>
+  	<label>Alamat</label>
+  	<textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
 
-	<div class="form-group">
-		<label>Email</label>
-		<input type="text" class="form-control" value="" id="email">
-	</div>
-
-	<div class="form-group">
-		<label>Nama</label>
-		<input type="text" class="form-control" value="" id="nama_lengkap">
-	</div>
-
-  <div class="form-group">
-    <label for="sel1">Tipe Akun</label>
-    <select class="form-control" id="tipe_akun">
-      <option value="{{ User::ACCOUNT_TYPE_USER }}" >User</option>
-      <option value="{{ User::ACCOUNT_TYPE_TEACHER }}" >Guru</option>
-      <option value="{{ User::ACCOUNT_TYPE_PARENT }}" >Orangtua</option>
-    </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger pull-right" id="non_aktif_button">Non Aktifkan</button>
+        <button type="button" id="update_data" class="btn btn-default pull-left">Update</button>
+      </div>
+    </div>
   </div>
-
-	<label>Alamat</label>
-	<textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
-
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-right" id="non_aktif_button">Non Aktifkan</button>
-      <button type="button" id="update_data" class="btn btn-default pull-left">Update</button>
-    </div>
-  </div>
-</div>
 </div>
 
 <div class="modal fade" id="updatePassword" role="dialog">
-<div class="modal-dialog modal-md">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <p class="modal-title">Update Password</p>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" class="form-control" value="" id="username_password" disabled>
-        </div>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <p class="modal-title">Update Password</p>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" value="" id="username_password" disabled>
+          </div>
 
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" value="" id="password">
-        </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" value="" id="password">
+          </div>
 
-        <div class="form-group">
-          <label>Re Password</label>
-          <input type="password" class="form-control" value="" id="password_confirmation">
-        </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" id="update_data_password" class="btn btn-default pull-left">Update Password</button>
+          <div class="form-group">
+            <label>Re Password</label>
+            <input type="password" class="form-control" value="" id="password_confirmation">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="update_data_password" class="btn btn-default pull-left">Update Password</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 @endsection

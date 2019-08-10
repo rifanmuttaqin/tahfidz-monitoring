@@ -35,3 +35,6 @@ Route::get('/student-class', ['as'=>'student-class', 'uses' => 'StudentClassCont
 Route::get('/student-class/create', ['as'=>'create-student-class', 'uses' => 'StudentClassController@create']);
 Route::post('/student-class/store', ['as'=>'store-student-class', 'uses' => 'StudentClassController@store']);
 Route::get('/student-class/get-user-teacher', ['as'=>'get-user-teacher', 'uses' => 'StudentClassController@getUserTeacher']);
+Route::post('/student-class/delete', ['as'=>'delete-student-class', 'uses' => 'StudentClassController@delete']);
+Route::post('/student-class/get-detail', ['as'=>'detail-student', 'uses' => 'StudentClassController@show']);
+Route::post('/student-class/update', ['as'=>'update-student', 'uses' => 'StudentClassController@update']);

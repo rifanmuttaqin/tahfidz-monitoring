@@ -10,6 +10,7 @@ use App\Model\User\User;
 use App\Model\StudentClass\StudentClass;
 
 use App\Http\Requests\StudentClass\StoreStudentClassRequest;
+use App\Http\Requests\StudentClass\UpdateStudentClassRequest;
 
 use App\Http\Resources\StudentClass\StudentClassResource;
 use App\Http\Resources\StudentClass\StudentClassCollection;
@@ -53,7 +54,8 @@ class StudentClassController extends Controller
                     ->toJson();
         }
 
-        return view('student_class.index', ['active'=>'student_class']);
+        $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
+        return view('student_class.index', ['active'=>'student_class','years'=>$years]);
     }
 
     /**
@@ -63,6 +65,32 @@ class StudentClassController extends Controller
     {
         $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
         return view('student_class.store', ['active'=>'student_class','years'=>$years]);
+    }
+
+    /**
+     * @return void
+     */
+    public function update(UpdateStudentClassRequest $request)
+    {
+        if ($request->ajax()) {
+
+            DB::beginTransaction();
+
+            $student_class = StudentClass::findOrFail($request->get('idclass'));
+            $student_class->angkatan = $request->get('angkatan');
+            $student_class->class_name = $request->get('class_name');
+            $student_class->note = $request->get('note');
+            $student_class->teacher_id = $request->get('teacher_id');
+
+            if(!$student_class->save())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,'','Kelas gagal diupdate');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','Kelas berhasil diupdate');
+        }
     }
 
     /**
@@ -101,7 +129,14 @@ class StudentClassController extends Controller
     {
         if ($request->ajax()) {
 
-            $data_guru = User::getTeacher();
+            if($request->has('search')){
+                $data_guru = User::getTeacher($request->get('search'));
+            }
+            else
+            {
+                $data_guru = User::getTeacher();
+            }
+
             $arr_data  = array();
             
             if($data_guru)
@@ -119,8 +154,39 @@ class StudentClassController extends Controller
         }
     }
 
-    // ------------------------------ Aditional Function -------------------
+    /**
+     *
+     */
+    public function show(Request $request)
+    {
+        if ($request->ajax()) {
+            $student_class = StudentClass::findOrFail($request->get('idclass'));
+            return new StudentClassResource($student_class);
+        }
+    }
 
-    
+    /**
+     *
+     */
+    public function delete(Request $request)
+    {
+        if ($request->ajax()) {
+
+            DB::beginTransaction();
+            $classModel = StudentClass::findOrFail($request->idclass);
+
+            if(!$classModel->delete())
+            {
+                DB::rollBack();
+                return $this->getResponse(false,400,'','Kelas gagal dihapus');
+            }
+
+            DB::commit();
+            return $this->getResponse(true,200,'','Kelas berhasil dihapus');
+        }
+    }
+
+    // ------------------------------ Aditional Function -------------------
+   
     
 }
