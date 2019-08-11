@@ -38,3 +38,7 @@ Route::get('/student-class/get-user-teacher', ['as'=>'get-user-teacher', 'uses' 
 Route::post('/student-class/delete', ['as'=>'delete-student-class', 'uses' => 'StudentClassController@delete']);
 Route::post('/student-class/get-detail', ['as'=>'detail-student', 'uses' => 'StudentClassController@show']);
 Route::post('/student-class/update', ['as'=>'update-student', 'uses' => 'StudentClassController@update']);
+
+// Untuk Siswa
+Route::get('/siswa', ['as'=>'siswa', 'uses' => 'SiswaController@index']);
+Route::get('/siswa/create', ['as'=>'create-siswa', 'uses' => 'SiswaController@create']);

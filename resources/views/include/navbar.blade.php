@@ -26,10 +26,10 @@
             <p>Kelas</p>
         </a>
     </li>
-    <li>
-        <a href="typography.html">
-            <i class="pe-7s-news-paper"></i>
-            <p>Siswa</p>
+    <li class="<?= $active == 'siswa' ? 'active' : '' ?>">
+        <a href="<?= URL::to('/siswa'); ?>">
+            <i class="pe-7s-user"></i>
+            <p>Manajemen Siswa</p>
         </a>
     </li>
     <li>

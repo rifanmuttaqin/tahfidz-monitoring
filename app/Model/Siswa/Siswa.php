@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Siswa extends Model
 {
-    use Filterable;
-
     protected $table = 'tbl_siswa';
     protected $guard_name = 'api';
  
