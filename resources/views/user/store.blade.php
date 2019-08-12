@@ -3,7 +3,7 @@
 @section('title', '')
 
 @section('content')
-
+	
 	<form method="post" action="{{ route('store-user') }}">
 
 		@csrf

@@ -1,11 +1,12 @@
 @extends('master')
  
-@section('title', 'Halaman Beranda')
+@section('title', '')
 
 @section('alert')
 
 @endsection
  
 @section('content')
+
 
 @endsection

@@ -88,6 +88,7 @@
                                 @yield('title')
                             </div>
                             <div class="content">
+                                {{ Breadcrumbs::render() }}
                                 @yield('content')
                             </div>
                         </div>
