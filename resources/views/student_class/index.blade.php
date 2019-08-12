@@ -75,9 +75,7 @@
 
     <div class="form-group">
       <label>Guru</label>
-        <select class="js-example-basic-single form-control" name="teacher_id" id="guru" style="width: 100%">
-          <option></option>
-        </select>
+          <?= $guru_option ?>
     </div>
     
     <div class="form-group">
@@ -92,7 +90,7 @@
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger pull-right" id="non_aktif_button">Hapus</button>
+      <button type="button" class="btn btn-danger pull-right" id="hapus_action">Hapus</button>
       <button type="button" id="update_data" class="btn btn-default pull-left">Update</button>
     </div>
   </div>
@@ -115,24 +113,28 @@ function clearAll(){
 }
 
 function btnUbah(id){
-
   clearAll();
-  
-  $('#detailModal').modal('toggle');
- 
-  idclass = id;
 
+  callGuru();
+  
+  idclass = id;
   $.ajax({
      type:'POST',
      url: base_url + '/student-class/get-detail',
      data:{idclass:idclass, "_token": "{{ csrf_token() }}",},
      success:function(data) {
+        $('#detailModal').modal('toggle');
         $('#angkatan').val(data.data.angkatan);
-        $("#guru").val([data.data.teacher.id]).trigger("change");
+        $('#guru').val(data.data.teacher.id).trigger('change');
         $('#class_name').val(data.data.class_name);
         $('#note').val(data.data.note);
      }
   });
+
+  $('#hapus_action').click(function() {
+    hapus(idclass);
+    $("#detailModal .close").click()
+  })
 
   $('#update_data').click(function() {
 
@@ -171,7 +173,8 @@ function btnUbah(id){
   })
 }
 
-$(document).ready(function() {
+function callGuru()
+{
   $('#guru').select2({
     allowClear: true,
     ajax: {
@@ -189,8 +192,7 @@ $(document).ready(function() {
       }
     }
   });
-});
-
+}
 
 $(function () {
   table = $('.data-table').DataTable({
@@ -210,12 +212,11 @@ $(function () {
   });
 });
 
-function btnDel(id)
+function hapus(idclass)
 {
-  idclass = id;
   swal({
       title: "Menghapus",
-      text: 'Data yang terhapus tidak dapat dikembalikan lagi', 
+      text: 'Dengan anda menghapus kelas, maka seluruh data nilai siswa dan data siswa dalam kelas ini akan ikut terhapus', 
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -249,7 +250,11 @@ function btnDel(id)
   });
 }
 
-
+function btnDel(id)
+{
+  idclass = id;
+  hapus(idclass);
+}
 
 </script>
 

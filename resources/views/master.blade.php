@@ -55,7 +55,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="azure" data-image="<?= URL::to('/'); ?>/layout/assets/img/sidebar-4.jpg">
+    <div class="sidebar" data-color="azure" data-image="<?= URL::to('/'); ?>/layout/assets/img/ngaji.jpg">
 
     <!--
 

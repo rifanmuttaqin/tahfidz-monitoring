@@ -48,14 +48,29 @@ class StudentClassController extends Controller
                         return $btn .'&nbsp'. $delete; 
                     })
                     ->addColumn('guru', function(StudentClass $class) {
-                        return $class->getTeacher->full_name;
+                        if($class->getTeacher->status != User::USER_STATUS_ACTIVE || $class->getTeacher->account_type != User::ACCOUNT_TYPE_TEACHER)
+                        {
+                            return 'Guru sudah tidak aktif';
+                        }
+                        else
+                        {
+                            return $class->getTeacher->full_name;
+                        }
                     }) 
                     ->rawColumns(['action'])
                     ->toJson();
         }
 
+        $data_guru = User::getTeacher();
+        
+        $guru_option = '<select class="js-example-basic-single form-control" name="teacher_id" id="guru" style="width: 100%">';
+            foreach ($data_guru as $guru) {
+                $guru_option .= '<option value="'.$guru->id.'">'.$guru->full_name.'</option>';
+            }
+        $guru_option .= '</select>';
+
         $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
-        return view('student_class.index', ['active'=>'student_class','years'=>$years]);
+        return view('student_class.index', ['active'=>'student_class','years'=>$years,'guru_option'=>$guru_option]);
     }
 
     /**

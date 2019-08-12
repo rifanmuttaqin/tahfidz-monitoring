@@ -4,7 +4,7 @@
 
 @section('content')
 
-	<form method="post" action="">
+	<form method="post" action="{{ route('store-siswa') }}">
 
 		@csrf
 
@@ -18,7 +18,10 @@
 
 		<div class="form-group">
 			<label>Jenis Hafalan</label>
-			<input type="text" class="form-control" value="" name="memorization_type">
+			<select class="form-control" name="memorization_type">
+				<option value="{{ Siswa::TYPE_IQRO }}" >Iqro</option>
+				<option value="{{ Siswa::TYPE_QURAN }}" >Alquran</option>
+			</select>
 			@if ($errors->has('memorization_type'))
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('memorization_type') }}</p></div>
 			@endif
@@ -26,7 +29,9 @@
 
 		<div class="form-group">
 			<label>Kelas </label>
-			<input type="text" class="form-control" value="" name="class_id">
+			<select class="js-example-basic-single form-control" name="class_id" id="class_id" style="width: 100%">
+	          <option></option>
+	        </select>
 			@if ($errors->has('class_id'))
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('class_id') }}</p></div>
 			@endif
@@ -34,7 +39,9 @@
 
 		<div class="form-group">
 			<label>Orangtua </label>
-			<input type="text" class="form-control" value="" name="parent_id">
+			<select class="js-example-basic-single form-control" name="parent_id" id="parent_id" style="width: 100%">
+	          <option></option>
+	        </select>
 			@if ($errors->has('parent_id'))
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('parent_id') }}</p></div>
 			@endif
@@ -47,3 +54,49 @@
 	</form>
 	
 @endsection
+
+@push('scripts')
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$('#parent_id').select2({
+			allowClear: true,
+			ajax: {
+			  url: base_url + '/siswa/get-user-parent',
+			  dataType: 'json',
+			  data: function(params) {
+			      return {
+			        search: params.term
+			      }
+			  },
+			  processResults: function (data, page) {
+			      return {
+			          results: data
+			      };
+			  }
+			}
+		});
+
+		$('#class_id').select2({
+			allowClear: true,
+			ajax: {
+			  url: base_url + '/siswa/get-class',
+			  dataType: 'json',
+			  data: function(params) {
+			      return {
+			        search: params.term
+			      }
+			  },
+			  processResults: function (data, page) {
+			      return {
+			          results: data
+			      };
+			  }
+			}
+		});
+
+	});
+</script>
+
+@endpush

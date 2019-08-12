@@ -55,6 +55,16 @@ class StudentClass extends Model
         return false;
     }
 
+
+    /**
+     * 
+     */
+    public static function getClass($search=null)
+    {
+        return self::where('class_name', 'like', '%'.$search.'%')->get();
+    }
+
+
     /**
      * 
      */

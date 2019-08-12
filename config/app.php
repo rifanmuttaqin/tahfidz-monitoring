@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'User' => App\Model\User\User::class,
+        'Siswa' => App\Model\Siswa\Siswa::class,
     ],
 
 ];

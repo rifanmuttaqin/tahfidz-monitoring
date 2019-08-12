@@ -2,7 +2,7 @@
 
 <div class="sidebar-wrapper">
 <div class="logo">
-    <a href="http://www.creative-tim.com" class="simple-text">
+    <a href="<?= URL::to('/'); ?>" class="simple-text">
         TAHFIDZ APP
     </a>
 </div>
@@ -30,24 +30,6 @@
         <a href="<?= URL::to('/siswa'); ?>">
             <i class="pe-7s-user"></i>
             <p>Manajemen Siswa</p>
-        </a>
-    </li>
-    <li>
-        <a href="icons.html">
-            <i class="pe-7s-science"></i>
-            <p>Icons</p>
-        </a>
-    </li>
-    <li>
-        <a href="maps.html">
-            <i class="pe-7s-map-marker"></i>
-            <p>Maps</p>
-        </a>
-    </li>
-    <li>
-        <a href="notifications.html">
-            <i class="pe-7s-bell"></i>
-            <p>Notifications</p>
         </a>
     </li>
 </ul>

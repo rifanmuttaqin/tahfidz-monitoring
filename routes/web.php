@@ -19,7 +19,7 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
 });
 
 // Untuk Home
-Route::get('/', 'HomeController@index');
+Route::get('/', ['as'=>'home', 'uses' => 'HomeController@index']);
 
 // Untuk User
 Route::get('/user', ['as'=>'index-user', 'uses' => 'UserController@index']);
@@ -42,3 +42,9 @@ Route::post('/student-class/update', ['as'=>'update-student', 'uses' => 'Student
 // Untuk Siswa
 Route::get('/siswa', ['as'=>'siswa', 'uses' => 'SiswaController@index']);
 Route::get('/siswa/create', ['as'=>'create-siswa', 'uses' => 'SiswaController@create']);
+Route::get('/siswa/get-user-parent', ['as'=>'get-user-parent', 'uses' => 'SiswaController@getUserParent']);
+Route::get('/siswa/get-class', ['as'=>'get-class', 'uses' => 'SiswaController@getClass']);
+Route::post('/siswa/store', ['as'=>'store-siswa', 'uses' => 'SiswaController@store']);
+Route::post('/siswa/delete', ['as'=>'delete-siswa', 'uses' => 'SiswaController@delete']);
+Route::post('/siswa/get-detail', ['as'=>'detail-siswa', 'uses' => 'SiswaController@show']);
+Route::post('/siswa/update', ['as'=>'update-siswa', 'uses' => 'SiswaController@update']);

@@ -51,9 +51,46 @@ class Siswa extends Model
     /**
      * 
      */
+    public static function validateSiswa($class_id,$parent_id,$siswa_name,$siswa_id=null)
+    {
+        if($siswa_id != null)
+        {
+            $data = self::where('class_id',$class_id)->where('parent_id',$parent_id)->where('siswa_name',$siswa_name)->whereNotIn('id',[$siswa_id])->first(); 
+        }
+        else
+        {
+            $data = self::where('class_id',$class_id)->where('parent_id',$parent_id)->where('siswa_name',$siswa_name)->first(); 
+        }
+        
+        if($data != null)
+        {
+            return true;
+        }
+
+        return false; 
+    }
+
+    /**
+     * 
+     */
     public function getClass()
     {
         return $this->hasOne('App\Model\StudentClass\StudentClass','id','class_id');
+    }
+
+    /**
+     * 
+     */
+    public static function getHafalanMeaning($memorization_type)
+    {
+        switch ($memorization_type) {
+            case Siswa::TYPE_IQRO:
+                return 'Iqro';
+            case Siswa::TYPE_QURAN:
+                return 'Alquran';
+            default:
+                return '';
+        }
     }
 
 }

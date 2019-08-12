@@ -70,6 +70,14 @@ class User extends Authenticatable
         return self::where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_TEACHER)->where('full_name', 'like', '%'.$search.'%')->get();
      }
 
+     /**
+     * 
+     */
+     public static function getParent($search=null)
+     {
+        return self::where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_PARENT)->where('full_name', 'like', '%'.$search.'%')->get();
+     }
+
     /**
      * The attributes excluded from the model's JSON form.
      *

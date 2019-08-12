@@ -18,6 +18,7 @@ class SiswaResource extends JsonResource
             'siswa_name' => $this->siswa_name,
             'class' => $this->getClass,
             'parent' => $this->getParent,
+            'memorization_type' => $this->memorization_type,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
