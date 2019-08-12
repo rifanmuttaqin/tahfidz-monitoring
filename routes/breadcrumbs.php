@@ -15,6 +15,16 @@ Breadcrumbs::for('create-user', function ($trail) {
     $trail->push('Tambah Pengguna', route('index-user'));
 });
 
+// Orangtua
+Breadcrumbs::for('index-parent', function ($trail) {
+    $trail->push('Orangtua', route('index-parent'));
+});
+
+Breadcrumbs::for('create-parent', function ($trail) {
+    $trail->parent('index-parent');
+    $trail->push('Tambah Orangtua', route('index-parent'));
+});
+
 
 // Kelas
 Breadcrumbs::for('student-class', function ($trail) {

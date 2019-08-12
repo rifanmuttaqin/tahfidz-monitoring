@@ -59,7 +59,7 @@ class User extends Authenticatable
      */
      public static function getUser()
      {
-        return self::where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR])->get();
+        return self::where('status',self::USER_STATUS_ACTIVE)->whereNotIn('account_type', [User::ACCOUNT_TYPE_CREATOR,User::ACCOUNT_TYPE_PARENT])->get();
      }
 
      /**

@@ -27,7 +27,6 @@ class StoreUserRequest extends FormRequest
             'username'      => 'required|min:2|unique:tbl_user',
             'email'         => 'required|email|unique:tbl_user',
             'full_name'     => 'string|min:2',
-            'account_type'  => 'integer',
             'address'       => 'string',
             'password'      => 'required|confirmed|min:6',
         ];

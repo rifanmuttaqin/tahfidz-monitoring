@@ -15,7 +15,6 @@
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('siswa_name') }}</p></div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<label>Jenis Hafalan</label>
 			<select class="form-control" name="memorization_type">
@@ -26,7 +25,6 @@
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('memorization_type') }}</p></div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<label>Kelas </label>
 			<select class="js-example-basic-single form-control" name="class_id" id="class_id" style="width: 100%">
@@ -36,7 +34,6 @@
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('class_id') }}</p></div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<label>Orangtua </label>
 			<select class="js-example-basic-single form-control" name="parent_id" id="parent_id" style="width: 100%">
@@ -46,7 +43,6 @@
 			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('parent_id') }}</p></div>
 			@endif
 		</div>
-
 		<div class="form-group">
 			<button type="submit" class="btn btn-info"> TAMBAH </button>
 		</div>
@@ -95,7 +91,6 @@
 			  }
 			}
 		});
-
 	});
 </script>
 

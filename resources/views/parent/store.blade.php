@@ -4,7 +4,7 @@
 
 @section('content')
 	
-	<form method="post" action="{{ route('store-user') }}">
+	<form method="post" action="{{ route('store-parent') }}">
 
 		@csrf
 
@@ -30,14 +30,6 @@
 			@if ($errors->has('full_name'))
 			    <div class="email"><p style="color: red"><span>&#42;</span> {{ $errors->first('full_name') }}</p></div>
 			@endif
-		</div>
-
-		<div class="form-group">
-			<label for="sel1">Tipe Akun</label>
-			<select class="form-control" name="account_type">
-				<option value="{{ User::ACCOUNT_TYPE_USER }}" >User</option>
-				<option value="{{ User::ACCOUNT_TYPE_TEACHER }}" >Guru</option>
-			</select>
 		</div>
 
 		<div class="form-group">

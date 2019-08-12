@@ -29,7 +29,6 @@ class UpdateUserRequest extends FormRequest
             'username'      => 'required|min:2|unique:tbl_user,username,'.$request->get('iduser'),
             'email'         => 'required|email|unique:tbl_user,email,'. $request->get('iduser'),
             'full_name'     => 'string',
-            'account_type'  => 'required|integer',
             'address'       => 'string',
         ];
     }

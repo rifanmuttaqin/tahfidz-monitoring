@@ -35,7 +35,7 @@
 @section('content')
 
 <div style="padding-bottom: 20px">
-  <a  href="{{ route('create-user') }}" type="button" class="btn btn-info"> TAMBAH </a>
+  <a  href="{{ route('create-parent') }}" type="button" class="btn btn-info"> TAMBAH </a>
 </div>
 
 <table class="table table-bordered data-table display nowrap" style="width:100%">
@@ -59,35 +59,27 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <p class="modal-title">User Detail</p>
+        <p class="modal-title">Parent Detail</p>
       </div>
       <div class="modal-body">
 
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" class="form-control" value="" id="username">
-    </div>
+  	<div class="form-group">
+  		<label>Username</label>
+  		<input type="text" class="form-control" value="" id="username">
+  	</div>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input type="text" class="form-control" value="" id="email">
-    </div>
+  	<div class="form-group">
+  		<label>Email</label>
+  		<input type="text" class="form-control" value="" id="email">
+  	</div>
 
-    <div class="form-group">
-      <label>Nama</label>
-      <input type="text" class="form-control" value="" id="nama_lengkap">
-    </div>
+  	<div class="form-group">
+  		<label>Nama</label>
+  		<input type="text" class="form-control" value="" id="nama_lengkap">
+  	</div>
 
-    <div class="form-group">
-      <label for="sel1">Tipe Akun</label>
-      <select class="form-control" id="tipe_akun">
-        <option value="{{ User::ACCOUNT_TYPE_USER }}" >User</option>
-        <option value="{{ User::ACCOUNT_TYPE_TEACHER }}" >Guru</option>
-      </select>
-    </div>
-
-    <label>Alamat</label>
-    <textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
+  	<label>Alamat</label>
+  	<textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
 
       </div>
       <div class="modal-footer">
@@ -138,7 +130,6 @@ var table;
 
 function clearAll(){
   $('#username').val('');
-  $('#tipe_akun').val('');
   $('#email').val('');
   $('#nama_lengkap').val('');
   $('#alamat').val('');
@@ -152,7 +143,7 @@ $(function () {
           selector: 'td:nth-child(2)'
       },
       responsive: true,
-      ajax: "{{ route('index-user') }}",
+      ajax: "{{ route('index-parent') }}",
       columns: [
           {data: 'full_name', name: 'full_name'},
           {data: 'email', name: 'email'},
@@ -190,7 +181,6 @@ function btnDel(id)
           {
             swal(data.message, { button:false, icon: "error", timer: 1000});
           }
-
           table.ajax.reload();
         },
         error: function(error) {
@@ -263,22 +253,21 @@ function btnPass(id){
 
 function btnUbah(id){
 
-  $('#detailModal').modal('toggle');
+	$('#detailModal').modal('toggle');
   
   iduser = id;
 
-  $.ajax({
-     type:'POST',
-     url: base_url + '/user/get-detail',
-     data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
-     success:function(data) {
-        $('#username').val(data.data.username);
-        $('#email').val(data.data.email);
-        $('#nama_lengkap').val(data.data.full_name);
-        $('#alamat').val(data.data.address);
-        $('#tipe_akun').val(data.data.account_type);
-     }
-  });
+	$.ajax({
+	   type:'POST',
+	   url: base_url + '/user/get-detail',
+	   data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
+	   success:function(data) {
+	      $('#username').val(data.data.username);
+	      $('#email').val(data.data.email);
+	   		$('#nama_lengkap').val(data.data.full_name);
+	   		$('#alamat').val(data.data.address);
+	   }
+	});
 
   $('#non_aktif_button').click(function() { 
       btnDel(iduser)
@@ -291,19 +280,17 @@ function btnUbah(id){
       var email = $('#email').val();
       var full_name = $('#nama_lengkap').val();
       var address = $('#alamat').val();
-      var account_type = $('#tipe_akun').val();
 
       $.ajax({
         type:'POST',
-        url: base_url + '/user/update',
+        url: base_url + '/parent/update',
         data:{
           iduser:iduser, 
           "_token": "{{ csrf_token() }}",
           username : username,
           email : email,
           full_name : full_name,
-          address : address,
-          account_type : account_type
+          address : address
         },
         success:function(data) {
           if(data.status != false)

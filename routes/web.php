@@ -30,6 +30,12 @@ Route::get('/user/create', ['as'=>'create-user', 'uses' => 'UserController@creat
 Route::post('/user/update-password', ['as'=>'update-password-user', 'uses' => 'UserController@updatePassword']);
 Route::post('/user/delete', ['as'=>'delete-user', 'uses' => 'UserController@delete']);
 
+// Untuk Parent
+Route::get('/parent', ['as'=>'index-parent', 'uses' => 'ParentController@index']);
+Route::get('/parent/create', ['as'=>'create-parent', 'uses' => 'ParentController@create']);
+Route::post('/parent/store', ['as'=>'store-parent', 'uses' => 'ParentController@store']);
+Route::post('/parent/update', ['as'=>'parent-user', 'uses' => 'ParentController@update']);
+
 // Untuk Class
 Route::get('/student-class', ['as'=>'student-class', 'uses' => 'StudentClassController@index']);
 Route::get('/student-class/create', ['as'=>'create-student-class', 'uses' => 'StudentClassController@create']);

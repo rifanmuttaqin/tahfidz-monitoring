@@ -20,6 +20,12 @@
             <p>Pengguna</p>
         </a>
     </li>
+    <li class="<?= $active == 'parent' ? 'active' : '' ?>">
+        <a href="<?= URL::to('/parent'); ?>">
+            <i class="pe-7s-user"></i>
+            <p>Orang Tua</p>
+        </a>
+    </li>
     <li class="<?= $active == 'student_class' ? 'active' : '' ?>">
         <a href="<?= URL::to('/student-class'); ?>">
             <i class="pe-7s-note2"></i>
