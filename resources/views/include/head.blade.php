@@ -19,16 +19,31 @@
                 </li>
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <p>
-								Pengaturan
-								<b class="caret"></b>
-							</p>
+                      <p>
+        								Pengaturan
+        								<b class="caret"></b>
+        							</p>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">Umum</a></li>
-                        <li><a href="#">Lembaga</a></li>  
+                        <li><a href="<?= URL::to('/role'); ?>">Manejemen Role</a></li> 
                       </ul>
                 </li>
+
+                 <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <p>
+                        Laporan
+                        <b class="caret"></b>
+                      </p>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Pengguna</a></li>
+                        <li><a href="#">Orang Tua</a></li>
+                        <li><a href="#">Kelas</a></li>
+                        <li><a href="#">Siswa</a></li> 
+                      </ul>
+                </li>
+
                 <li>
                     <a href="<?= URL::to('/'); ?>/auth/logout">
                         <p>Log out</p>

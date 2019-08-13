@@ -46,3 +46,18 @@ Breadcrumbs::for('create-siswa', function ($trail) {
     $trail->parent('siswa');
     $trail->push('Tambah Siswa', route('siswa'));
 });
+
+// Role dan Permission
+Breadcrumbs::for('role', function ($trail) {
+    $trail->push('Role Permission', route('role'));
+});
+
+Breadcrumbs::for('create-role', function ($trail) {
+    $trail->parent('role');
+    $trail->push('Tambah Role', route('role'));
+});
+
+Breadcrumbs::for('update-role', function ($trail,$role) {
+    $trail->parent('role'); 
+    $trail->push('Update ('.Role::findOrFail($role)->name.')', route('role', Role::findOrFail($role)->name));
+});

@@ -2,26 +2,15 @@
 
 namespace App\Model\Iqro;
 
-use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Iqro extends Model
 {
-    use Filterable;
-
     protected $table = 'tbl_iqro';
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
     
-     /**
-     * modelFilter Function
-     */
-    public function modelFilter()
-    {
-        return $this->provideFilter(App\ModelFilters\IqroFilter\IqroFilter::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *

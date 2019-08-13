@@ -230,6 +230,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'User' => App\Model\User\User::class,
         'Siswa' => App\Model\Siswa\Siswa::class,
+        'Role' => App\Model\Helper\Role::class,
     ],
 
 ];

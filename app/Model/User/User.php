@@ -3,17 +3,16 @@
 namespace App\Model\User;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-use Spatie\Permission\Traits\HasRoles;
-
 class User extends Authenticatable
 {
-    // use Authenticatable, Authorizable;
-    // use HasRoles;
+    use HasRoles;
 
     protected $table = 'tbl_user';
     protected $guard_name = 'web';
@@ -159,5 +158,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Model\Siswa\Siswa');
     }
-
 }

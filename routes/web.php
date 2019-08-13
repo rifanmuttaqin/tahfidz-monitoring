@@ -54,3 +54,11 @@ Route::post('/siswa/store', ['as'=>'store-siswa', 'uses' => 'SiswaController@sto
 Route::post('/siswa/delete', ['as'=>'delete-siswa', 'uses' => 'SiswaController@delete']);
 Route::post('/siswa/get-detail', ['as'=>'detail-siswa', 'uses' => 'SiswaController@show']);
 Route::post('/siswa/update', ['as'=>'update-siswa', 'uses' => 'SiswaController@update']);
+
+// Untuk Role Dan Permission
+Route::get('/role', ['as'=>'role', 'uses' => 'RoleController@index']);
+Route::get('/role/create', ['as'=>'create-role', 'uses' => 'RoleController@create']);
+Route::get('/role/edit/{id}', ['as'=>'update-role', 'uses' => 'RoleController@edit']);
+Route::post('/role/update/{id}', ['as'=>'do-update-role', 'uses' => 'RoleController@update']);
+Route::post('/role/store', ['as'=>'store-role', 'uses' => 'RoleController@store']);
+Route::post('/role/delete', ['as'=>'delete-role', 'uses' => 'RoleController@delete']);

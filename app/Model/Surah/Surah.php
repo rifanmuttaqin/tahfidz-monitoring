@@ -2,17 +2,13 @@
 
 namespace App\Model\Surah;
 
-use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Surah extends Model
 {
-    use Filterable;
-
     protected $table = 'tbl_surah';
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
     
      /**
      * modelFilter Function

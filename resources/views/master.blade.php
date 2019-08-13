@@ -13,7 +13,7 @@
     <!-- Bootrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    
+
     <!--   Core JS Files   -->
     <script src="<?= URL::to('/'); ?>/layout/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
     <script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap.min.js" type="text/javascript"></script>
@@ -48,6 +48,8 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?= URL::to('/'); ?>/layout/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="<?= URL::to('/'); ?>/layout/assets/css/additional_css.css" rel="stylesheet" />
+    
 
     @stack('scripts')
     
