@@ -178,7 +178,7 @@ class UserController extends Controller
 
             if(!$user->save())
             {
-                DB::commit();
+                DB::rollBack();
                 return $this->getResponse(true,400,null,'Password gagal diupdate');
             }
 

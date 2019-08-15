@@ -18,6 +18,7 @@ class CreateUserTable extends Migration
             $table->string('username');
             $table->text('address')->nullable();
             $table->string('full_name')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->tinyInteger('account_type')->default(10);
             $table->string('password');
             $table->integer('status');

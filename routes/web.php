@@ -78,3 +78,8 @@ Route::post('/alquran/store', ['as'=>'store-alquran', 'uses' => 'AlquranControll
 Route::post('/alquran/delete', ['as'=>'delete-alquran', 'uses' => 'AlquranController@delete']);
 Route::post('/alquran/get-detail', ['as'=>'detail-surah', 'uses' => 'AlquranController@show']);
 Route::post('/alquran/update', ['as'=>'update-surah', 'uses' => 'AlquranController@update']);
+
+// Untuk Profile
+Route::get('/profile', ['as'=>'profile', 'uses' => 'ProfileController@index']);
+Route::post('/profile/update', ['as'=>'update-profile', 'uses' => 'ProfileController@update']);
+Route::post('/profile/update-password', ['as'=>'update-password-profile', 'uses' => 'ProfileController@updatePassword']);

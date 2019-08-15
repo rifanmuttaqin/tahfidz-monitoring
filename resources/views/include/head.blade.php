@@ -13,7 +13,7 @@
             <ul class="nav navbar-nav navbar-left"></ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                   <a href="">
+                   <a href="<?= URL::to('/profile'); ?>">
                        <p>Profile</p>
                     </a>
                 </li>
@@ -26,8 +26,8 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><a href="<?= URL::to('/role'); ?>">Manejemen Role</a></li> 
-                        <li><a href="<?= URL::to('/alquran'); ?>">Al-Quran </a></li> 
-                        <li><a href="<?= URL::to('/iqro'); ?>">IQRO </a></li> 
+                        <li><a href="<?= URL::to('/alquran'); ?>">Quran </a></li> 
+                        <li><a href="<?= URL::to('/iqro'); ?>">Iqro </a></li> 
                       </ul>
                 </li>
 

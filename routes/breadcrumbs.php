@@ -81,3 +81,8 @@ Breadcrumbs::for('create-alquran', function ($trail) {
     $trail->parent('alquran');
     $trail->push('Tambah alquran', route('alquran'));
 });
+
+// Profile
+Breadcrumbs::for('profile', function ($trail) {
+    $trail->push('Profile Pengguna', route('profile'));
+});

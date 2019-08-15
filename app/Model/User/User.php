@@ -72,6 +72,19 @@ class User extends Authenticatable
      /**
      * 
      */
+     public static function passwordChangeValidation($old_password, $curent_password)
+     {
+        if(Hash::check($old_password, $curent_password)) 
+        { 
+            return true;
+        }
+
+        return false;
+     }
+
+     /**
+     * 
+     */
      public static function getParent($search=null)
      {
         return self::where('status',self::USER_STATUS_ACTIVE)->where('account_type', User::ACCOUNT_TYPE_PARENT)->where('full_name', 'like', '%'.$search.'%')->get();

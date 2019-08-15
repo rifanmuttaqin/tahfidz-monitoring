@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Http\Request;
 
-class UpdateUserRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,8 @@ class UpdateUserRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'username'      => 'required|min:2|unique:tbl_user,username,'.$request->get('iduser'),
             'email'         => 'required|email|unique:tbl_user,email,'. $request->get('iduser'),
-            'full_name'     => 'string|nullable',
+            'full_name'     => 'string|min:2|nullable',
             'address'       => 'string|nullable',
         ];
     }
@@ -41,16 +40,14 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'Username tidak boleh dikosongkan',
-            'username.min' => 'Username setidaknya 2 karakter',
-            'username.unique' => 'Username telah ada sebelumnya',
-
             'email.required' => 'Username tidak boleh dikosongkan',
             'email.email' => 'Format email tidak disetujui',
             'email.unique' => 'Email telah digunakan sebelumnya',
 
             'full_name.string' => 'Gunakan huruf untuk nama lengkap anda',
             'full_name.min' => 'Gunakan setidaknya 2 karakter',
+
+            'address.string' => 'Gunakan huruf untuk nama lengkap anda',
         ];
     }
 }
