@@ -38,17 +38,21 @@
   <a  href="{{ route('create-user') }}" type="button" class="btn btn-info"> TAMBAH </a>
 </div>
 
-<table class="table table-bordered data-table display nowrap" style="width:100%">
+<div style="width: 100%; padding-left: -10px;">
+<div class="table-responsive">
+<table id="user_table" class="table table-bordered data-table display nowrap" style="width:100%">
     <thead>
         <tr>
             <th>Nama</th>
             <th>Email</th>
-            <th width="100px">Action</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
+</div>
+</div>
 
 @endsection
 
@@ -145,7 +149,7 @@ function clearAll(){
 }
 
 $(function () {
-  table = $('.data-table').DataTable({
+  table = $('#user_table').DataTable({
       processing: true,
       serverSide: true,
       rowReorder: {

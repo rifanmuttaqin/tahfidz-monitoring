@@ -39,20 +39,6 @@
         </a>
     </li>
 
-    <li class="<?= $active == 'iqro' ? 'active' : '' ?>">
-        <a href="<?= URL::to('/iqro'); ?>">
-            <i class="pe-7s-news-paper"></i>
-            <p>Iqro</p>
-        </a>
-    </li>
-
-    <li class="<?= $active == 'alquran' ? 'active' : '' ?>">
-        <a href="<?= URL::to('/alquran'); ?>">
-            <i class="pe-7s-notebook"></i>
-            <p>Al Quran</p>
-        </a>
-    </li>
-
 </ul>
 </div>
 

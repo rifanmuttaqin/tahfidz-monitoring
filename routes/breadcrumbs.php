@@ -61,3 +61,23 @@ Breadcrumbs::for('update-role', function ($trail,$role) {
     $trail->parent('role'); 
     $trail->push('Update ('.Role::findOrFail($role)->name.')', route('role', Role::findOrFail($role)->name));
 });
+
+// Iqro
+Breadcrumbs::for('iqro', function ($trail) {
+    $trail->push('Iqro', route('iqro'));
+});
+
+Breadcrumbs::for('create-iqro', function ($trail) {
+    $trail->parent('iqro');
+    $trail->push('Tambah Iqro', route('iqro'));
+});
+
+// Alquran
+Breadcrumbs::for('alquran', function ($trail) {
+    $trail->push('Alquran', route('alquran'));
+});
+
+Breadcrumbs::for('create-alquran', function ($trail) {
+    $trail->parent('alquran');
+    $trail->push('Tambah alquran', route('alquran'));
+});

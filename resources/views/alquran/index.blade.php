@@ -35,17 +35,16 @@
 @section('content')
 
 <div style="padding-bottom: 20px">
-  <a  href="{{ route('create-siswa') }}" type="button" class="btn btn-info"> TAMBAH </a>
+  <a  href="{{route('create-alquran')}}" type="button" class="btn btn-info"> TAMBAH </a>
 </div>
 
 <div class="table-responsive">
 <table class="table table-bordered data-table display nowrap" style="width:100%">
     <thead>
         <tr>
-            <th>Nama Siswa</th>
-            <th>Jenis Hafalan</th>
-            <th>Kelas</th>
-            <th>Orang Tua</th>
+            <th>Juz</th>
+            <th>Nama Surah</th>
+            <th>Total Ayat</th>
             <th width="100px">Action</th>
         </tr>
     </thead>
@@ -63,31 +62,23 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <p class="modal-title">Detail Siswa</p>
+      <p class="modal-title">Detail Alquran</p>
     </div>
     <div class="modal-body">
 
     <div class="form-group">
-      <label>Nama Siswa</label>
-      <input type="text" class="form-control" value="" name="siswa_name" id="siswa_name">
-    </div> 
-
-    <div class="form-group">
-      <label>Jenis Hafalan</label>
-      <select class="form-control" name="memorization_type" id="memorization_type">
-        <option value="{{ Siswa::TYPE_IQRO }}" >Iqro</option>
-        <option value="{{ Siswa::TYPE_QURAN }}" >Alquran</option>
-      </select>
+      <label>Juz</label>
+      <input type="text" class="form-control" value="" name="juz" id="juz">
     </div>
 
     <div class="form-group">
-      <label>Kelas </label>
-      <?= $class_option ?>
+      <label>Nama Surat</label>
+      <input type="text" class="form-control" value="" name="surah_name" id="surah_name">
     </div>
 
     <div class="form-group">
-      <label>Orang Tua </label>
-      <?= $ortu_option ?>
+      <label>Total Ayat</label>
+      <input type="text" class="form-control" value="" name="total_ayat" id="total_ayat">
     </div>
 
     </div>
@@ -105,7 +96,7 @@
 
 <script type="text/javascript">
 
-var idsiswa;
+var idsurah;
 var table;
 
 $(function () {
@@ -116,22 +107,21 @@ $(function () {
           selector: 'td:nth-child(2)'
       },
       responsive: true,
-      ajax: "{{ route('siswa') }}",
+      ajax: "{{ route('alquran') }}",
       columns: [
-          {data: 'siswa_name', name: 'siswa_name'},
-          {data: 'memorization_type', name: 'memorization_type'},
-          {data: 'class_id', name: 'class_id'},
-          {data: 'parent_id', name: 'parent_id'},
+          {data: 'juz', name: 'juz'},
+          {data: 'surah_name', name: 'surah_name'},
+          {data: 'total_ayat', name: 'total_ayat'},
           {data: 'action', name: 'action', orderable: false, searchable: false},
       ]
   });
 });
 
-function hapus(idsiswa)
+function hapus(idsurah)
 {
   swal({
       title: "Menghapus",
-      text: 'Siswa yang dihapus, akan menghilangkan data siswa yang bersangkutan secara keseluruhan', 
+      text: 'Apakah anda yakin ingin menghapus ini ?', 
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -140,9 +130,9 @@ function hapus(idsiswa)
     if (willDelete) {
       $.ajax({
         type:'POST',
-        url: base_url + '/siswa/delete',
+        url: base_url + '/alquran/delete',
         data:{
-          idsiswa:idsiswa, 
+          idsurah:idsurah, 
           "_token": "{{ csrf_token() }}",},
         success:function(data) {
           
@@ -154,7 +144,6 @@ function hapus(idsiswa)
           {
             swal(data.message, { button:false, icon: "error", timer: 1000});
           }
-
           table.ajax.reload();
         },
         error: function(error) {
@@ -167,100 +156,45 @@ function hapus(idsiswa)
 
 function btnDel(id)
 {
-  idsiswa = id;
-  hapus(idsiswa);
+  idsurah = id;
+  hapus(idsurah);
 }
 
-function callSelect2()
+function btnUbah(id)
 {
-  $('#class_id').select2({
-    allowClear: true,
-    ajax: {
-      url: base_url + '/siswa/get-class',
-      dataType: 'json',
-      data: function(params) {
-          return {
-            search: params.term
-          }
-      },
-      processResults: function (data, page) {
-          return {
-              results: data
-          };
-      }
-    }
-  })
-
-  $('#hapus_action').click(function() {
-    hapus(idsiswa);
-    $("#detailModal .close").click()
-  })
-
-  $('#parent_id').select2({
-    allowClear: true,
-    ajax: {
-      url: base_url + '/siswa/get-user-parent',
-      dataType: 'json',
-      data: function(params) {
-          return {
-            search: params.term
-          }
-      },
-      processResults: function (data, page) {
-          return {
-              results: data
-          };
-      }
-    }
-  })
-}
-
-
-function clearAll()
-{
-  $('#siswa_name').val('');
-  $("#class_id").val([]).trigger("change");
-  $("#parent_id").val([]).trigger("change");
-  $('#memorization_type').val('');
-  $('#note').val('');
-}
-
-function btnUbah(id){
-  clearAll();
-
-  callSelect2();
-  
-  idsiswa = id;
+  idsurah = id;
   $.ajax({
      type:'POST',
-     url: base_url + '/siswa/get-detail',
-     data:{idsiswa:idsiswa, "_token": "{{ csrf_token() }}",},
+     url: base_url + '/alquran/get-detail',
+     data:{idsurah:idsurah, "_token": "{{ csrf_token() }}",},
      success:function(data) {
         $('#detailModal').modal('toggle');
-        $('#siswa_name').val(data.data.siswa_name);
-        $('#parent_id').val(data.data.parent.id).trigger('change');
-        $('#class_id').val(data.data.class.id).trigger('change');
-        $('#memorization_type').val(data.data.memorization_type);
+        $('#surah_name').val(data.data.surah_name);
+        $('#juz').val(data.data.juz);
+        $('#total_ayat').val(data.data.total_ayat);
      }
   });
 
+  $('#hapus_action').click(function() {
+    hapus(idsurah);
+    $("#detailModal .close").click()
+  })
+
   $('#update_data').click(function() {
 
-    var siswa_name = $('#siswa_name').val();
-    var memorization_type = $('#memorization_type').val();
-    var class_id = $('#class_id').val();
-    var parent_id = $('#parent_id').val();
-
+    var surah_name = $('#surah_name').val();
+    var juz = $('#juz').val();
+    var total_ayat = $('#total_ayat').val();
+    
     $.ajax({
       type:'POST',
-      url: base_url + '/siswa/update',
+      url: base_url + '/alquran/update',
       data:{
-            idsiswa:idsiswa, 
+            idsurah:idsurah, 
             "_token": "{{ csrf_token() }}",
-            siswa_name : siswa_name,
-            memorization_type : memorization_type,
-            class_id : class_id,
-            parent_id : parent_id
+            surah_name : surah_name,
+            juz : juz,
+            total_ayat : total_ayat
       },
      success:function(data) {
         if(data.status != false)
@@ -279,7 +213,7 @@ function btnUbah(id){
       }
     });
   })
-  
+
 }
 
 </script>

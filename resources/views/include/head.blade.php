@@ -26,6 +26,8 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><a href="<?= URL::to('/role'); ?>">Manejemen Role</a></li> 
+                        <li><a href="<?= URL::to('/alquran'); ?>">Al-Quran </a></li> 
+                        <li><a href="<?= URL::to('/iqro'); ?>">IQRO </a></li> 
                       </ul>
                 </li>
 
@@ -37,10 +39,7 @@
                       </p>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="#">Pengguna</a></li>
-                        <li><a href="#">Orang Tua</a></li>
-                        <li><a href="#">Kelas</a></li>
-                        <li><a href="#">Siswa</a></li> 
+                        <li><a href="#"></a></li>
                       </ul>
                 </li>
 

@@ -10,14 +10,6 @@ class Surah extends Model
     protected $table = 'tbl_surah';
     protected $guard_name = 'web';
     
-     /**
-     * modelFilter Function
-     */
-    public function modelFilter()
-    {
-        return $this->provideFilter(App\ModelFilters\SurahFilter\SurahFilter::class);
-    }
-
     /**
      * The attributes that are mass assignable.
      *

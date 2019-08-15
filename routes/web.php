@@ -62,3 +62,19 @@ Route::get('/role/edit/{id}', ['as'=>'update-role', 'uses' => 'RoleController@ed
 Route::post('/role/update/{id}', ['as'=>'do-update-role', 'uses' => 'RoleController@update']);
 Route::post('/role/store', ['as'=>'store-role', 'uses' => 'RoleController@store']);
 Route::post('/role/delete', ['as'=>'delete-role', 'uses' => 'RoleController@delete']);
+
+// Untuk Iqro
+Route::get('/iqro', ['as'=>'iqro', 'uses' => 'IqroController@index']);
+Route::get('/iqro/create', ['as'=>'create-iqro', 'uses' => 'IqroController@create']);
+Route::post('/iqro/store', ['as'=>'store-iqro', 'uses' => 'IqroController@store']);
+Route::post('/iqro/delete', ['as'=>'delete-iqro', 'uses' => 'IqroController@delete']);
+Route::post('/iqro/get-detail', ['as'=>'detail-iqro', 'uses' => 'IqroController@show']);
+Route::post('/iqro/update', ['as'=>'update-iqro', 'uses' => 'IqroController@update']);
+
+// Untuk Alquran (Surah)
+Route::get('/alquran', ['as'=>'alquran', 'uses' => 'AlquranController@index']);
+Route::get('/alquran/create', ['as'=>'create-alquran', 'uses' => 'AlquranController@create']);
+Route::post('/alquran/store', ['as'=>'store-alquran', 'uses' => 'AlquranController@store']);
+Route::post('/alquran/delete', ['as'=>'delete-alquran', 'uses' => 'AlquranController@delete']);
+Route::post('/alquran/get-detail', ['as'=>'detail-surah', 'uses' => 'AlquranController@show']);
+Route::post('/alquran/update', ['as'=>'update-surah', 'uses' => 'AlquranController@update']);

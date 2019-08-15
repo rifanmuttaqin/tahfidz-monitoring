@@ -38,6 +38,7 @@
   <a  href="{{ route('create-parent') }}" type="button" class="btn btn-info"> TAMBAH </a>
 </div>
 
+<div class="table-responsive">
 <table class="table table-bordered data-table display nowrap" style="width:100%">
     <thead>
         <tr>
@@ -49,6 +50,7 @@
     <tbody>
     </tbody>
 </table>
+</div>
 
 @endsection
 
