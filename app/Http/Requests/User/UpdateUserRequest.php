@@ -28,6 +28,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'username'      => 'required|min:2|unique:tbl_user,username,'.$request->get('iduser'),
             'email'         => 'required|email|unique:tbl_user,email,'. $request->get('iduser'),
+            'profile_picture' => 'string|nullable',
             'full_name'     => 'string|nullable',
             'address'       => 'string|nullable',
         ];

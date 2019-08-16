@@ -31,7 +31,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username','address', 'full_name','account_type','password','status'
+        'username','address', 'full_name','account_type','password','status','profile_picture'
     ];
 
 
@@ -47,6 +47,7 @@ class User extends Authenticatable
 
     public static $rules = [
         'username' => 'required | unique',
+        'profile_picture' => 'string',
         'address' => 'string',
         'full_name' => 'required | string',
         'account_type' => 'required | integer',

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('master_profile')
  
 @section('title', '')
 
@@ -32,9 +32,10 @@
 
 @endsection
  
+
 @section('content')
 
-<form method="post" action="{{ route('update-profile') }}">
+<form method="post" action="{{ route('update-profile') }}" enctype="multipart/form-data">
 
     @csrf
     <div class="form-group">
@@ -67,8 +68,38 @@
       <button type="submit" class="btn btn-info"> UPDATE </button>
       <button type="button" id="change_pass" class="btn btn-info pull-right"> UBAH PASSWORD </button>
     </div>
+@endsection
 
-  </form>
+@section('profile_picture')
+
+<div style="text-align: center">
+    <img src="<?= $data_user->profile_picture != null ? URL::to('/').'/storage/profile_picture/'.$data_user->profile_picture : URL::to('/').'/layout/assets/img/default-avatar.png';?>" style="width:200px;height:200px;" class="img-thumbnail center-cropped" id="profile_pic"> 
+</div>
+<div style="text-align: center; padding-top: 10px">
+  @if ($data_user->profile_picture != null)
+
+  <button type="button" class="btn btn-info" id="delete_image">
+      <span class="glyphicon glyphicon-trash"></span>
+  </button>
+
+  @else
+
+  <input type="file" name="file" id="file" class="inputfile" accept="image/x-png,image/gif,image/jpeg"/>
+  <label for="file"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Pilih Gambar</label>
+
+  <p> Gambar Max. 2 MB </p>
+  
+  @endif
+  
+
+</div>
+
+
+@if ($errors->has('file'))
+    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('file') }}</p></div>
+@endif
+
+</form>
 
 @endsection
 
@@ -115,39 +146,92 @@
 var idiqro;
 var table;
 
+
 $( document ).ready(function() {
+
+  $("#file").change(function() {
+    
+    var size = this.files[0].size;
   
+    if(size >= 2000587)
+    {
+      swal('Ukuran file maksimal 2 MB', { button:false, icon: "error", timer: 1000});
+      return false;
+    }
+
+    readURL(this);
+
+  });
+
+  $('#delete_image').click(function() { 
+    // Delete imagee With ajax
+
+    swal({
+      title: "Ingin menghapus foto profile ?",
+      text: "",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          type:'POST',
+          url: base_url + '/profile/delete-image',
+          data:
+          {
+            "_token": "{{ csrf_token() }}",
+          },
+          success:function(data) {
+            if(data.status != false)
+            {
+              swal(data.message, { button:false, icon: "success", timer: 1000});
+            }
+            else
+            {
+              swal(data.message, { button:false, icon: "error", timer: 1000});
+            }
+            location.reload();
+          },
+          error: function(error) {
+            swal('Error pada sistem', { button:false, icon: "error", timer: 1000});
+          }
+        }); 
+      }
+    });
+  })
+
   $('#change_pass').click(function() { 
     $('#passwordModal').modal('toggle');
   })
 
   $('#update_password').click(function() { 
 
-  var old_password = $('#old_password').val();
-  var password = $('#password').val();
-  var password_confirmation = $('#password_confirmation').val();
+    var old_password = $('#old_password').val();
+    var password = $('#password').val();
+    var password_confirmation = $('#password_confirmation').val();
 
-   $.ajax({
-      type:'POST',
-      url: base_url + '/profile/update-password',
-      data:
-      {
-        "_token": "{{ csrf_token() }}",
-        password : password,
-        password_confirmation : password_confirmation,
-        old_password : old_password
-      },
-      success:function(data) {
-        if(data.status != false)
+    $.ajax({
+        type:'POST',
+        url: base_url + '/profile/update-password',
+        data:
         {
-          swal(data.message, { button:false, icon: "success", timer: 1000});
-          $("#passwordModal .close").click()
-        }
-        else
-        {
-          swal(data.message, { button:false, icon: "error", timer: 1000});
-        }
-      },
+          "_token": "{{ csrf_token() }}",
+          password : password,
+          password_confirmation : password_confirmation,
+          old_password : old_password
+        },
+        success:function(data) {
+          if(data.status != false)
+          {
+            swal(data.message, { button:false, icon: "success", timer: 1000});
+            $("#passwordModal .close").click()
+          }
+          else
+          {
+            swal(data.message, { button:false, icon: "error", timer: 1000});
+          }
+        },
         error: function(error) {
           var err = eval("(" + error.responseText + ")");
           var array_1 = $.map(err, function(value, index) {
@@ -161,9 +245,19 @@ $( document ).ready(function() {
         }
     });
   })
-
 });
 
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#profile_pic').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 </script>
 

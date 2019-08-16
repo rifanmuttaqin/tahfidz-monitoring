@@ -26,9 +26,11 @@ class ProfileRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'email'         => 'required|email|unique:tbl_user,email,'. $request->get('iduser'),
-            'full_name'     => 'string|min:2|nullable',
-            'address'       => 'string|nullable',
+            'email'           => 'required|email|unique:tbl_user,email,'. $request->get('iduser'),
+            'full_name'       => 'string|min:2|nullable',
+            'address'         => 'string|nullable',
+            'file'            => 'nullable|max:2000',
+            'profile_picture' => 'string|nullable',
         ];
     }
 
@@ -43,6 +45,8 @@ class ProfileRequest extends FormRequest
             'email.required' => 'Username tidak boleh dikosongkan',
             'email.email' => 'Format email tidak disetujui',
             'email.unique' => 'Email telah digunakan sebelumnya',
+
+            'file.max' => 'Maksimum file 100 KB',
 
             'full_name.string' => 'Gunakan huruf untuk nama lengkap anda',
             'full_name.min' => 'Gunakan setidaknya 2 karakter',

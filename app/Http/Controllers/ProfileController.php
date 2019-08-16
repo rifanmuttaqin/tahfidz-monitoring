@@ -15,12 +15,16 @@ use App\Model\User\User;
 use App\Http\Resources\User\UserResource;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 use Auth;
 
 use App\Http\Requests\User\StoreUserRequest;
 
 use DB;
+use URL;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -58,7 +62,23 @@ class ProfileController extends Controller
 		$user->address = $request->get('address');
 		$user->full_name = $request->get('full_name');
 		$user->account_type = $user->account_type;
-		            
+
+        if($request->hasFile('file'))
+        {
+            $image      = $request->file('file');
+            $fileName   = time() . '.' . $image->getClientOriginalExtension();
+
+            $img = Image::make($image->getRealPath());
+            $img->resize(300, 300, function ($constraint) {
+                $constraint->aspectRatio();                 
+            });
+
+            $img->stream();
+            Storage::disk('local')->put('public/profile_picture/'.$fileName, $img, 'public');
+
+            $user->profile_picture = $fileName;
+        }
+    		            
 		if(!$user->save())
 		{
 		    DB::rollBack();
@@ -95,6 +115,32 @@ class ProfileController extends Controller
 
             DB::rollBack();
             return $this->getResponse(false,400,null,'Password lama yang anda masukkan tidak sesuai');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function deleteImage(Request $request)
+    {
+        if ($request->ajax()) {
+
+            DB::beginTransaction();
+
+            $user_data = User::findOrFail(Auth::user()->id);
+            $picture_backup = $user_data->profile_picture;
+
+            $user_data->profile_picture = null;
+
+            if($user_data->save())
+            {
+                Storage::disk('local')->delete('public/profile_picture/'.$picture_backup);
+                DB::commit();
+                return $this->getResponse(true,200,'','Gambar berhasil dihapus'); 
+            }
+
+            DB::rollBack();
+            return $this->getResponse(false,400,'','Gambar gagal berhasil dihapus');
         }
     }
 

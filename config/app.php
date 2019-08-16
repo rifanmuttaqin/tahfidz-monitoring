@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -231,6 +232,7 @@ return [
         'User' => App\Model\User\User::class,
         'Siswa' => App\Model\Siswa\Siswa::class,
         'Role' => App\Model\Helper\Role::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

@@ -83,3 +83,4 @@ Route::post('/alquran/update', ['as'=>'update-surah', 'uses' => 'AlquranControll
 Route::get('/profile', ['as'=>'profile', 'uses' => 'ProfileController@index']);
 Route::post('/profile/update', ['as'=>'update-profile', 'uses' => 'ProfileController@update']);
 Route::post('/profile/update-password', ['as'=>'update-password-profile', 'uses' => 'ProfileController@updatePassword']);
+Route::post('/profile/delete-image', ['as'=>'delete-image', 'uses' => 'ProfileController@deleteImage']);
