@@ -222,8 +222,36 @@ function btnPass(id){
       swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
     }
   });
+}
 
-  $('#update_data_password').click(function() {
+function btnUbah(id){
+
+  $('#detailModal').modal('toggle');
+  
+  iduser = id;
+
+  $.ajax({
+     type:'POST',
+     url: base_url + '/user/get-detail',
+     data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
+     success:function(data) {
+        $('#username').val(data.data.username);
+        $('#email').val(data.data.email);
+        $('#nama_lengkap').val(data.data.full_name);
+        $('#alamat').val(data.data.address);
+        $('#tipe_akun').val(data.data.account_type);
+     }
+  });
+}
+
+$( document ).ready(function() {
+
+$('#non_aktif_button').click(function() { 
+      btnDel(iduser)
+      $("#detailModal .close").click()
+})
+
+$('#update_data_password').click(function() {
 
     var password = $('#password').val();
     var password_confirmation = $('#password_confirmation').val();
@@ -262,76 +290,52 @@ function btnPass(id){
           swal(message, { button:false, icon: "error", timer: 1000});
         }
     });
-  })
-}
+})
 
-function btnUbah(id){
+$('#update_data').click(function() { 
 
-  $('#detailModal').modal('toggle');
-  
-  iduser = id;
+    var username = $('#username').val();
+    var email = $('#email').val();
+    var full_name = $('#nama_lengkap').val();
+    var address = $('#alamat').val();
+    var account_type = $('#tipe_akun').val();
 
-  $.ajax({
-     type:'POST',
-     url: base_url + '/user/get-detail',
-     data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
-     success:function(data) {
-        $('#username').val(data.data.username);
-        $('#email').val(data.data.email);
-        $('#nama_lengkap').val(data.data.full_name);
-        $('#alamat').val(data.data.address);
-        $('#tipe_akun').val(data.data.account_type);
-     }
-  });
-
-  $('#non_aktif_button').click(function() { 
-      btnDel(iduser)
-      $("#detailModal .close").click()
-  })
-
-  $('#update_data').click(function() { 
-
-      var username = $('#username').val();
-      var email = $('#email').val();
-      var full_name = $('#nama_lengkap').val();
-      var address = $('#alamat').val();
-      var account_type = $('#tipe_akun').val();
-
-      $.ajax({
-        type:'POST',
-        url: base_url + '/user/update',
-        data:{
-          iduser:iduser, 
-          "_token": "{{ csrf_token() }}",
-          username : username,
-          email : email,
-          full_name : full_name,
-          address : address,
-          account_type : account_type
-        },
-        success:function(data) {
-          if(data.status != false)
-          {
-            table.ajax.reload();
-            clearAll();
-            swal(data.message, { button:false, icon: "success", timer: 1000});
-            $("#detailModal .close").click()
-          }
-        },
-        error: function(error) {
-          var err = eval("(" + error.responseText + ")");
-          var array_1 = $.map(err, function(value, index) {
-              return [value];
-          });
-          var array_2 = $.map(array_1, function(value, index) {
-              return [value];
-          });
-          var message = JSON.stringify(array_2);
-          swal(message, { button:false, icon: "error", timer: 1000});
+    $.ajax({
+      type:'POST',
+      url: base_url + '/user/update',
+      data:{
+        iduser:iduser, 
+        "_token": "{{ csrf_token() }}",
+        username : username,
+        email : email,
+        full_name : full_name,
+        address : address,
+        account_type : account_type
+      },
+      success:function(data) {
+        if(data.status != false)
+        {
+          table.ajax.reload();
+          swal(data.message, { button:false, icon: "success", timer: 1000});
+          $("#detailModal .close").click();
+          clearAll();
         }
-      });
-  })
-}
+      },
+      error: function(error) {
+        var err = eval("(" + error.responseText + ")");
+        var array_1 = $.map(err, function(value, index) {
+            return [value];
+        });
+        var array_2 = $.map(array_1, function(value, index) {
+            return [value];
+        });
+        var message = JSON.stringify(array_2);
+        swal(message, { button:false, icon: "error", timer: 1000});
+      }
+    });
+})    
+
+});
 
 </script>
 
