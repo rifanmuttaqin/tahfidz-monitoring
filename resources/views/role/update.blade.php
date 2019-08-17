@@ -4,7 +4,7 @@
 
 @section('content')
 
-	<form method="post" action="{{ route('store-role') }}">
+	<form method="post" action="{{ route('do-update-role', ['role_id'=>$id])}}">
 
 		@csrf
 
@@ -26,14 +26,15 @@
 			<hr>			
 				@foreach ($data_permission as $permission)
 				    <div class="checkbox-inline">
-					    <input id='{{ $permission->id }}' name="permission[]" type="checkbox" value="{{ $permission->id }}">
+					    <input id='{{ $permission->id }}' name="permission[]" type="checkbox" value="{{ $permission->id }}" <?= in_array($permission->id, $data_role_permission) ? 'checked' : '' ?> >
 					    <label for="permission_{{ $permission->id }}"> {{ $permission->name }} </label>
 					</div>
+					<br>
 				@endforeach
 		</fieldset>
 		
 		<div class="form-group" style="padding-top: 20px">
-			<button type="submit" class="btn btn-info"> TAMBAH </button>
+			<button type="submit" class="btn btn-info"> Update </button>
 		</div>
 	</form>
 	

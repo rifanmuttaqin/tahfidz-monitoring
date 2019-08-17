@@ -133,13 +133,13 @@ class User extends Authenticatable
     {
         switch ($acount) {
             case static::ACCOUNT_TYPE_CREATOR:
-               return 'Developer';
+               return 'Creator';
             case static::ACCOUNT_TYPE_PARENT:
                return 'Orangtua';
             case static::ACCOUNT_TYPE_TEACHER:
                return 'Guru';
             case static::ACCOUNT_TYPE_USER:
-               return 'User Umum';
+               return 'User';
             default:
                 return '';
         }

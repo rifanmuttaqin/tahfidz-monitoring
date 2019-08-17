@@ -17,6 +17,8 @@ use App\Http\Resources\User\UserCollection;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Model\RoleHasPermission\RoleHasPermission;
+
 use DB;
 
 class UserController extends Controller
@@ -83,6 +85,8 @@ class UserController extends Controller
         $user->account_type = $request->get('account_type');
         $user->status = User::USER_STATUS_ACTIVE;
 
+        $user->assignRole(User::getAccountMeaning($user->account_type));
+        
         if(!$user->save())
         {
             DB::rollBack();
@@ -151,16 +155,21 @@ class UserController extends Controller
             $user->email = $request->get('email');
             $user->address = $request->get('address');
             $user->full_name = $request->get('full_name');
-            $user->account_type = $request->get('account_type');
-                        
+            $old_account_type = $user->account_type;
+            $user->account_type = $request->get('account_type');           
+                                    
             if(!$user->save())
             {
                 DB::rollBack();
                 return $this->getResponse(true,400,null,'User gagal diupdate');
             }
-
-            DB::commit();
-            return $this->getResponse(true,200,'','User berhasil diupdate');
+            
+            if($user->removeRole(User::getAccountMeaning($old_account_type)))
+            {
+                $user->assignRole(User::getAccountMeaning($user->account_type));
+                DB::commit();
+                return $this->getResponse(true,200,'','User berhasil diupdate');
+            }
         }
     }
 

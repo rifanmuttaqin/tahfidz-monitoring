@@ -12,6 +12,8 @@ use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Model\Helper\Role;
 use App\Model\Helper\Permission;
 
+use App\Model\RoleHasPermission\RoleHasPermission;
+
 use DB;
 
 class RoleController extends Controller
@@ -41,7 +43,7 @@ class RoleController extends Controller
                     ->addColumn('action', function($row){  
                         $btn = '<button onclick="btnUbah('.$row->id.')" name="btnUbah" type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>';
                         $delete = '<button onclick="btnDel('.$row->id.')" name="btnDel" type="button" class="btn btn-info"><span class="glyphicon glyphicon-trash"></span></button>';
-                        return $btn .'&nbsp'.'&nbsp'. $delete; 
+                        return $btn; 
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -66,16 +68,60 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::findOrFail($id);
+        $data_role_permission = RoleHasPermission::getHasPermission($id);
+        $arr_permission = [];
+
+        foreach ($data_role_permission as $val) 
+        {
+            array_push($arr_permission, $val->permission_id);
+        }
+
         $data_permission = Permission::all();
-        return view('role.update', ['active'=>'role','data'=>$role, 'data_permission'=>$data_permission]);
+        return view('role.update', [
+            'active'=>'role','data'=>$role, 
+            'data_role_permission'=>$arr_permission,
+            'data_permission'=>$data_permission,
+            'id' => $id
+        ]);
     }
 
     /**
      * @return void
      */
-    public function update(UpdateRoleRequest $request)
+    public function update(UpdateRoleRequest $request,$role_id)
     {
+        DB::beginTransaction();
 
+        $role = Role::findOrFail($role_id);
+
+        if($role)
+        {
+
+            if($permissions = $request->get('permission'))
+            {
+                // revoke first before assign new permission to role
+                $permission_role = $role->permissions()->get();
+
+                foreach ($permission_role as $delete_permission) 
+                {
+                    $role->revokePermissionTo($delete_permission->name);
+                }
+                
+                foreach ($permissions as $permission_assign) 
+                {
+                    $data = Permission::findOrFail($permission_assign);
+                    $role->givePermissionTo($data->name);
+                }
+
+                DB::commit();
+                return redirect('role')->with('alert_success', 'Konfigurasi baru pada role berhasil dibuat');
+            }
+        }
+        else
+        {
+            DB::rollBack();
+            return redirect('role')->with('alert_error', 'Gagal Disimpan');
+        }
     }
 
     /**
@@ -115,7 +161,6 @@ class RoleController extends Controller
     {
         if ($request->ajax()) 
         {
-
             DB::beginTransaction();
 
             $role = Role::findOrFail($request->get('idrole'));

@@ -23,13 +23,17 @@
 				    <input id='check_all' name="check_all" type="checkbox">
 				    <label> <strong> Pilih Semua </strong></label>
 			</div>
-			<hr>			
+
+			<hr>
+				<div class="col-md-12">			
 				@foreach ($data_permission as $permission)
 				    <div class="checkbox-inline">
-					    <input id='{{ $permission->id }}' name="permission[]" type="checkbox" value="{{ $permission->id }}">
-					    <label for="permission_{{ $permission->id }}"> {{ $permission->name }} </label>
+					   <input id='{{ $permission->id }}' name="permission[]" type="checkbox" value="{{ $permission->id }}">
+					   <label for="permission_{{ $permission->id }}"> {{ $permission->name }} </label>
 					</div>
+					<br>
 				@endforeach
+				</div>
 		</fieldset>
 		
 		<div class="form-group" style="padding-top: 20px">
