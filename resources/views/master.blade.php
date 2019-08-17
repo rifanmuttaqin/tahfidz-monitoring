@@ -78,24 +78,15 @@
         
         @include('include.head')
 
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        @yield('alert')
-                        <div class="card">
-                            <div class="header">   
-                                @yield('title')
-                            </div>
-                            <div class="content">
-                                {{ Breadcrumbs::render() }}
-                                @yield('content')
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Content Disini -->
+            @if (isset($profile_content))
+                @if ($profile_content != false)
+                    @include('content_profile')
+                @endif
+            @else
+                @include('content_master')
+            @endif
+        <!-- End Content -->
 
         <footer class="footer">
             

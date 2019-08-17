@@ -1,4 +1,4 @@
-@extends('master_profile')
+@extends('master', ['profile_content'=>true])
  
 @section('title', '')
 

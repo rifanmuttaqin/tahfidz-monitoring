@@ -7,6 +7,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use Auth;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -27,6 +29,21 @@ class Controller extends BaseController
     }
 
     /**
+     * Untuk mengontrol permission 
+     */
+    public function getUserPermission($permission_name)
+    {
+        $user = Auth::user();
+
+        if(!$user->hasPermissionTo($permission_name))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @return void
      */
     public function systemLog()
@@ -34,14 +51,7 @@ class Controller extends BaseController
 
     }
 
-    /**
-     * @return void
-     */
-    public function dateConvert()
-    {
-        
-    }
-
+    
     /**
      * @return void
      */
