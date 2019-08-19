@@ -27,7 +27,6 @@ class StoreSiswaRequest extends FormRequest
             'siswa_name'        => 'required|min:2',
             'memorization_type' => 'required|integer',
             'class_id'          => 'required|integer',
-            'parent_id'         => 'required|integer'
         ];
     }
 
@@ -42,12 +41,10 @@ class StoreSiswaRequest extends FormRequest
             'siswa_name.required' => 'Siswa tidak boleh dikosongkan',
             'memorization_type.required' => 'Jenis Hafalan tidak boleh dikosongkan',
             'class_id.required' => 'Kelas tidak boleh dikosongkan',
-            'parent_id.required' => 'Orangtua tidak boleh dikosongkan',
 
             'siswa_name.min' => 'Inputan siswa minimal 2 karakter',
             'memorization_type.integer' => 'Tipe hafalan tidak sesuai',
             'class_id.integer' => 'Kelas tidak sesuai',
-            'parent_id.integer' => 'Orangtua tidak sesuai',
         ];
     }
 }

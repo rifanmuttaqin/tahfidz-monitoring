@@ -163,13 +163,9 @@ class User extends Authenticatable
         }
     }
 
-    public function getClass()
+    public function hasParent()
     {
-        return $this->belongsTo('App\Model\Class\Class');
+        return $this->hasMany('App\Model\SiswaHasParent\SiswaHasParent','parent_id','id');
     }
 
-    public function getSiswa()
-    {
-        return $this->belongsTo('App\Model\Siswa\Siswa');
-    }
 }

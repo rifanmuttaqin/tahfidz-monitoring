@@ -35,15 +35,6 @@
 			@endif
 		</div>
 		<div class="form-group">
-			<label>Orangtua </label>
-			<select class="js-example-basic-single form-control" name="parent_id" id="parent_id" style="width: 100%">
-	          <option></option>
-	        </select>
-			@if ($errors->has('parent_id'))
-			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('parent_id') }}</p></div>
-			@endif
-		</div>
-		<div class="form-group">
 			<button type="submit" class="btn btn-info"> TAMBAH </button>
 		</div>
 
@@ -56,24 +47,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		$('#parent_id').select2({
-			allowClear: true,
-			ajax: {
-			  url: base_url + '/siswa/get-user-parent',
-			  dataType: 'json',
-			  data: function(params) {
-			      return {
-			        search: params.term
-			      }
-			  },
-			  processResults: function (data, page) {
-			      return {
-			          results: data
-			      };
-			  }
-			}
-		});
-
 		$('#class_id').select2({
 			allowClear: true,
 			ajax: {

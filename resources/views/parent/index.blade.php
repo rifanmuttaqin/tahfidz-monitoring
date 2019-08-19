@@ -61,7 +61,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <p class="modal-title">Parent Detail</p>
+        <p class="modal-title">Detail Orangtua</p>
       </div>
       <div class="modal-body">
 
@@ -82,6 +82,11 @@
 
   	<label>Alamat</label>
   	<textarea class="form-control" placeholder="" rows="3" id="alamat"></textarea>
+
+      <div class="form-group">
+      <label>Orangtua Dari</label>
+          <?= $siswa_option ?>
+      </div>
 
       </div>
       <div class="modal-footer">
@@ -264,6 +269,17 @@ function btnUbah(id){
 	   url: base_url + '/user/get-detail',
 	   data:{iduser:iduser, "_token": "{{ csrf_token() }}",},
 	   success:function(data) {
+
+        var arr_has_parent = [];
+
+        $.each(data.data.has_parent, function( index, value ) {
+          arr_has_parent[index] = JSON.stringify(value.siswa_id);
+        });
+
+        $.each($("#siswa_data"), function(){
+            $(this).val(arr_has_parent).trigger('change');
+        });
+
 	      $('#username').val(data.data.username);
 	      $('#email').val(data.data.email);
 	   		$('#nama_lengkap').val(data.data.full_name);
@@ -282,6 +298,7 @@ function btnUbah(id){
       var email = $('#email').val();
       var full_name = $('#nama_lengkap').val();
       var address = $('#alamat').val();
+      var siswa_data = $('#siswa_data').val();
 
       $.ajax({
         type:'POST',
@@ -292,7 +309,8 @@ function btnUbah(id){
           username : username,
           email : email,
           full_name : full_name,
-          address : address
+          address : address,
+          siswa_data : siswa_data
         },
         success:function(data) {
           if(data.status != false)
@@ -317,6 +335,28 @@ function btnUbah(id){
       });
   })
 }
+
+
+$(document).ready(function() {
+      $('#siswa_data').select2({
+        allowClear: true,
+      placeholder: 'Masukkan Nama Siswa',
+      ajax: {
+        url: base_url + '/parent/get-siswa',
+        dataType: 'json',
+        data: function(params) {
+            return {
+              search: params.term
+            }
+        },
+        processResults: function (data, page) {
+            return {
+                results: data
+            };
+        }
+      }
+      });
+  });
 
 </script>
 

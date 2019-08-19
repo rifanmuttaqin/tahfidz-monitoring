@@ -41,6 +41,14 @@
 			@endif
 		</div>
 
+		<div class="form-group">
+			<label>Orangtua Dari</label>
+            <select class="js-example-basic-single form-control" id="siswa_data" name="siswa_data[]" style="width: 100%" multiple="multiple"></select>
+            @if ($errors->has('teacher_id'))
+			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('teacher_id') }}</p></div>
+			@endif
+        </div>
+
 		<div class="form-group col-md-6" style="padding-left: 0px">
 			<label>Password</label>
 			<input type="password" class="form-control" value="" name="password">
@@ -64,3 +72,28 @@
 	</form>
 	
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#siswa_data').select2({
+	    	allowClear: true,
+			placeholder: 'Masukkan Nama Siswa',
+			ajax: {
+				url: base_url + '/parent/get-siswa',
+				dataType: 'json',
+				data: function(params) {
+				    return {
+				      search: params.term
+				    }
+				},
+				processResults: function (data, page) {
+				    return {
+				        results: data
+				    };
+				}
+			}
+	    });
+	});
+</script>
+@endpush

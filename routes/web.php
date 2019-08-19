@@ -35,6 +35,7 @@ Route::get('/parent', ['as'=>'index-parent', 'uses' => 'ParentController@index']
 Route::get('/parent/create', ['as'=>'create-parent', 'uses' => 'ParentController@create']);
 Route::post('/parent/store', ['as'=>'store-parent', 'uses' => 'ParentController@store']);
 Route::post('/parent/update', ['as'=>'parent-user', 'uses' => 'ParentController@update']);
+Route::get('/parent/get-siswa', ['as'=>'get-siswa', 'uses' => 'ParentController@getSiswa']);
 
 // Untuk Class
 Route::get('/student-class', ['as'=>'student-class', 'uses' => 'StudentClassController@index']);

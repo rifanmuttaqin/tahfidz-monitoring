@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if($this->getUserPermission('index home'))
+        if($this->getUserPermission('index user'))
         {
             return view('home.index', ['active'=>'home']);
         }

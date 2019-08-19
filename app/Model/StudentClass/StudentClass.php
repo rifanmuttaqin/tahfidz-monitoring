@@ -10,7 +10,7 @@ class StudentClass extends Model
     // use Filterable;
 
     protected $table = 'tbl_class';
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
     
     /**
      * The attributes that are mass assignable.

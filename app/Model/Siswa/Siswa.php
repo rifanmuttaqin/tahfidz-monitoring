@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class Siswa extends Model
 {
     protected $table = 'tbl_siswa';
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
  
     const TYPE_IQRO = 10;
     const TYPE_QURAN = 20;
@@ -22,14 +22,12 @@ class Siswa extends Model
     protected $fillable = [
         'siswa_name', 
         'class_id', 
-        'parent_id',
         'memorization_type'
     ];
 
     public static $rules = [
         'siswa_name' => 'required',
         'class_id' => 'required | integer',
-        'parent_id' => 'required | integer',
         'memorization_type' => 'required | integer'
     ];
 
@@ -43,23 +41,15 @@ class Siswa extends Model
     /**
      * 
      */
-    public function getParent()
-    {
-        return $this->hasOne('App\Model\User\User','id','parent_id');
-    }
-
-    /**
-     * 
-     */
-    public static function validateSiswa($class_id,$parent_id,$siswa_name,$siswa_id=null)
+    public static function validateSiswa($class_id,$siswa_name,$siswa_id=null)
     {
         if($siswa_id != null)
         {
-            $data = self::where('class_id',$class_id)->where('parent_id',$parent_id)->where('siswa_name',$siswa_name)->whereNotIn('id',[$siswa_id])->first(); 
+            $data = self::where('class_id',$class_id)->where('siswa_name',$siswa_name)->whereNotIn('id',[$siswa_id])->first(); 
         }
         else
         {
-            $data = self::where('class_id',$class_id)->where('parent_id',$parent_id)->where('siswa_name',$siswa_name)->first(); 
+            $data = self::where('class_id',$class_id)->where('siswa_name',$siswa_name)->first(); 
         }
         
         if($data != null)
@@ -76,6 +66,11 @@ class Siswa extends Model
     public function getClass()
     {
         return $this->hasOne('App\Model\StudentClass\StudentClass','id','class_id');
+    }
+
+    public static function getAll($search=null)
+    {
+        return self::where('siswa_name', 'like', '%'.$search.'%')->get();
     }
 
     /**

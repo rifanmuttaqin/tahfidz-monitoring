@@ -8,6 +8,11 @@ use Yajra\Datatables\Datatables;
 
 use App\Model\User\User;
 
+use App\Model\SiswaHasParent\SiswaHasParent;
+
+
+use App\Model\Siswa\Siswa;
+
 use App\Http\Resources\User\UserResource;
 use App\Http\Resources\User\UserCollection;
 
@@ -54,7 +59,15 @@ class ParentController extends Controller
                     ->make(true);
         }
 
-        return view('parent.index', ['active'=>'parent']);
+        $data_siswa = Siswa::getAll();
+        
+        $siswa_option = '<select class="js-example-basic-single form-control" name="siswa_data[]" id="siswa_data" style="width: 100%" multiple="multiple">';
+            foreach ($data_siswa as $siswa) {
+                $siswa_option .= '<option value="'.$siswa->id.'">'.$siswa->siswa_name.'</option>';
+            }
+        $siswa_option .= '</select>';
+
+        return view('parent.index', ['active'=>'parent', 'siswa_option'=>$siswa_option]);
     }
 
     /**
@@ -88,6 +101,39 @@ class ParentController extends Controller
                 return $this->getResponse(true,400,null,'Data gagal diupdate');
             }
 
+            if($siswa_data = $request->get('siswa_data'))
+            {
+                if($old_data_siswa = SiswaHasParent::getByParent($user->id))
+                {
+                    foreach ($old_data_siswa as $old) 
+                    {
+                        if(!$old->delete())
+                        {
+                            DB::rollBack();
+                            return redirect('parent')->with('alert_error', 'Gagal Disimpan 1');
+                        }
+                    }
+                }
+                
+                foreach ($siswa_data as $siswa) {
+                    $siswa_has_parent = new SiswaHasParent();
+                    $siswa_has_parent->parent_id = $user->id;
+                    $siswa_has_parent->siswa_id = $siswa;
+
+                    if(SiswaHasParent::validateSiswaParent($user->id,$siswa))
+                    {
+                        DB::rollBack();
+                        return redirect('parent')->with('alert_error', 'Gagal Disimpan 2');
+                    }
+
+                    if(!$siswa_has_parent->save())
+                    {
+                        DB::rollBack();
+                        return redirect('parent')->with('alert_error', 'Gagal Disimpan 3');
+                    }
+                }
+            }
+
             DB::commit();
             return $this->getResponse(true,200,'','Data berhasil diupdate');
         }
@@ -99,7 +145,7 @@ class ParentController extends Controller
     public function store(StoreUserRequest $request)
     {
         DB::beginTransaction();
-        
+               
         $user = new User();
 
         $user->username = $request->get('username');
@@ -117,8 +163,61 @@ class ParentController extends Controller
             return redirect('parent')->with('alert_error', 'Gagal Disimpan');
         }
 
+        if($siswa_data = $request->get('siswa_data'))
+        {
+            foreach ($siswa_data as $siswa) {
+                $siswa_has_parent = new SiswaHasParent();
+                $siswa_has_parent->parent_id = $user->id;
+                $siswa_has_parent->siswa_id = $siswa;
+
+                if(SiswaHasParent::validateSiswaParent($user->id,$siswa))
+                {
+                    DB::rollBack();
+                    return redirect('parent')->with('alert_error', 'Gagal Disimpan 1');
+                }
+
+                if(!$siswa_has_parent->save())
+                {
+                    DB::rollBack();
+                    return redirect('parent')->with('alert_error', 'Gagal Disimpan 2');
+                }
+            }
+        }
+       
         DB::commit();
         return redirect('parent')->with('alert_success', 'Berhasil Disimpan');
+    }
+
+    /**
+     * @return void
+     */
+    public function getSiswa(Request $request)
+    {
+        if ($request->ajax()) {
+
+            if($request->has('search')){
+                $data_siswa = Siswa::getAll($request->get('search'));
+            }
+            else
+            {
+                $data_siswa = Siswa::getAll();
+            }
+
+            $arr_data  = array();
+            
+            if($data_siswa)
+            {
+                $key = 0;
+
+                foreach ($data_siswa as $data) {
+                    $arr_data[$key]['id'] = $data->id;
+                    $arr_data[$key]['text'] = $data->siswa_name;
+                    $key++;
+                }
+            }
+
+            return json_encode($arr_data);
+        }
     }
 
 }

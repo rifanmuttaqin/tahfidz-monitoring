@@ -45,7 +45,6 @@
             <th>Nama Siswa</th>
             <th>Jenis Hafalan</th>
             <th>Kelas</th>
-            <th>Orang Tua</th>
             <th width="100px">Action</th>
         </tr>
     </thead>
@@ -85,11 +84,6 @@
       <?= $class_option ?>
     </div>
 
-    <div class="form-group">
-      <label>Orang Tua </label>
-      <?= $ortu_option ?>
-    </div>
-
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger pull-right" id="hapus_action">Hapus</button>
@@ -121,7 +115,6 @@ $(function () {
           {data: 'siswa_name', name: 'siswa_name'},
           {data: 'memorization_type', name: 'memorization_type'},
           {data: 'class_id', name: 'class_id'},
-          {data: 'parent_id', name: 'parent_id'},
           {data: 'action', name: 'action', orderable: false, searchable: false},
       ]
   });
@@ -196,23 +189,6 @@ function callSelect2()
     $("#detailModal .close").click()
   })
 
-  $('#parent_id').select2({
-    allowClear: true,
-    ajax: {
-      url: base_url + '/siswa/get-user-parent',
-      dataType: 'json',
-      data: function(params) {
-          return {
-            search: params.term
-          }
-      },
-      processResults: function (data, page) {
-          return {
-              results: data
-          };
-      }
-    }
-  })
 }
 
 
@@ -220,7 +196,6 @@ function clearAll()
 {
   $('#siswa_name').val('');
   $("#class_id").val([]).trigger("change");
-  $("#parent_id").val([]).trigger("change");
   $('#memorization_type').val('');
   $('#note').val('');
 }
@@ -238,7 +213,6 @@ function btnUbah(id){
      success:function(data) {
         $('#detailModal').modal('toggle');
         $('#siswa_name').val(data.data.siswa_name);
-        $('#parent_id').val(data.data.parent.id).trigger('change');
         $('#class_id').val(data.data.class.id).trigger('change');
         $('#memorization_type').val(data.data.memorization_type);
      }
@@ -249,7 +223,6 @@ function btnUbah(id){
     var siswa_name = $('#siswa_name').val();
     var memorization_type = $('#memorization_type').val();
     var class_id = $('#class_id').val();
-    var parent_id = $('#parent_id').val();
 
     $.ajax({
       type:'POST',
@@ -259,8 +232,7 @@ function btnUbah(id){
             "_token": "{{ csrf_token() }}",
             siswa_name : siswa_name,
             memorization_type : memorization_type,
-            class_id : class_id,
-            parent_id : parent_id
+            class_id : class_id
       },
      success:function(data) {
         if(data.status != false)
