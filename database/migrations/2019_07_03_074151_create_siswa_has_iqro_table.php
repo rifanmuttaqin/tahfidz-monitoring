@@ -18,7 +18,6 @@ class CreateSiswaHasIqroTable extends Migration
             $table->unsignedBigInteger('iqro_id')->nullable();
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->integer('page');
-            $table->tinyInteger('status')->default(10);
             $table->date('date');
             $table->text('note')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

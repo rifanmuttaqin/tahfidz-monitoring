@@ -85,3 +85,11 @@ Route::get('/profile', ['as'=>'profile', 'uses' => 'ProfileController@index']);
 Route::post('/profile/update', ['as'=>'update-profile', 'uses' => 'ProfileController@update']);
 Route::post('/profile/update-password', ['as'=>'update-password-profile', 'uses' => 'ProfileController@updatePassword']);
 Route::post('/profile/delete-image', ['as'=>'delete-image', 'uses' => 'ProfileController@deleteImage']);
+
+// Untuk Assessment
+Route::get('/assessment', ['as'=>'assessment', 'uses' => 'AssessmentController@index']);
+Route::get('/assessment/assessment/{type}', ['as'=>'create-assessment', 'uses' => 'AssessmentController@assessment']);
+Route::get('/assessment/get-surah', ['as'=>'get-surah', 'uses' => 'AssessmentController@getSurah']);
+Route::get('/assessment/get-total-ayat', ['as'=>'get-ayat', 'uses' => 'AssessmentController@getAyat']);
+Route::get('/assessment/get-total-page', ['as'=>'get-page', 'uses' => 'AssessmentController@getPage']);
+Route::post('/assessment/do-assessment', ['as'=>'do-assessment', 'uses' => 'AssessmentController@doAssessment']);

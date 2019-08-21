@@ -38,6 +38,12 @@
             <p>Manajemen Siswa</p>
         </a>
     </li>
+    <li class="<?= $active == 'assessment' ? 'active' : '' ?>">
+        <a href="<?= URL::to('/assessment'); ?>">
+            <i class="pe-7s-note2"></i>
+            <p style="color: yellow">Penilaian Siswa</p>
+        </a>
+    </li>
 
 </ul>
 </div>

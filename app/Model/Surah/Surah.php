@@ -34,4 +34,12 @@ class Surah extends Model
      */
     protected $hidden = [];
 
+    /**
+     * 
+     */
+    public static function getSurah($search=null)
+    {
+        return self::where('surah_name', 'like', '%'.$search.'%')->get();
+    }
+
 }

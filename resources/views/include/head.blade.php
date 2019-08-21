@@ -39,7 +39,7 @@
                       </p>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="#"></a></li>
+                        <li><a href="<?= URL::to('/role'); ?>"> Hafalan Harian </a></li> 
                       </ul>
                 </li>
 

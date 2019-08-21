@@ -86,3 +86,13 @@ Breadcrumbs::for('create-alquran', function ($trail) {
 Breadcrumbs::for('profile', function ($trail) {
     $trail->push('Profile Pengguna', route('profile'));
 });
+
+// Assessment
+Breadcrumbs::for('assessment', function ($trail) {
+    $trail->push('Penilaian Santri', route('assessment'));
+});
+
+Breadcrumbs::for('create-assessment', function ($trail) {
+    $trail->parent('assessment');
+    $trail->push('Penilaian Hafalan', route('assessment'));
+});

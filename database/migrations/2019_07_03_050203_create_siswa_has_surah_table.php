@@ -18,7 +18,6 @@ class CreateSiswaHasSurahTable extends Migration
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->unsignedBigInteger('surah_id')->nullable();
             $table->integer('ayat');
-            $table->tinyInteger('status')->default(10);
             $table->date('date');
             $table->text('note')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
