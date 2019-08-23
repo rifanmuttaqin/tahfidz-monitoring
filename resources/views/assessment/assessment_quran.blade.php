@@ -126,8 +126,8 @@
         responsive: true,
         ajax: url,
         columns: [
-            {data: 'surah_id', name: 'surah_id'},
-            {data: 'ayat', name: 'ayat'},
+            {data: 'assessment', name: 'assessment'},
+            {data: 'range', name: 'range'},
             {data: 'date', name: 'date'},
         ]
     });

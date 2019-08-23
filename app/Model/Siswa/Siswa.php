@@ -68,6 +68,16 @@ class Siswa extends Model
         return $this->hasOne('App\Model\StudentClass\StudentClass','id','class_id');
     }
 
+    /**
+     * 
+     */
+    public function getAssessment()
+    {
+        return $this->belongsTo('App\Model\AssementLog\AssementLog');
+    }
+
+    
+
     public static function getAll($search=null)
     {
         return self::where('siswa_name', 'like', '%'.$search.'%')->get();

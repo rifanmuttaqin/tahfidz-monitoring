@@ -96,3 +96,13 @@ Breadcrumbs::for('create-assessment', function ($trail) {
     $trail->parent('assessment');
     $trail->push('Penilaian Hafalan', route('assessment'));
 });
+
+// Daily Report
+Breadcrumbs::for('daily-report', function ($trail) {
+    $trail->push('Laporan harian', route('daily-report'));
+});
+
+// Student Report
+Breadcrumbs::for('student-report', function ($trail) {
+    $trail->push('Laporan Per Siswa/ Siswi', route('student-report'));
+});

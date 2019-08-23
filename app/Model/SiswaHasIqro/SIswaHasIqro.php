@@ -31,6 +31,7 @@ class SiswaHasIqro extends Model
         'page' => 'required | integer',
         'date' => 'date',
         'note' => 'string',
+        'group_page' => 'string | required',
     ];
 
     /**

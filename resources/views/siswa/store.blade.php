@@ -46,7 +46,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
 		$('#class_id').select2({
 			allowClear: true,
 			ajax: {

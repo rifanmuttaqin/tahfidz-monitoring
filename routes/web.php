@@ -93,3 +93,13 @@ Route::get('/assessment/get-surah', ['as'=>'get-surah', 'uses' => 'AssessmentCon
 Route::get('/assessment/get-total-ayat', ['as'=>'get-ayat', 'uses' => 'AssessmentController@getAyat']);
 Route::get('/assessment/get-total-page', ['as'=>'get-page', 'uses' => 'AssessmentController@getPage']);
 Route::post('/assessment/do-assessment', ['as'=>'do-assessment', 'uses' => 'AssessmentController@doAssessment']);
+
+// Untuk Daily Report
+Route::get('/daily-report', ['as'=>'daily-report', 'uses' => 'DailyReportController@index']);
+Route::post('/daily-report/show', ['as'=>'daily-report-show', 'uses' => 'DailyReportController@show']);
+Route::get('/daily-report/print', ['as'=>'daily-report-print', 'uses' => 'DailyReportController@printPdf']);
+
+// Untuk Student Report
+Route::get('/student-report', ['as'=>'student-report', 'uses' => 'StudentReportController@index']);
+Route::post('/student-report/show', ['as'=>'student-report-show', 'uses' => 'StudentReportController@show']);
+Route::get('/student-report/print', ['as'=>'student-report-print', 'uses' => 'StudentReportController@printPdf']);

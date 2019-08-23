@@ -16,6 +16,8 @@ use App\Model\Surah\Surah;
 use App\Model\SiswaHasSurah\SiswaHasSurah;
 use App\Model\SiswaHasIqro\SiswaHasIqro;
 
+use App\Model\AssessmentLog\AssessmentLog;
+
 use App\Http\Resources\Siswa\SiswaResource;
 
 use App\Http\Requests\Assessment\AssessmentRequest;
@@ -73,36 +75,19 @@ class AssessmentController extends Controller
 
         if ($request->ajax()) 
         {
-            if($data_siswa->memorization_type != Siswa::TYPE_IQRO)
-            {
-                $data = SiswaHasSurah::where('siswa_id',$id_siswa)->orderBy('created_at', 'desc')->get();
 
-                return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('surah_id', function(SiswaHasSurah $surah) {
-                        return $surah->getSurah->surah_name;
-                    })
-                    ->addColumn('date', function(SiswaHasSurah $date) {
-                        return date("d M Y", strtotime($date->date));
-                    })
-                    ->rawColumns(['action'])
-                    ->toJson();
-            }
-            else if($data_siswa->memorization_type == Siswa::TYPE_IQRO)
-            {
-                $data = SiswaHasIqro::where('siswa_id',$id_siswa)->orderBy('created_at', 'desc')->get();
+            $data = AssessmentLog::where('siswa_id',$id_siswa)->orderBy('created_at', 'desc')->get();
 
-                return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('iqro_id', function(SiswaHasIqro $iqro) {
-                        return 'Jilid '.$iqro->getIqro->jilid_number;
-                    })
-                    ->addColumn('date', function(SiswaHasIqro $date) {
-                        return date("d M Y", strtotime($date->date));
-                    })
-                    ->rawColumns(['action'])
-                    ->toJson();
-            }
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('assessment', function(AssessmentLog $data) {
+                    return $data->assessment;
+                })
+                ->addColumn('date', function(AssessmentLog $date) {
+                    return date("d M Y", strtotime($date->date));
+                })
+                ->rawColumns(['action'])
+                ->toJson();
         } 
 
     	if($data_siswa->memorization_type != Siswa::TYPE_IQRO)
@@ -144,6 +129,18 @@ class AssessmentController extends Controller
 
         if(Siswa::findOrFail($request->get('id_siswa'))->memorization_type != Siswa::TYPE_IQRO)
         {
+            $assessment_log = new AssessmentLog();
+            $assessment_log->siswa_id = $request->get('id_siswa');
+            $assessment_log->range = $request->get('begin').'-'.$request->get('end');
+            $assessment_log->date = date("Y-m-d H:i:s");
+            $assessment_log->assessment = 'Surat '.Surah::findOrFail($request->get('surah_id'))->surah_name;
+
+            if(!$assessment_log->save())
+            {
+                DB::rollBack();
+                return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
+            }
+
             for ($ayat = $request->get('begin'); $ayat <= $request->get('end'); $ayat++) 
             {
                 $assessment = new SiswaHasSurah();
@@ -152,6 +149,7 @@ class AssessmentController extends Controller
                 $assessment->ayat = $ayat;
                 $assessment->date = date("Y-m-d H:i:s");
                 $assessment->note = $request->get('note');
+                $assessment->group_ayat = $request->get('begin').'-'.$request->get('end');
 
                 if(SiswaHasSurah::AssessmentValidation($assessment->siswa_id,$assessment->surah_id,$assessment->ayat))
                 {
@@ -168,6 +166,18 @@ class AssessmentController extends Controller
         }
         else if(Siswa::findOrFail($request->get('id_siswa'))->memorization_type == Siswa::TYPE_IQRO)
         {
+            $assessment_log = new AssessmentLog();
+            $assessment_log->siswa_id = $request->get('id_siswa');
+            $assessment_log->range = $request->get('begin').'-'.$request->get('end');
+            $assessment_log->date = date("Y-m-d H:i:s");
+            $assessment_log->assessment = 'Iqro Jilid '.Iqro::findOrFail($request->get('iqro_id'))->jilid_number;
+
+            if(!$assessment_log->save())
+            {
+                DB::rollBack();
+                return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
+            }
+
             for ($page = $request->get('begin'); $page <= $request->get('end'); $page++) 
             {
                 $assessment = new SiswaHasIqro();
@@ -176,6 +186,7 @@ class AssessmentController extends Controller
                 $assessment->page = $page;
                 $assessment->date = date("Y-m-d H:i:s");
                 $assessment->note = $request->get('note');
+                $assessment->group_page = $request->get('begin').'-'.$request->get('end');
 
                 if(SiswaHasIqro::AssessmentValidation($assessment->siswa_id,$assessment->iqro_id,$assessment->page))
                 {

@@ -63,6 +63,9 @@ class SiswaHasParent extends Model
         return $this->hasOne('App\Model\User\User','id','parent_id');
     }
 
+    /**
+     * 
+     */
     public function getSiswa()
     {
         return $this->belongsTo('App\Model\Siswa\Siswa');

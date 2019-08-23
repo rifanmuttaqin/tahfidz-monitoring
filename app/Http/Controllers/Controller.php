@@ -24,7 +24,7 @@ class Controller extends BaseController
         }
         else
         {
-            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>null, 'message'=>$message]);  
+            return response()->json(['status'=> $status, 'status_code'=> $status_code, 'data'=>$data, 'message'=>$message]);  
         }
     }
 

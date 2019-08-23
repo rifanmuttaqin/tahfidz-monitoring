@@ -128,8 +128,8 @@ $(function () {
         responsive: true,
         ajax: url,
         columns: [
-            {data: 'iqro_id', name: 'iqro_id'},
-            {data: 'page', name: 'page'},
+            {data: 'assessment', name: 'assessment'},
+            {data: 'range', name: 'range'},
             {data: 'date', name: 'date'},
         ]
     });

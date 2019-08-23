@@ -29,6 +29,7 @@ class SiswaHasSurah extends Model
         'surah_id' => 'required | integer',
         'siswa_id' => 'required | integer',
         'ayat' => 'required | integer',
+        'group_ayat' => 'string | required',
         'date' => 'date',
         'note' => 'string',
     ];

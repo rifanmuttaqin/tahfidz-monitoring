@@ -39,7 +39,9 @@
                       </p>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><a href="<?= URL::to('/role'); ?>"> Hafalan Harian </a></li> 
+                        <li><a href="{{route('daily-report')}}"> Laporan Harian </a></li> 
+                        <li><a href="{{route('student-report')}}"> Laporan Persiswa </a></li>
+                        <li><a href="{{route('daily-report')}}"> Laporan Kekurangan </a></li> 
                       </ul>
                 </li>
 
