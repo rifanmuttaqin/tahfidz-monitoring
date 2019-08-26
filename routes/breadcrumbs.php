@@ -104,5 +104,10 @@ Breadcrumbs::for('daily-report', function ($trail) {
 
 // Student Report
 Breadcrumbs::for('student-report', function ($trail) {
-    $trail->push('Laporan Per Siswa/ Siswi', route('student-report'));
+    $trail->push('Laporan Per Siswa / Siswi', route('student-report'));
+});
+
+// Student Lack Report
+Breadcrumbs::for('student-lack-report', function ($trail) {
+    $trail->push('Laporan Tanggungan Siswa / Siswi', route('student-lack-report'));
 });

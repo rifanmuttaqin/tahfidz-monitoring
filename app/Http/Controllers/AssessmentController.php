@@ -47,6 +47,11 @@ class AssessmentController extends Controller
             
             $data = Siswa::all();
 
+            if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER)
+            {
+                $data = Siswa::where('teacher_id',$this->getUserLogin()->id)->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id');
+            }
+
 			return Datatables::of($data)
 			    ->addIndexColumn()
 			    ->addColumn('action', function($row){  
@@ -62,8 +67,15 @@ class AssessmentController extends Controller
 			    ->rawColumns(['action'])
 			    ->toJson();
         }
-      
-        return view('assessment.index', ['active'=>'assessment']);
+
+        if($this->getUserPermission('index assessment'))
+        {
+            return view('assessment.index', ['active'=>'assessment']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'assessment']);
+        }
     }
 
     /**
@@ -88,31 +100,38 @@ class AssessmentController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->toJson();
-        } 
+        }
 
-    	if($data_siswa->memorization_type != Siswa::TYPE_IQRO)
-    	{           
-    		return view('assessment.assessment_quran',[
-                'active'=>'assessment',
-                'data_siswa'=>$data_siswa
-            ]);
-    	}
-    	else if($data_siswa->memorization_type == Siswa::TYPE_IQRO)
-    	{
-            $data_iqro  = Iqro::all();
-            $iqro_arr   = [];
-
-            foreach ($data_iqro as $iqro) 
-            {
-                $iqro_arr[$iqro->id] = $iqro->jilid_number;
+        if($this->getUserPermission('create assessment'))
+        {
+            if($data_siswa->memorization_type != Siswa::TYPE_IQRO)
+            {           
+                return view('assessment.assessment_quran',[
+                    'active'=>'assessment',
+                    'data_siswa'=>$data_siswa
+                ]);
             }
+            else if($data_siswa->memorization_type == Siswa::TYPE_IQRO)
+            {
+                $data_iqro  = Iqro::all();
+                $iqro_arr   = [];
 
-    		return view('assessment.assessment_iqro', [
-                'active'=>'assessment',
-                'data_siswa'=>$data_siswa,
-                'iqro_arr' => $iqro_arr
-            ]);
-    	}
+                foreach ($data_iqro as $iqro) 
+                {
+                    $iqro_arr[$iqro->id] = $iqro->jilid_number;
+                }
+
+                return view('assessment.assessment_iqro', [
+                    'active'=>'assessment',
+                    'data_siswa'=>$data_siswa,
+                    'iqro_arr' => $iqro_arr
+                ]);
+            }
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'assessment']);
+        } 
     }
 
     /**
@@ -202,8 +221,16 @@ class AssessmentController extends Controller
             }
         }
 
-        DB::commit();
-        return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('create assessment'))
+        {
+            DB::commit();
+            return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
+        }
     }
 
     /**
@@ -260,5 +287,4 @@ class AssessmentController extends Controller
             return json_encode($arr_data);
         }
     }
-
 }

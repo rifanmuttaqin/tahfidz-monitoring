@@ -13,6 +13,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function getUserLogin()
+    {
+        $user = Auth::user();
+        return $user;
+    }
+
     /**
      * @return void
      */

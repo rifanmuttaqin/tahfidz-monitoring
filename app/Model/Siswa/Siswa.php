@@ -2,6 +2,10 @@
 
 namespace App\Model\Siswa;
 
+use Auth;
+
+use App\Model\User\User;
+
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -80,6 +84,13 @@ class Siswa extends Model
 
     public static function getAll($search=null)
     {
+        $user = Auth::user();
+
+        if($user->account_type == User::ACCOUNT_TYPE_TEACHER)
+        {
+            return self::where('siswa_name', 'like', '%'.$search.'%')->where('teacher_id',$user->id)->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id')->get();
+        }
+
         return self::where('siswa_name', 'like', '%'.$search.'%')->get();
     }
 

@@ -1,3 +1,9 @@
+<?php
+  use App\Model\User\User;
+  // get user auth
+  $user = Auth::user();
+?>
+
 <nav class="navbar navbar-default navbar-fixed">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -17,6 +23,7 @@
                        <p>Profile</p>
                     </a>
                 </li>
+                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <p>
@@ -25,11 +32,20 @@
         							</p>
                       </a>
                       <ul class="dropdown-menu">
+
+                        @if($user->account_type == User::ACCOUNT_TYPE_CREATOR)
+
                         <li><a href="<?= URL::to('/role'); ?>"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>&nbsp Role</a></li> 
+
+                        @endif
+
                         <li><a href="<?= URL::to('/alquran'); ?>"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp Qur'an </a></li> 
                         <li><a href="<?= URL::to('/iqro'); ?>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp Iqro </a></li> 
                       </ul>
                 </li>
+                @endif
+
+                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER || $user->account_type == User::ACCOUNT_TYPE_TEACHER)
 
                  <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -41,9 +57,11 @@
                       <ul class="dropdown-menu">
                         <li><a href="{{route('daily-report')}}"> Laporan Harian </a></li> 
                         <li><a href="{{route('student-report')}}"> Laporan Persiswa </a></li>
-                        <li><a href="{{route('daily-report')}}"> Laporan Kekurangan </a></li> 
+                        <li><a href="{{route('student-lack-report')}}"> Laporan Kekurangan </a></li> 
                       </ul>
                 </li>
+
+                @endif
 
                 <li>
                     <a href="<?= URL::to('/'); ?>/auth/logout">

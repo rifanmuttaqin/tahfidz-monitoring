@@ -2,6 +2,9 @@
 
 namespace App\Model\StudentClass;
 
+use Auth;
+
+use App\Model\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -61,6 +64,13 @@ class StudentClass extends Model
      */
     public static function getClass($search=null)
     {
+        $user = Auth::user();
+
+        if($user->account_type == User::ACCOUNT_TYPE_TEACHER)
+        {
+            return self::where('class_name', 'like', '%'.$search.'%')->where('teacher_id',$user->id)->get();
+        }
+
         return self::where('class_name', 'like', '%'.$search.'%')->get();
     }
 

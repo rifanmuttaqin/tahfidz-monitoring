@@ -51,7 +51,14 @@ class AlquranController extends Controller
                     ->make(true);
         }
 
-        return view('alquran.index', ['active'=>'alquran']);
+        if($this->getUserPermission('index surah'))
+        {
+            return view('alquran.index', ['active'=>'alquran']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'alquran']);
+        }
     }
 
     /**
@@ -59,7 +66,14 @@ class AlquranController extends Controller
      */
     public function create()
     {
-        return view('alquran.store', ['active'=>'alquran']);
+        if($this->getUserPermission('create surah'))
+        {
+            return view('alquran.store', ['active'=>'alquran']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'alquran']);
+        }
     }
 
     /**
@@ -81,8 +95,16 @@ class AlquranController extends Controller
             return redirect('alquran')->with('alert_error', 'Gagal Disimpan');
         }
 
-        DB::commit();
-        return redirect('alquran')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('create surah'))
+        {
+             DB::commit();
+            return redirect('alquran')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return redirect('alquran')->with('alert_error', 'Gagal Disimpan');
+        }
     }
 
     /**
@@ -104,8 +126,16 @@ class AlquranController extends Controller
             return $this->getResponse(false,400,'','Surah gagal diupdate');
         }
 
-        DB::commit();
-        return $this->getResponse(true,200,'','Surah berhasil diupdate');
+        if($this->getUserPermission('update surah'))
+        {
+            DB::commit();
+            return $this->getResponse(true,200,'','Surah berhasil diupdate');
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+        }
     }
 
     /**
@@ -124,8 +154,16 @@ class AlquranController extends Controller
                 return $this->getResponse(false,400,'','Surah gagal dihapus');
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','Surah berhasil dihapus');
+            if($this->getUserPermission('delete surah'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','Surah berhasil dihapus');
+            }
+            else
+            {
+                DB::rollBack();
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
     	}
     }
 

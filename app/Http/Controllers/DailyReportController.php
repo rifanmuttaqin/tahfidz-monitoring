@@ -29,7 +29,14 @@ class DailyReportController extends Controller
      */
     public function index(Request $request)
     {
-        return view('daily-report.index', ['active'=>'daily-report']);
+        if($this->getUserPermission('all report'))
+        {
+            return view('daily-report.index', ['active'=>'daily-report']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'daily-report']);
+        }
     }
 
     /**
@@ -50,7 +57,14 @@ class DailyReportController extends Controller
             'data' => $data 
         ]);
 
-        return $pdf->stream();
+        if($this->getUserPermission('all report'))
+        {
+            return $pdf->stream();
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'daily-report']);
+        }
     }
 
 
@@ -121,7 +135,14 @@ class DailyReportController extends Controller
             $table .= '</tbody>';
             $table .= '</table>';
 
-            return $this->getResponse(true,200,$table,'Berhasil menarik data');
+            if($this->getUserPermission('all report'))
+            {
+                return $this->getResponse(true,200,$table,'Berhasil menarik data');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
         }
     }
 }

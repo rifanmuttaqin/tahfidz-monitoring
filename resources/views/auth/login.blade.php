@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="login100-pic js-tilt" data-tilt>
-    <img src="<?= URL::to('/'); ?>/layout_login/images/img-01.png" alt="IMG">
+    <img src="<?= URL::to('/layout_login/images/logo.png') ?>" alt="IMG">
 </div>
 
 <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">

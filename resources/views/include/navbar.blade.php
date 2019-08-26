@@ -1,10 +1,17 @@
-<?php use Yajra\Datatables\Datatables; ?>
+<?php 
+    use Yajra\Datatables\Datatables; 
+    use App\Model\User\User;
+
+    // get user auth
+    $user = Auth::user();
+?>
 
 <div class="sidebar-wrapper">
 <div class="logo">
-    <a href="<?= URL::to('/'); ?>" class="simple-text">
+    <!-- <a href="<?= URL::to('/'); ?>" class="simple-text">
         TAHFIDZ APP
-    </a>
+    </a> -->
+    <img src="<?= URL::to('/layout/assets/img/logo.png'); ?>" style="width:110px;height:40px;" class="center">
 </div>
 
 <ul class="nav">
@@ -14,18 +21,27 @@
             <p>Home</p>
         </a>
     </li>
+
+    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
+
     <li class="<?= $active == 'user' ? 'active' : '' ?>">
         <a href="<?= URL::to('/user'); ?>">
             <i class="pe-7s-user"></i>
             <p>Pengguna</p>
         </a>
     </li>
+
+    @endif
+
+    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
+
     <li class="<?= $active == 'parent' ? 'active' : '' ?>">
         <a href="<?= URL::to('/parent'); ?>">
             <i class="pe-7s-id"></i>
             <p>Orang Tua</p>
         </a>
     </li>
+    
     <li class="<?= $active == 'student_class' ? 'active' : '' ?>">
         <a href="<?= URL::to('/student-class'); ?>">
             <i class="pe-7s-note2"></i>
@@ -38,6 +54,11 @@
             <p>Manajemen Siswa</p>
         </a>
     </li>
+
+    @endif
+
+    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_TEACHER)
+    
     <li class="<?= $active == 'assessment' ? 'active' : '' ?>">
         <a href="<?= URL::to('/assessment'); ?>">
             <i class="pe-7s-note2"></i>
@@ -45,9 +66,23 @@
         </a>
     </li>
 
+    @endif
+
 </ul>
 </div>
 
+<style type="text/css">
+
+.center 
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+
 @push('scripts')
+
 
 @endpush

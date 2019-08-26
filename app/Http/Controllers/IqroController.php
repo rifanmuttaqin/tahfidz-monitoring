@@ -51,7 +51,14 @@ class IqroController extends Controller
                     ->make(true);
         }
 
-        return view('iqro.index', ['active'=>'iqro']);
+        if($this->getUserPermission('index iqro'))
+        {
+            return view('iqro.index', ['active'=>'iqro']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'iqro']);
+        }   
     }
 
      /**
@@ -59,7 +66,14 @@ class IqroController extends Controller
      */
     public function create()
     {
-        return view('iqro.store', ['active'=>'iqro']);
+        if($this->getUserPermission('create iqro'))
+        {
+            return view('iqro.store', ['active'=>'iqro']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'iqro']);
+        }
     }
 
     /**
@@ -80,8 +94,16 @@ class IqroController extends Controller
             return redirect('iqro')->with('alert_error', 'Gagal Disimpan');
         }
 
-        DB::commit();
-        return redirect('iqro')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('create iqro'))
+        {
+            DB::commit();
+            return redirect('iqro')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return view('error.unauthorized', ['active'=>'iqro']);
+        }
     }
 
     /**
@@ -100,8 +122,15 @@ class IqroController extends Controller
                 return $this->getResponse(false,400,'','Iqro gagal dihapus');
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','Iqro berhasil dihapus');
+            if($this->getUserPermission('create iqro'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','Iqro berhasil dihapus');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
     	}
     }
 
@@ -123,8 +152,15 @@ class IqroController extends Controller
             return $this->getResponse(false,400,'','Iqro gagal diupdate');
         }
 
-        DB::commit();
-        return $this->getResponse(true,200,'','Iqro berhasil diupdate');
+        if($this->getUserPermission('update iqro'))
+        {
+            DB::commit();
+            return $this->getResponse(true,200,'','Iqro berhasil diupdate');
+        }
+        else
+        {
+            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');   
+        }   
     }
 
     /**

@@ -46,7 +46,15 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
     	$data_user = Auth::user();
-    	return view('profile.index', ['active'=>'profile', 'data_user'=>$data_user]);
+
+        if($this->getUserPermission('index profile'))
+        {
+            return view('profile.index', ['active'=>'profile', 'data_user'=>$data_user]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'profile']);
+        }
     }
 
     /**
@@ -82,11 +90,19 @@ class ProfileController extends Controller
 		if(!$user->save())
 		{
 		    DB::rollBack();
-		    return redirect('profile')->with('alert_error', 'Berhasil Disimpan');
+		    return redirect('profile')->with('alert_error', 'Gagal Disimpan');
 		}
 
-		DB::commit();
-		return redirect('profile')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('update profile'))
+        {
+            DB::commit();
+            return redirect('profile')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return view('error.unauthorized', ['active'=>'profile']);
+        }   
     }
 
     /**
@@ -109,8 +125,16 @@ class ProfileController extends Controller
                     return $this->getResponse(false,400,null,'Password gagal diupdate');
                 }
 
-                DB::commit();
-                return $this->getResponse(true,200,'','Password berhasil diupdate'); 
+                if($this->getUserPermission('change password'))
+                {
+                    DB::commit();
+                    return $this->getResponse(true,200,'','Password berhasil diupdate');
+                }
+                else
+                {
+                    DB::rollBack();
+                    return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+                }
             }
 
             DB::rollBack();
@@ -123,8 +147,8 @@ class ProfileController extends Controller
      */
     public function deleteImage(Request $request)
     {
-        if ($request->ajax()) {
-
+        if ($request->ajax()) 
+        {
             DB::beginTransaction();
 
             $user_data = User::findOrFail(Auth::user()->id);
@@ -132,16 +156,22 @@ class ProfileController extends Controller
 
             $user_data->profile_picture = null;
 
-            if($user_data->save())
+            if($this->getUserPermission('update profile'))
             {
-                Storage::disk('local')->delete('public/profile_picture/'.$picture_backup);
-                DB::commit();
-                return $this->getResponse(true,200,'','Gambar berhasil dihapus'); 
+                if($user_data->save())
+                {
+                    Storage::disk('local')->delete('public/profile_picture/'.$picture_backup);
+                    DB::commit();
+                    return $this->getResponse(true,200,'','Gambar berhasil dihapus'); 
+                }
             }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }           
 
             DB::rollBack();
             return $this->getResponse(false,400,'','Gambar gagal berhasil dihapus');
         }
     }
-
 }

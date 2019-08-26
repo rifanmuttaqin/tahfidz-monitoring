@@ -103,3 +103,8 @@ Route::get('/daily-report/print', ['as'=>'daily-report-print', 'uses' => 'DailyR
 Route::get('/student-report', ['as'=>'student-report', 'uses' => 'StudentReportController@index']);
 Route::post('/student-report/show', ['as'=>'student-report-show', 'uses' => 'StudentReportController@show']);
 Route::get('/student-report/print', ['as'=>'student-report-print', 'uses' => 'StudentReportController@printPdf']);
+
+// Untuk Student Lack Report
+Route::get('/student-lack-report', ['as'=>'student-lack-report', 'uses' => 'StudentLackReportController@index']);
+Route::post('/student-lack-report/show', ['as'=>'student-lack-report-show', 'uses' => 'StudentLackReportController@show']);
+Route::get('/student-lack-report/print', ['as'=>'student-lack-report-print', 'uses' => 'StudentLackReportController@printPdf']);

@@ -65,9 +65,17 @@ class ParentController extends Controller
             foreach ($data_siswa as $siswa) {
                 $siswa_option .= '<option value="'.$siswa->id.'">'.$siswa->siswa_name.'</option>';
             }
-        $siswa_option .= '</select>';
 
-        return view('parent.index', ['active'=>'parent', 'siswa_option'=>$siswa_option]);
+        $siswa_option .= '</select>';
+        
+        if($this->getUserPermission('index parent'))
+        {
+            return view('parent.index', ['active'=>'parent', 'siswa_option'=>$siswa_option]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'parent']);
+        }
     }
 
     /**
@@ -75,7 +83,14 @@ class ParentController extends Controller
      */
     public function create()
     {
-        return view('parent.store', ['active'=>'parent']);
+        if($this->getUserPermission('create parent'))
+        {
+            return view('parent.store', ['active'=>'parent']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'parent']);
+        }
     }
 
      /**
@@ -134,8 +149,15 @@ class ParentController extends Controller
                 }
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','Data berhasil diupdate');
+            if($this->getUserPermission('update parent'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','Data berhasil diupdate');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }   
         }
     }
 
@@ -183,9 +205,16 @@ class ParentController extends Controller
                 }
             }
         }
-       
-        DB::commit();
-        return redirect('parent')->with('alert_success', 'Berhasil Disimpan');
+        
+        if($this->getUserPermission('create parent'))
+        {
+            DB::commit();
+            return redirect('parent')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+        }
     }
 
     /**
