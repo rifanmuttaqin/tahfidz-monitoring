@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Model\Siswa\Siswa;
+use App\Model\StudentClass\StudentClass;
+use App\Model\AssessmentLog\AssessmentLog;
+
 class HomeController extends Controller
 {
     /**
@@ -25,7 +29,11 @@ class HomeController extends Controller
     {
         if($this->getUserPermission('index home'))
         {
-            return view('home.index', ['active'=>'home']);
+            $siswa = Siswa::count();
+            $class = StudentClass::count();
+            $hafalan = AssessmentLog::where('date',date("Y-m-d"))->count();
+
+            return view('home.index', ['active'=>'home', 'siswa'=>$siswa, 'class'=>$class, 'hafalan'=>$hafalan]);
         }
         else
         {

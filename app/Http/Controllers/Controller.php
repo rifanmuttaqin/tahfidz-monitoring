@@ -7,7 +7,11 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use App\Model\ActionLog\ActionLog;
+
 use Auth;
+
+use DB;
 
 class Controller extends BaseController
 {
@@ -52,9 +56,27 @@ class Controller extends BaseController
     /**
      * @return void
      */
-    public function systemLog()
+    public function systemLog($is_error = false, $action_message='')
     {
+        $user = Auth::user();
 
+        DB::beginTransaction();
+
+        $action_log = new ActionLog();
+        $action_log->action_type = ActionLog::TYPE_GENERAL;
+        $action_log->is_error = $is_error;
+        $action_log->action_message = $action_message;
+        $action_log->user_id = $user->id;
+        $action_log->date = date('Y-m-d H:i:s');
+
+        if(!$action_log->save())
+        {
+            DB::rollBack();
+            return false;
+        }
+
+        DB::commit();
+        return true;
     }
 
     

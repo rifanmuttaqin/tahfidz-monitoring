@@ -37,7 +37,7 @@ class RoleController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Role::all();
+            $data = Role::whereNotIn('name', ['Creator'])->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){  
@@ -49,7 +49,14 @@ class RoleController extends Controller
                     ->make(true);
         }
 
-        return view('role.index', ['active'=>'role']);
+        if($this->getUserPermission('index role'))
+        {
+            return view('role.index', ['active'=>'role']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'role']);
+        }
     }
 
     /**
@@ -67,22 +74,29 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::findOrFail($id);
-        $data_role_permission = RoleHasPermission::getHasPermission($id);
-        $arr_permission = [];
-
-        foreach ($data_role_permission as $val) 
+        if($this->getUserPermission('update role'))
         {
-            array_push($arr_permission, $val->permission_id);
-        }
+            $role = Role::findOrFail($id);
+            $data_role_permission = RoleHasPermission::getHasPermission($id);
+            $arr_permission = [];
 
-        $data_permission = Permission::all();
-        return view('role.update', [
-            'active'=>'role','data'=>$role, 
-            'data_role_permission'=>$arr_permission,
-            'data_permission'=>$data_permission,
-            'id' => $id
-        ]);
+            foreach ($data_role_permission as $val) 
+            {
+                array_push($arr_permission, $val->permission_id);
+            }
+
+            $data_permission = Permission::all();
+            return view('role.update', [
+                'active'=>'role','data'=>$role, 
+                'data_role_permission'=>$arr_permission,
+                'data_permission'=>$data_permission,
+                'id' => $id
+            ]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'role']);
+        }
     }
 
     /**
@@ -113,8 +127,16 @@ class RoleController extends Controller
                     $role->givePermissionTo($data->name);
                 }
 
-                DB::commit();
-                return redirect('role')->with('alert_success', 'Konfigurasi baru pada role berhasil dibuat');
+                if($this->getUserPermission('update role'))
+                {
+                    DB::commit();
+                    return redirect('role')->with('alert_success', 'Konfigurasi baru pada role berhasil dibuat');
+                }
+                else
+                {
+                    DB::rollBack();
+                    return view('error.unauthorized', ['active'=>'role']);
+                }
             }
         }
         else

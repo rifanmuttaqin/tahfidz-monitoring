@@ -53,10 +53,12 @@ class AlquranController extends Controller
 
         if($this->getUserPermission('index surah'))
         {
+            $this->systemLog(false,'Mengakses Halaman Master Quran');
             return view('alquran.index', ['active'=>'alquran']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Master Quran');
             return view('error.unauthorized', ['active'=>'alquran']);
         }
     }
@@ -68,10 +70,12 @@ class AlquranController extends Controller
     {
         if($this->getUserPermission('create surah'))
         {
+            $this->systemLog(false,'Mengakses Halaman Input Surah (Quran)');
             return view('alquran.store', ['active'=>'alquran']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Input Surah (Quran)');
             return view('error.unauthorized', ['active'=>'alquran']);
         }
     }
@@ -92,17 +96,20 @@ class AlquranController extends Controller
        	if(!$surah->save())
         {
             DB::rollBack();
+            $this->systemLog(true,'Gagal Menyimpan Input Surah (Quran)');
             return redirect('alquran')->with('alert_error', 'Gagal Disimpan');
         }
 
         if($this->getUserPermission('create surah'))
         {
-             DB::commit();
+            DB::commit();
+            $this->systemLog(false,'Berhasil Menyimpan Input Surah (Quran)');
             return redirect('alquran')->with('alert_success', 'Berhasil Disimpan');
         }
         else
         {
             DB::rollBack();
+            $this->systemLog(true,'Gagal Menyimpan Input Surah (Quran)');
             return redirect('alquran')->with('alert_error', 'Gagal Disimpan');
         }
     }
@@ -116,23 +123,28 @@ class AlquranController extends Controller
 
         $surah = Surah::findOrFail($request->get('idsurah'));
 
+        $surah_backup = $request->get('idsurah');
+
        	$surah->juz = $request->get('juz');
        	$surah->surah_name = $request->get('surah_name');
        	$surah->total_ayat = $request->get('total_ayat');
 
         if(!$surah->save())
         {
+            $this->systemLog(true,'Gagal Mengupdate Input Surah '.$surah_backup.' (Quran)');
             DB::rollBack();
             return $this->getResponse(false,400,'','Surah gagal diupdate');
         }
 
         if($this->getUserPermission('update surah'))
         {
+            $this->systemLog(false,'Berhasil Mengupdate Input Surah '.$surah_backup.' (Quran)');
             DB::commit();
             return $this->getResponse(true,200,'','Surah berhasil diupdate');
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengupdate Input Surah '.$surah_backup.' (Quran)');
             DB::rollBack();
             return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
         }
@@ -148,25 +160,29 @@ class AlquranController extends Controller
     		DB::beginTransaction();
             $alquranModel = Surah::findOrFail($request->idsurah);
 
+            $id_surah_backup = $request->idsurah;
+
             if(!$alquranModel->delete())
             {
+                $this->systemLog(true,'Gagal Menghapus Input Surah '.$id_surah_backup.' (Quran)');
                 DB::rollBack();
                 return $this->getResponse(false,400,'','Surah gagal dihapus');
             }
 
             if($this->getUserPermission('delete surah'))
             {
+                $this->systemLog(false,'Berhasil Menghapus Input Surah '.$id_surah_backup.' (Quran)');
                 DB::commit();
                 return $this->getResponse(true,200,'','Surah berhasil dihapus');
             }
             else
             {
+                $this->systemLog(true,'Gagal Menghapus Input Surah (Quran)');
                 DB::rollBack();
                 return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
             }
     	}
     }
-
 
     /**
      *
@@ -175,6 +191,7 @@ class AlquranController extends Controller
     {
         if ($request->ajax()) {
             $alquran = Surah::findOrFail($request->get('idsurah'));
+            $this->systemLog(false,'Berhasil Mengakses Data Dari Surah '.$request->get('idsurah').' (Quran)');
             return new SurahResource($alquran);
         }
     }

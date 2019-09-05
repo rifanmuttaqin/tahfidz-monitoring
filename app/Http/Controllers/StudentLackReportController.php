@@ -32,7 +32,14 @@ class StudentLackReportController extends Controller
      */
     public function index(Request $request)
     {
-        return view('student-lack-report.index', ['active'=>'student-lack-report']);
+        if($this->getUserPermission('all report'))
+        {
+            return view('student-lack-report.index', ['active'=>'student-lack-report']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'student-lack-report']);
+        }
     }
 
     /**
@@ -53,7 +60,14 @@ class StudentLackReportController extends Controller
             'surah_max_ayat' => $surah_max_ayat
         ]);
 
-        return $pdf->stream();
+        if($this->getUserPermission('all report'))
+        {
+            return $pdf->stream();
+        }
+        else
+        {   
+            return view('error.unauthorized', ['active'=>'student-lack-report']);
+        }
     }
 
      /**
@@ -138,7 +152,14 @@ class StudentLackReportController extends Controller
             $table .= '</tbody>';
             $table .= '</table>';
 
-            return $this->getResponse(true,200,$table,'Berhasil menarik data');
+            if($this->getUserPermission('all report'))
+            {
+                return $this->getResponse(true,200,$table,'Berhasil menarik data');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
         }
     }
 }

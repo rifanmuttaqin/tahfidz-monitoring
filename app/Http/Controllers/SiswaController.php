@@ -66,7 +66,14 @@ class SiswaController extends Controller
             }
         $class_option .= '</select>';
 
-        return view('siswa.index', ['active'=>'siswa','class_option'=>$class_option]);
+        if($this->getUserPermission('index siswa'))
+        {
+            return view('siswa.index', ['active'=>'siswa','class_option'=>$class_option]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'siswa']);
+        }
     }
 
     /**
@@ -74,7 +81,14 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('siswa.store', ['active'=>'siswa']);
+        if($this->getUserPermission('create siswa'))
+        {
+            return view('siswa.store', ['active'=>'siswa']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'siswa']);
+        }
     }
 
     /**
@@ -103,11 +117,18 @@ class SiswaController extends Controller
             return $this->getResponse(false,400,'','Siswa gagal diupdate');
         }
 
-        DB::commit();
-        return $this->getResponse(true,200,'','Siswa berhasil diupdate');
+        if($this->getUserPermission('update siswa'))
+        {
+            DB::commit();
+            return $this->getResponse(true,200,'','Siswa berhasil diupdate');
+        }
+        else
+        {
+            DB::rollBack();
+            return view('error.unauthorized', ['active'=>'siswa']);
+        }
     }
 
-    
     /**
      * @return void
      */
@@ -134,8 +155,16 @@ class SiswaController extends Controller
             return redirect('siswa')->with('alert_error', 'Gagal Disimpan');
         }
 
-        DB::commit();
-        return redirect('siswa')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('create siswa'))
+        {
+            DB::commit();
+            return redirect('siswa')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return view('error.unauthorized', ['active'=>'siswa']);
+        }
     }
 
      /**

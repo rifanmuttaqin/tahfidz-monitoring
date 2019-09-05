@@ -23,13 +23,28 @@
 				    <input id='check_all' name="check_all" type="checkbox">
 				    <label> <strong> Pilih Semua </strong></label>
 			</div>
+			
+			@php
+				$i = 1;
+			@endphp
+
 			<hr>			
 				@foreach ($data_permission as $permission)
+					@php
+						$i++;
+					@endphp
+
 				    <div class="checkbox-inline">
 					    <input id='{{ $permission->id }}' name="permission[]" type="checkbox" value="{{ $permission->id }}" <?= in_array($permission->id, $data_role_permission) ? 'checked' : '' ?> >
 					    <label for="permission_{{ $permission->id }}"> {{ $permission->name }} </label>
 					</div>
-					<br>
+
+					@if( ($i % 5) == 0)
+
+					<hr>
+
+					@endif
+
 				@endforeach
 		</fieldset>
 		

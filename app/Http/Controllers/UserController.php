@@ -56,7 +56,14 @@ class UserController extends Controller
                     ->make(true);
         }
 
-        return view('user.index', ['active'=>'user']);
+        if($this->getUserPermission('index user'))
+        {
+            return view('user.index', ['active'=>'user']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'user']);
+        }
     }
 
     /**
@@ -64,7 +71,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.store', ['active'=>'user']);
+        if($this->getUserPermission('create user'))
+        {
+            return view('user.store', ['active'=>'user']);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'user']);
+        }
     }
 
     /**
@@ -93,8 +107,16 @@ class UserController extends Controller
             return redirect('user')->with('alert_error', 'Gagal Disimpan');
         }
 
-        DB::commit();
-        return redirect('user')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('create user'))
+        {
+            DB::commit();
+            return redirect('user')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+        }
     }
 
     /**
@@ -114,8 +136,15 @@ class UserController extends Controller
                 return $this->getResponse(false,400,'','User gagal dinonaktifkan');
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','User berhasil dinonaktifkan');
+            if($this->getUserPermission('create user'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','User berhasil dinonaktifkan');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
         }
     }
 
@@ -131,7 +160,14 @@ class UserController extends Controller
                 $user_id = $request->iduser;
                 $userModel = User::findOrFail($user_id);
 
-                return new UserResource($userModel);
+                if($this->getUserPermission('view user'))
+                {
+                    return new UserResource($userModel);
+                }
+                else
+                {
+                    return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+                }
             }
             else
             {
@@ -166,9 +202,16 @@ class UserController extends Controller
             
             if($user->removeRole(User::getAccountMeaning($old_account_type)))
             {
-                $user->assignRole(User::getAccountMeaning($user->account_type));
-                DB::commit();
-                return $this->getResponse(true,200,'','User berhasil diupdate');
+                if($this->getUserPermission('update user'))
+                {
+                    $user->assignRole(User::getAccountMeaning($user->account_type));
+                    DB::commit();
+                    return $this->getResponse(true,200,'','User berhasil diupdate');
+                }
+                else
+                {
+                    return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+                }
             }
         }
     }
@@ -191,8 +234,15 @@ class UserController extends Controller
                 return $this->getResponse(true,400,null,'Password gagal diupdate');
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','Password berhasil diupdate');   
+            if($this->getUserPermission('change password'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','Password berhasil diupdate');
+            }
+            else
+            {
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }   
         }
     }
 

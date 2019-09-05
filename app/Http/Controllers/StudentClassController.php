@@ -70,7 +70,15 @@ class StudentClassController extends Controller
         $guru_option .= '</select>';
 
         $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
-        return view('student_class.index', ['active'=>'student_class','years'=>$years,'guru_option'=>$guru_option]);
+
+        if($this->getUserPermission('index class'))
+        {
+            return view('student_class.index', ['active'=>'student_class','years'=>$years,'guru_option'=>$guru_option]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'student_class']);
+        }
     }
 
     /**
@@ -78,8 +86,15 @@ class StudentClassController extends Controller
      */
     public function create()
     {
-        $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
-        return view('student_class.store', ['active'=>'student_class','years'=>$years]);
+        if($this->getUserPermission('create class'))
+        {
+            $years = array_combine(range(date("Y"), 2001), range(date("Y"), 2001));
+            return view('student_class.store', ['active'=>'student_class','years'=>$years]);
+        }
+        else
+        {
+            return view('error.unauthorized', ['active'=>'student_class']);
+        }
     }
 
     /**
@@ -103,8 +118,16 @@ class StudentClassController extends Controller
                 return $this->getResponse(false,400,'','Kelas gagal diupdate');
             }
 
-            DB::commit();
-            return $this->getResponse(true,200,'','Kelas berhasil diupdate');
+            if($this->getUserPermission('update class'))
+            {
+                DB::commit();
+                return $this->getResponse(true,200,'','Kelas berhasil diupdate');
+            }
+            else
+            {
+                DB::rollBack();
+                return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+            }
         }
     }
 
@@ -133,8 +156,16 @@ class StudentClassController extends Controller
             return redirect('student-class')->with('alert_error', 'Gagal Disimpan');
         }
 
-        DB::commit();
-        return redirect('student-class')->with('alert_success', 'Berhasil Disimpan');
+        if($this->getUserPermission('cerate class'))
+        {
+            DB::commit();
+            return redirect('student-class')->with('alert_success', 'Berhasil Disimpan');
+        }
+        else
+        {
+            DB::rollBack();
+            return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
+        }
     }
 
      /**
