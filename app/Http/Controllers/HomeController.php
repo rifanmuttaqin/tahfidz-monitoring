@@ -33,10 +33,12 @@ class HomeController extends Controller
             $class = StudentClass::count();
             $hafalan = AssessmentLog::where('date',date("Y-m-d"))->count();
 
+            $this->systemLog(false,'Mengakses Halaman Home');
             return view('home.index', ['active'=>'home', 'siswa'=>$siswa, 'class'=>$class, 'hafalan'=>$hafalan]);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Home');
             return view('error.unauthorized', ['active'=>'home']);
         }
     }

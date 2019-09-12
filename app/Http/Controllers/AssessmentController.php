@@ -70,10 +70,12 @@ class AssessmentController extends Controller
 
         if($this->getUserPermission('index assessment'))
         {
+            $this->systemLog(false,'Mengakses Halaman Assessment');
             return view('assessment.index', ['active'=>'assessment']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Assessment');
             return view('error.unauthorized', ['active'=>'assessment']);
         }
     }
@@ -105,7 +107,8 @@ class AssessmentController extends Controller
         if($this->getUserPermission('create assessment'))
         {
             if($data_siswa->memorization_type != Siswa::TYPE_IQRO)
-            {           
+            {
+                $this->systemLog(false,'Mengakses Halaman Assessment');           
                 return view('assessment.assessment_quran',[
                     'active'=>'assessment',
                     'data_siswa'=>$data_siswa
@@ -121,6 +124,7 @@ class AssessmentController extends Controller
                     $iqro_arr[$iqro->id] = $iqro->jilid_number;
                 }
 
+                $this->systemLog(false,'Mengakses Halaman Assessment');
                 return view('assessment.assessment_iqro', [
                     'active'=>'assessment',
                     'data_siswa'=>$data_siswa,
@@ -130,6 +134,7 @@ class AssessmentController extends Controller
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Assessment');
             return view('error.unauthorized', ['active'=>'assessment']);
         } 
     }
@@ -156,6 +161,7 @@ class AssessmentController extends Controller
 
             if(!$assessment_log->save())
             {
+                $this->systemLog(true,'Gagal Melakukan Assessment Kepada : '.$assessment->siswa_id.'');
                 DB::rollBack();
                 return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
             }
@@ -193,6 +199,7 @@ class AssessmentController extends Controller
 
             if(!$assessment_log->save())
             {
+                $this->systemLog(true,'Gagal Melakukan Assessment Kepada : '.$assessment->siswa_id.'');
                 DB::rollBack();
                 return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
             }
@@ -223,6 +230,7 @@ class AssessmentController extends Controller
 
         if($this->getUserPermission('create assessment'))
         {
+            $this->systemLog(false,'Melakukan Assessment Kepada : '.$assessment->siswa_id.'');
             DB::commit();
             return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Berhasil Disimpan');
         }
@@ -240,6 +248,7 @@ class AssessmentController extends Controller
     {
         if ($request->ajax()) {
             $data_surah = Surah::findOrFail($request->get('id_ayat'));
+            $this->systemLog(false,'Menarik data Ayat');
             return json_encode($data_surah->total_ayat);
         }
     }
@@ -251,6 +260,7 @@ class AssessmentController extends Controller
     {
         if ($request->ajax()) {
             $data_iqro = Iqro::findOrFail($request->get('iqro_id'));
+            $this->systemLog(false,'Menarik data Iqro');
             return json_encode($data_iqro->total_page);
         }
     }
@@ -284,6 +294,7 @@ class AssessmentController extends Controller
                 }
             }
 
+            $this->systemLog(false,'Menarik data Surah');
             return json_encode($arr_data);
         }
     }

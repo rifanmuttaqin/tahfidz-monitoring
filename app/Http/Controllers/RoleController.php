@@ -51,10 +51,12 @@ class RoleController extends Controller
 
         if($this->getUserPermission('index role'))
         {
+            $this->systemLog(false,'Mengakses halaman role');
             return view('role.index', ['active'=>'role']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses halaman role');
             return view('error.unauthorized', ['active'=>'role']);
         }
     }
@@ -64,6 +66,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->systemLog(false,'Mengakses halaman create role');
         $data_permission = Permission::all();
         return view('role.store', ['active'=>'role','data_permission'=>$data_permission]);
     }
@@ -86,6 +89,9 @@ class RoleController extends Controller
             }
 
             $data_permission = Permission::all();
+
+            $this->systemLog(false,'Mengakses halaman update role');
+
             return view('role.update', [
                 'active'=>'role','data'=>$role, 
                 'data_role_permission'=>$arr_permission,
@@ -95,6 +101,7 @@ class RoleController extends Controller
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses halaman update role');
             return view('error.unauthorized', ['active'=>'role']);
         }
     }
@@ -110,7 +117,6 @@ class RoleController extends Controller
 
         if($role)
         {
-
             if($permissions = $request->get('permission'))
             {
                 // revoke first before assign new permission to role
@@ -129,11 +135,13 @@ class RoleController extends Controller
 
                 if($this->getUserPermission('update role'))
                 {
+                    $this->systemLog(false,'Berhasil melakukan update data');
                     DB::commit();
                     return redirect('role')->with('alert_success', 'Konfigurasi baru pada role berhasil dibuat');
                 }
                 else
                 {
+                    $this->systemLog(true,'gagal mengupdate role');
                     DB::rollBack();
                     return view('error.unauthorized', ['active'=>'role']);
                 }
@@ -141,6 +149,7 @@ class RoleController extends Controller
         }
         else
         {
+            $this->systemLog(true,'gagal mengupdate role');
             DB::rollBack();
             return redirect('role')->with('alert_error', 'Gagal Disimpan');
         }
@@ -165,6 +174,7 @@ class RoleController extends Controller
                     $role->givePermissionTo($data->name);
                 }
 
+                $this->systemLog(false,'berhasil membuat role');
                 DB::commit();
                 return redirect('role')->with('alert_success', 'Role berhasil dikonfigurasi');
             }
@@ -196,6 +206,7 @@ class RoleController extends Controller
 
             if($role->delete())
             {
+                $this->systemLog(false,'berhasil menghapus role');
                 DB::commit();
                 return $this->getResponse(true,200,'','Role berhasil dihapus');
             }

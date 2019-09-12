@@ -31,10 +31,12 @@ class DailyReportController extends Controller
     {
         if($this->getUserPermission('all report'))
         {
+            $this->systemLog(false,'Mengakses Halaman Laporan Harian');
             return view('daily-report.index', ['active'=>'daily-report']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Laporan Harian');
             return view('error.unauthorized', ['active'=>'daily-report']);
         }
     }
@@ -59,10 +61,12 @@ class DailyReportController extends Controller
 
         if($this->getUserPermission('all report'))
         {
+            $this->systemLog(false,'Mencetak Halaman Laporan Harian');
             return $pdf->stream();
         }
         else
         {
+            $this->systemLog(true,'Gagal Mencetak Halaman Laporan Harian');
             return view('error.unauthorized', ['active'=>'daily-report']);
         }
     }

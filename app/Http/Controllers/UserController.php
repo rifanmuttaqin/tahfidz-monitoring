@@ -58,10 +58,12 @@ class UserController extends Controller
 
         if($this->getUserPermission('index user'))
         {
+            $this->systemLog(false,'Mengakses halaman manajemen user');
             return view('user.index', ['active'=>'user']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses halaman manajemen user');
             return view('error.unauthorized', ['active'=>'user']);
         }
     }
@@ -73,10 +75,12 @@ class UserController extends Controller
     {
         if($this->getUserPermission('create user'))
         {
+            $this->systemLog(false,'Mengakses halaman create manajemen user');
             return view('user.store', ['active'=>'user']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses halaman create manajemen user');
             return view('error.unauthorized', ['active'=>'user']);
         }
     }
@@ -103,17 +107,20 @@ class UserController extends Controller
         
         if(!$user->save())
         {
+            $this->systemLog(true,'Gagal menyimpan user');
             DB::rollBack();
             return redirect('user')->with('alert_error', 'Gagal Disimpan');
         }
 
         if($this->getUserPermission('create user'))
         {
+            $this->systemLog(false,'Berhasil menyimpan user');
             DB::commit();
             return redirect('user')->with('alert_success', 'Berhasil Disimpan');
         }
         else
         {
+            $this->systemLog(true,'Gagal menyimpan user');
             DB::rollBack();
             return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
         }
@@ -132,17 +139,20 @@ class UserController extends Controller
 
             if(!$userModel->save())
             {
+                $this->systemLog(true,'Gagal menghapus user');
                 DB::rollBack();
                 return $this->getResponse(false,400,'','User gagal dinonaktifkan');
             }
 
             if($this->getUserPermission('create user'))
             {
+                $this->systemLog(false,'Berhasil menghapus user');
                 DB::commit();
                 return $this->getResponse(true,200,'','User berhasil dinonaktifkan');
             }
             else
             {
+                $this->systemLog(true,'Gagal menghapus user');
                 return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
             }
         }

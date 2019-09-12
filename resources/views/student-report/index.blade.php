@@ -24,7 +24,6 @@
 	<button type="submit" class="btn btn-info" id="print" style="display: none"> CETAK </button>
 </div>
 
-
 <div id="table_result">
     <div class="result"></div>
 </div>

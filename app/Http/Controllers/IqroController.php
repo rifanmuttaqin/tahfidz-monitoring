@@ -53,10 +53,12 @@ class IqroController extends Controller
 
         if($this->getUserPermission('index iqro'))
         {
+            $this->systemLog(false,'Mengakses Halaman Master Iqro');
             return view('iqro.index', ['active'=>'iqro']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Master Iqro');
             return view('error.unauthorized', ['active'=>'iqro']);
         }   
     }
@@ -68,10 +70,12 @@ class IqroController extends Controller
     {
         if($this->getUserPermission('create iqro'))
         {
+            $this->systemLog(false,'Mengakses Halaman Create Iqro');
             return view('iqro.store', ['active'=>'iqro']);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses Halaman Create Iqro');
             return view('error.unauthorized', ['active'=>'iqro']);
         }
     }
@@ -96,11 +100,13 @@ class IqroController extends Controller
 
         if($this->getUserPermission('create iqro'))
         {
+            $this->systemLog(false,'Berhasil menyimpan data Iqro JILID : '.$iqro->jilid_number.' ');
             DB::commit();
             return redirect('iqro')->with('alert_success', 'Berhasil Disimpan');
         }
         else
         {
+            $this->systemLog(true,'Gagal Membuat Iqro');
             DB::rollBack();
             return view('error.unauthorized', ['active'=>'iqro']);
         }
@@ -118,12 +124,14 @@ class IqroController extends Controller
 
             if(!$iqroModel->delete())
             {
+                $this->systemLog(true,'Gagal Mendelete Iqro');
                 DB::rollBack();
                 return $this->getResponse(false,400,'','Iqro gagal dihapus');
             }
 
             if($this->getUserPermission('create iqro'))
             {
+                $this->systemLog(false,'Berhasil Mendelete Iqro');
                 DB::commit();
                 return $this->getResponse(true,200,'','Iqro berhasil dihapus');
             }
@@ -148,12 +156,14 @@ class IqroController extends Controller
 
         if(!$iqro->save())
         {
+            $this->systemLog(true,'Gagal Mengupdate Iqro');
             DB::rollBack();
             return $this->getResponse(false,400,'','Iqro gagal diupdate');
         }
 
         if($this->getUserPermission('update iqro'))
         {
+            $this->systemLog(false,'Berhasil Mengupdate Iqro');
             DB::commit();
             return $this->getResponse(true,200,'','Iqro berhasil diupdate');
         }

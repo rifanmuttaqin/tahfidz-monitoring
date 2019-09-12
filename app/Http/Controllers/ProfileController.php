@@ -49,10 +49,12 @@ class ProfileController extends Controller
 
         if($this->getUserPermission('index profile'))
         {
+            $this->systemLog(false,'Mengakses halaman Profile');
             return view('profile.index', ['active'=>'profile', 'data_user'=>$data_user]);
         }
         else
         {
+            $this->systemLog(true,'Gagal Mengakses halaman Profile');
             return view('error.unauthorized', ['active'=>'profile']);
         }
     }
@@ -89,17 +91,20 @@ class ProfileController extends Controller
     		            
 		if(!$user->save())
 		{
+            $this->systemLog(true,'Gagal mengupdate Profile');
 		    DB::rollBack();
 		    return redirect('profile')->with('alert_error', 'Gagal Disimpan');
 		}
 
         if($this->getUserPermission('update profile'))
         {
+            $this->systemLog(false,'Berhasil mengupdate Profile');
             DB::commit();
             return redirect('profile')->with('alert_success', 'Berhasil Disimpan');
         }
         else
         {
+            $this->systemLog(true,'Gagal mengupdate Profile');
             DB::rollBack();
             return view('error.unauthorized', ['active'=>'profile']);
         }   
@@ -121,17 +126,20 @@ class ProfileController extends Controller
 
                 if(!$user->save())
                 {
+                    $this->systemLog(true,'Gagal mengupdate Password');
                     DB::rollBack();
                     return $this->getResponse(false,400,null,'Password gagal diupdate');
                 }
 
                 if($this->getUserPermission('change password'))
                 {
+                    $this->systemLog(false,'Berhasil mengupdate Password');
                     DB::commit();
                     return $this->getResponse(true,200,'','Password berhasil diupdate');
                 }
                 else
                 {
+                    $this->systemLog(true,'Gagal mengupdate Password');
                     DB::rollBack();
                     return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
                 }
@@ -160,6 +168,7 @@ class ProfileController extends Controller
             {
                 if($user_data->save())
                 {
+                    $this->systemLog(false,'Berhasil memperbaharui gambar profile');
                     Storage::disk('local')->delete('public/profile_picture/'.$picture_backup);
                     DB::commit();
                     return $this->getResponse(true,200,'','Gambar berhasil dihapus'); 
@@ -170,8 +179,9 @@ class ProfileController extends Controller
                 return $this->getResponse(false,505,'','Tidak mempunyai izin untuk aktifitas ini');
             }           
 
+            $this->systemLog(true,'Gagal memperbaharui gambar profile');
             DB::rollBack();
-            return $this->getResponse(false,400,'','Gambar gagal berhasil dihapus');
+            return $this->getResponse(false,400,'','Gambar gagal dihapus');
         }
     }
 }
