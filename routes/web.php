@@ -108,3 +108,6 @@ Route::get('/student-report/print', ['as'=>'student-report-print', 'uses' => 'St
 Route::get('/student-lack-report', ['as'=>'student-lack-report', 'uses' => 'StudentLackReportController@index']);
 Route::post('/student-lack-report/show', ['as'=>'student-lack-report-show', 'uses' => 'StudentLackReportController@show']);
 Route::get('/student-lack-report/print', ['as'=>'student-lack-report-print', 'uses' => 'StudentLackReportController@printPdf']);
+
+// Untuk Action Log
+Route::get('/action-log', ['as'=>'action-log', 'uses' => 'ActionLogController@index']);

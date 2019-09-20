@@ -40,7 +40,8 @@
                         @endif
 
                         <li><a href="<?= URL::to('/alquran'); ?>"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp Qur'an </a></li> 
-                        <li><a href="<?= URL::to('/iqro'); ?>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp Iqro </a></li> 
+                        <li><a href="<?= URL::to('/iqro'); ?>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp Iqro </a></li>
+                         <li><a href="<?= URL::to('/action-log'); ?>">&nbsp Action Log </a></li> 
                       </ul>
                 </li>
                 @endif

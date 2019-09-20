@@ -111,3 +111,8 @@ Breadcrumbs::for('student-report', function ($trail) {
 Breadcrumbs::for('student-lack-report', function ($trail) {
     $trail->push('Laporan Tanggungan Siswa / Siswi', route('student-lack-report'));
 });
+
+// Action Log
+Breadcrumbs::for('action-log', function ($trail) {
+    $trail->push('Log Aksi', route('action-log'));
+});
