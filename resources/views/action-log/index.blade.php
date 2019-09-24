@@ -64,8 +64,30 @@ var table;
 
 $( document ).ready(function() {
   $( "#reset" ).click(function() {
-    
-    
+      
+    $.ajax({
+      type:'POST',
+      url: base_url + '/action-log/remove',
+      data:{
+        
+        "_token": "{{ csrf_token() }}",
+      
+      },
+      success:function(data) {
+        if(data.status != false)
+        {
+          table.ajax.reload();
+          swal(data.message, { button:false, icon: "success", timer: 1000});
+        }
+        else
+        {
+          swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+        }
+      },
+      error: function(error) {
+        swal('Terjadi kegagalan sistem', { button:false, icon: "error", timer: 1000});
+      }
+    });
 
   });
 });

@@ -20,6 +20,7 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
 
 // Untuk Home
 Route::get('/', ['as'=>'home', 'uses' => 'HomeController@index']);
+Route::get('/home', ['as'=>'home-url', 'uses' => 'HomeController@index']);
 
 // Untuk User
 Route::get('/user', ['as'=>'index-user', 'uses' => 'UserController@index']);
@@ -111,3 +112,4 @@ Route::get('/student-lack-report/print', ['as'=>'student-lack-report-print', 'us
 
 // Untuk Action Log
 Route::get('/action-log', ['as'=>'action-log', 'uses' => 'ActionLogController@index']);
+Route::post('/action-log/remove', ['as'=>'action-log-remove', 'uses' => 'ActionLogController@destroy']);

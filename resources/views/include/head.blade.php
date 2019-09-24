@@ -23,7 +23,7 @@
                        <p>Profile</p>
                     </a>
                 </li>
-                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
+                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <p>
@@ -46,7 +46,7 @@
                 </li>
                 @endif
 
-                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER || $user->account_type == User::ACCOUNT_TYPE_TEACHER)
+                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN || $user->account_type == User::ACCOUNT_TYPE_TEACHER)
 
                  <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">

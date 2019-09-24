@@ -5,6 +5,10 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
 });
 
+Breadcrumbs::for('home-url', function ($trail) {
+    $trail->push('Home', route('home'));
+});
+
 // Pengguna
 Breadcrumbs::for('index-user', function ($trail) {
     $trail->push('Pengguna', route('index-user'));

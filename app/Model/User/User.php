@@ -21,7 +21,7 @@ class User extends Authenticatable
     const USER_STATUS_NOT_ACTIVE = 20;
 
     const ACCOUNT_TYPE_CREATOR = 10;
-    const ACCOUNT_TYPE_USER = 20;
+    const ACCOUNT_TYPE_ADMIN = 20;
     const ACCOUNT_TYPE_PARENT = 30;
     const ACCOUNT_TYPE_TEACHER = 40;
 
@@ -138,8 +138,8 @@ class User extends Authenticatable
                return 'Orangtua';
             case static::ACCOUNT_TYPE_TEACHER:
                return 'Guru';
-            case static::ACCOUNT_TYPE_USER:
-               return 'User';
+            case static::ACCOUNT_TYPE_ADMIN:
+               return 'Admin';
             default:
                 return '';
         }

@@ -22,7 +22,7 @@
         </a>
     </li>
 
-    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
+    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
 
     <li class="<?= $active == 'user' ? 'active' : '' ?>">
         <a href="<?= URL::to('/user'); ?>">
@@ -33,7 +33,7 @@
 
     @endif
 
-    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_USER)
+    @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
 
     <li class="<?= $active == 'parent' ? 'active' : '' ?>">
         <a href="<?= URL::to('/parent'); ?>">

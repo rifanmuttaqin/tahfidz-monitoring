@@ -51,4 +51,19 @@ class ActionLogController extends Controller
             return view('error.unauthorized', ['active'=>'action-log']);
         }
     }
+
+    public function destroy(Request $request)
+    {
+        if ($request->ajax()) {
+
+            if(ActionLog::truncate())
+            {
+                return $this->getResponse(true,200,'','Semua data log berhasil terhapus');
+            }
+            else
+            {
+                return $this->getResponse(false,400,'','Terjadi kesalahan, Data gagal dihapus');
+            }
+        }
+    }
 }
