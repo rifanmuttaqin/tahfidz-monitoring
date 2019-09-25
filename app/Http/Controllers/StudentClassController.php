@@ -156,7 +156,7 @@ class StudentClassController extends Controller
             return redirect('student-class')->with('alert_error', 'Gagal Disimpan');
         }
 
-        if($this->getUserPermission('cerate class'))
+        if($this->getUserPermission('create class'))
         {
             DB::commit();
             return redirect('student-class')->with('alert_success', 'Berhasil Disimpan');
