@@ -1,4 +1,7 @@
 -------- Catatan Kekurangan Aplikasi --------
 
-- Penambahan NOTE / NILAI Pada Report
+- Penambahan NOTE / NILAI Pada Report (done)
 - Murid dan kelas harus sesuai yang diampu guru (done)
+- Penambahan Notification
+- Mengganti semua Aset yang masih CDN ke Lokal Server
+- Penambahan Forgot Password (Reset Token)

@@ -41,14 +41,14 @@
 
                         <li><a href="<?= URL::to('/alquran'); ?>"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp Qur'an </a></li> 
                         <li><a href="<?= URL::to('/iqro'); ?>"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp Iqro </a></li>
-                         <li><a href="<?= URL::to('/action-log'); ?>">&nbsp Action Log </a></li> 
+                         <li><a href="<?= URL::to('/action-log'); ?>"><span class="glyphicon glyphicon-record" aria-hidden="true"></span>&nbsp Log Sistem </a></li> 
                       </ul>
                 </li>
                 @endif
 
                 @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN || $user->account_type == User::ACCOUNT_TYPE_TEACHER)
 
-                 <li class="dropdown">
+                <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <p>
                         Laporan
@@ -64,11 +64,24 @@
 
                 @endif
 
+                @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
+
+                <li>
+                   <a href="<?= URL::to('/profile'); ?>">
+                       <p>Notifikasi</p>
+                    </a>
+                </li>
+                
+                @endif
+
                 <li>
                     <a href="<?= URL::to('/'); ?>/auth/logout">
                         <p>Log out</p>
                     </a>
                 </li>
+
+                @if($user->account_type != User::ACCOUNT_TYPE_CREATOR)
+
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell"></i>
@@ -82,7 +95,10 @@
                         <li><a href="#">Notification 1</a></li>
                       </ul>
                 </li>
-				<li class="separator hidden-lg"></li>
+
+                @endif
+				
+        <li class="separator hidden-lg"></li>
             </ul>
         </div>
     </div>
