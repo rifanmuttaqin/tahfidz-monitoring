@@ -15,7 +15,7 @@
 <div class="col-md-4">
 	<div class="card">
 	    <div class="header">   
-	        <p style="text-align: center; font-weight: bold;"> Siswa </p>
+	        <p style="text-align: center; font-weight: bold;"> Siswa Yang Diampu </p>
 	    </div>
 	    <div class="content">
 	       <h3 style="text-align: center;"> {{ $siswa }} </h3>
@@ -26,7 +26,7 @@
 <div class="col-md-4">
 	<div class="card">
 	    <div class="header">   
-	        <p style="text-align: center; font-weight: bold;"> Kelas </p>
+	        <p style="text-align: center; font-weight: bold;"> Kelas Yang Diampu </p>
 	    </div>
 	    <div class="content">
 	       <h3 style="text-align: center;"> {{ $class }} </h3>

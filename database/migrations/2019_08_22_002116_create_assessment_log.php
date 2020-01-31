@@ -18,10 +18,11 @@ class CreateAssessmentLog extends Migration
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->string('assessment');
             $table->string('range');
+            $table->string('note');
             $table->date('date');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-
+            
             $table->foreign('siswa_id')
             ->references('id')
             ->on('tbl_siswa')

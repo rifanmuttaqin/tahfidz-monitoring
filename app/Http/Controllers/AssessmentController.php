@@ -158,6 +158,7 @@ class AssessmentController extends Controller
             $assessment_log->range = $request->get('begin').'-'.$request->get('end');
             $assessment_log->date = date("Y-m-d H:i:s");
             $assessment_log->assessment = 'Surat '.Surah::findOrFail($request->get('surah_id'))->surah_name;
+            $assessment_log->note = $request->get('note');
 
             if(!$assessment_log->save())
             {
@@ -196,6 +197,7 @@ class AssessmentController extends Controller
             $assessment_log->range = $request->get('begin').'-'.$request->get('end');
             $assessment_log->date = date("Y-m-d H:i:s");
             $assessment_log->assessment = 'Iqro Jilid '.Iqro::findOrFail($request->get('iqro_id'))->jilid_number;
+            $assessment_log->note = $request->get('note');
 
             if(!$assessment_log->save())
             {

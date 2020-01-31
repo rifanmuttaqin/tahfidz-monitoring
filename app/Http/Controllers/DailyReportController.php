@@ -109,6 +109,7 @@ class DailyReportController extends Controller
             $table .= '<th> Siswa </th>';
             $table .= '<th> Surat / Jilid </th>';
             $table .= '<th> Ayat / Halaman </th>';
+            $table .= '<th> Keterangan / Nilai </th>';
             $table .= '<th> Tanggal </th>';
             $table .= '</tr>';
             $table .= '</thead>';
@@ -131,6 +132,7 @@ class DailyReportController extends Controller
                 }
                 
                 $table .= '<td>'.$assessment->assessment.'</td>';
+                $table .= '<td>'.$assessment->note.'</td>';
                 $table .= '<td>'.$assessment->range.'</td>';
                 $table .= '<td>'. date('d M Y', strtotime($assessment->date)) .'</td>';
                 $table .= '</tr>';

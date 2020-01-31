@@ -46,6 +46,7 @@
 	<tr>
 	<th> Surat / Jilid </th>
 	<th> Ayat / Halaman </th>
+	<th> Note </th>
 	<th> Tanggal </th>
 	</tr>
 </thead>
@@ -59,6 +60,7 @@
     
     <td>{{ $assessment->assessment }}</td>
     <td>{{ $assessment->range }}</td>
+    <td>{{ $assessment->note }}</td>
     <td>{{ date('d M Y', strtotime($assessment->date)) }}</td>
     
     </tr>

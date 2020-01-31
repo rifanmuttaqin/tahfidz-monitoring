@@ -94,6 +94,7 @@
       <tr>
           <th width="30%">Iqro </th>
           <th width="20%">Halaman </th>
+          <th width="20%">Note / Nilai </th>
           <th width="50%">Tanggal </th>
       </tr>
   </thead>
@@ -130,6 +131,7 @@ $(function () {
         columns: [
             {data: 'assessment', name: 'assessment'},
             {data: 'range', name: 'range'},
+            {data: 'note', name: 'note'},
             {data: 'date', name: 'date'},
         ]
     });

@@ -42,7 +42,7 @@
 
 		<div class="form-group">
 			<label>Alamat</label>
-			<textarea class="form-control" placeholder="" rows="3" name="address">
+			<textarea class="form-control" rows="3" name="address">
 			</textarea>
 			@if ($errors->has('address'))
 			    <div class="address"><p style="color: red"><span>&#42;</span> {{ $errors->first('address') }}</p></div>

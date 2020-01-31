@@ -91,6 +91,7 @@
       <tr>
           <th width="30%">Surat </th>
           <th width="20%">Ayat </th>
+          <th width="20%">Catatan / Nilai </th>
           <th width="50%">Tanggal </th>
       </tr>
   </thead>
@@ -128,6 +129,7 @@
         columns: [
             {data: 'assessment', name: 'assessment'},
             {data: 'range', name: 'range'},
+            {data: 'note', name: 'note'},
             {data: 'date', name: 'date'},
         ]
     });

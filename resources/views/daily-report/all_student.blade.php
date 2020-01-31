@@ -35,7 +35,7 @@
 <div style="text-align: center; line-height: 1.5;">
 	<p> 
 		<h4> Laporan Rekap Siswa / Siswi Kelas {{ $class_id }} <br>
-		Periode {{ date('d M Y', strtotime($start_date)) }} Sampai dengan {{ date('d M Y', strtotime($end_date)) }} <h4> 
+		Periode {{ date('d M Y', strtotime($start_date)) }} Sampai dengan {{ date('d M Y', strtotime($end_date)) }} <h4>
 	<p>
 </div>
 
@@ -47,6 +47,7 @@
 	<th> Siswa </th>
 	<th> Surat / Jilid </th>
 	<th> Ayat / Halaman </th>
+	<th> Note / Nilai </th>
 	<th> Tanggal </th>
 	</tr>
 </thead>
@@ -70,6 +71,7 @@
     
     <td>{{ $assessment->assessment }}</td>
     <td>{{ $assessment->range }}</td>
+    <td>{{ $assessment->note }}</td>
     <td>{{ date('d M Y', strtotime($assessment->date)) }}</td>
     
     </tr>
