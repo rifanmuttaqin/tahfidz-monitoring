@@ -11,9 +11,6 @@
 |
 */
 
-
-// Perlu perbaikan di route agar semua dibuat group biar rapi
-
 // Untuk Auth controller
 $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($router) {
     $router->get('/login',  ['uses' => 'LoginController@showLoginForm']);
@@ -22,13 +19,19 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
 });
 
 // Untuk Home
-Route::get('/', ['as'=>'home', 'uses' => 'HomeController@index']);
-Route::get('/home', ['as'=>'home-url', 'uses' => 'HomeController@index']);
+$router->group(['prefix' => '/'], function () use ($router) {
+	$router->get('/',  ['as'=>'home','uses' => 'HomeController@index']);
+    $router->get('/home',  ['as'=>'home-url','uses' => 'HomeController@index']);
+});
 
 // Untuk User
-Route::get('/user', ['as'=>'index-user', 'uses' => 'UserController@index']);
-Route::post('/user/get-detail', ['as'=>'detail', 'uses' => 'UserController@show']);
-Route::post('/user/update', ['as'=>'update-user', 'uses' => 'UserController@update']);
+$router->group(['prefix' => 'user'], function () use ($router) {
+	$router->get('/',  ['as'=>'index-user','uses' => 'UserController@index']);
+    $router->post('/get-detail',  ['as'=>'detail','uses' => 'UserController@show']);
+    $router->post('/update',  ['as'=>'update-user','uses' => 'UserController@update']);
+});
+
+
 Route::post('/user/store', ['as'=>'store-user', 'uses' => 'UserController@store']);
 Route::get('/user/create', ['as'=>'create-user', 'uses' => 'UserController@create']);
 Route::post('/user/update-password', ['as'=>'update-password-user', 'uses' => 'UserController@updatePassword']);

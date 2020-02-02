@@ -11,28 +11,30 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Bootrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="<?= URL::to('/'); ?>/layout/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= URL::to('/'); ?>/layout/assets/css/bootstrap-theme.min.css">
 
     <!--   Core JS Files   -->
     <script src="<?= URL::to('/'); ?>/layout/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
     <script src="<?= URL::to('/'); ?>/layout/assets/js/bootstrap.min.js" type="text/javascript"></script>
 
     <!-- Date Picker -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="<?= URL::to('/'); ?>/layout/assets/js/moment.min.js"></script>
+    <script type="text/javascript" src="<?= URL::to('/'); ?>/layout/assets/js/daterangepicker.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="<?= URL::to('/'); ?>/layout/assets/css/daterangepicker.css" />
 
     <!-- Sweat Alert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="<?= URL::to('/'); ?>/layout/assets/js/sweetalert.min.js"></script>
 
     <!-- DataTable -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="<?= URL::to('/'); ?>/layout/assets/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="<?= URL::to('/'); ?>/layout/assets/js/jquery.dataTables.js" defer></script>
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+    <link href="<?= URL::to('/'); ?>/layout/assets/css/select2.min.css" rel="stylesheet" />
+    <script src="<?= URL::to('/'); ?>/layout/assets/js/select2.min.js"></script>
     
 
     <!-- Bootstrap core CSS     -->
@@ -50,8 +52,8 @@
 
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="<?= URL::to('/'); ?>/layout/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= URL::to('/'); ?>/layout/assets/css/robotofont.css" rel='stylesheet' type='text/css'>
     <link href="<?= URL::to('/'); ?>/layout/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     <link href="<?= URL::to('/'); ?>/layout/assets/css/additional_css.css" rel="stylesheet" />
     
