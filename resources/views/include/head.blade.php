@@ -67,7 +67,7 @@
                 @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
 
                 <li>
-                   <a href="<?= URL::to('/profile'); ?>">
+                   <a href="<?= URL::to('/notification'); ?>">
                        <p>Notifikasi</p>
                     </a>
                 </li>
@@ -85,6 +85,11 @@
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell"></i>
+
+                            <!-- Hitung pesan notifikasi belum terbaca -->
+                            
+                            <span class="notification">5</span>
+                            
                             <b class="caret hidden-lg hidden-md"></b>
                             <p class="hidden-lg hidden-md">
                                 Notifications
@@ -93,6 +98,7 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><a href="#">Notification 1</a></li>
+                        <li><a href="#">Notification 2</a></li>
                       </ul>
                 </li>
 

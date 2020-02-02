@@ -232,6 +232,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'User' => App\Model\User\User::class,
         'Siswa' => App\Model\Siswa\Siswa::class,
+        'Notification' => App\Model\Notification\Notification::class,
         'Role' => App\Model\Helper\Role::class,
         'Image' => Intervention\Image\Facades\Image::class,
     ],

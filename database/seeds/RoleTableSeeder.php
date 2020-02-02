@@ -41,9 +41,21 @@ class RoleTableSeeder extends Seeder
 
 	        // Assign All Permission to creator role
 	        $role_creator->givePermissionTo(Permission::all());
+            $role_admin->givePermissionTo(Permission::all());
+
+            // Assign Default Permission to Teacher
+            $role_guru->givePermissionTo('index home');
+            $role_guru->givePermissionTo('all report');
+            $role_guru->givePermissionTo('index profile');
+            $role_guru->givePermissionTo('update profile');
+            $role_guru->givePermissionTo('index assessment');
+            $role_guru->givePermissionTo('create assessment');   
     	}
     }
 
+    /**
+    * 
+    */
     private function createPermission()
     {
     	// ------ Home ----- 

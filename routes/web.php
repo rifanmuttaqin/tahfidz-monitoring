@@ -11,6 +11,9 @@
 |
 */
 
+
+// Perlu perbaikan di route agar semua dibuat group biar rapi
+
 // Untuk Auth controller
 $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($router) {
     $router->get('/login',  ['uses' => 'LoginController@showLoginForm']);
@@ -113,3 +116,7 @@ Route::get('/student-lack-report/print', ['as'=>'student-lack-report-print', 'us
 // Untuk Action Log
 Route::get('/action-log', ['as'=>'action-log', 'uses' => 'ActionLogController@index']);
 Route::post('/action-log/remove', ['as'=>'action-log-remove', 'uses' => 'ActionLogController@destroy']);
+
+// Untuk Notification
+Route::get('/notification', ['as'=>'notification', 'uses' => 'NotificationController@index']);
+Route::post('/notification/store', ['as'=>'store-notification', 'uses' => 'NotificationController@store']);

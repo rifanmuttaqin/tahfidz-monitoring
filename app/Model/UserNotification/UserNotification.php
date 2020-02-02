@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Model\ActionLog;
+namespace App\Model\UserNotification;
 
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ActionLog extends Model
+class UserNotification extends Model
 {
-    const TYPE_GENERAL = 10;
+	protected $table = 'tbl_user_notification';
 
-    protected $table = 'tbl_action_log';
-    protected $guard_name = 'web';
-    
+    const STATUS_UNREAD = 10;
+    const STATUS_READ 	= 20;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,17 +20,16 @@ class ActionLog extends Model
      */
     protected $fillable = [
         'user_id', 
-        'action_type',
-        'is_error',
-        'action_message',
-        'date'
+        'notification_id',
+        'status',
     ];
 
+    /**
+     */
     public static $rules = [
-        'user_id' => 'nullable | interger',
-        'action_type' => 'required | interger',
-        'date' => 'required | date',
-        'is_error' => 'required | interger',
+        'user_id' => 'required | interger',
+        'notification_id' => 'required | interger',
+        'status' => 'required | interger'
     ];
 
     /**
@@ -48,4 +47,12 @@ class ActionLog extends Model
         return $this->hasOne('App\Model\User\User','id','user_id');
     }
 
+    /**
+     * 
+     */
+    public function getNotification()
+    {
+        return $this->hasOne('App\Model\Notification\Notification','id','notification_id');
+    }
+ 
 }
