@@ -58,7 +58,6 @@
                       <ul class="dropdown-menu">
                         <li><a href="{{route('daily-report')}}"> Laporan Harian </a></li> 
                         <li><a href="{{route('student-report')}}"> Laporan Persiswa </a></li>
-                        <li><a href="{{route('student-lack-report')}}"> Laporan Kekurangan </a></li> 
                       </ul>
                 </li>
 

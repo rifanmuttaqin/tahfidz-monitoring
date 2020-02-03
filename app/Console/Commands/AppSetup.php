@@ -41,14 +41,13 @@ class AppSetup extends Command
         $this->line('--------------- Instalasi TAHFIDZ APP ----------------');
 
         $this->line('Menghapus Database Tahfidz Lama.');
-
-        //Command,[Param]
         Artisan::call('database:delete', ['db_name' => env('DB_DATABASE')]);
 
         $this->line('Membuat Database TAHFIDZ');
         Artisan::call('database:create', ['db_name' => env('DB_DATABASE')]);
 
         $this->line('Menjalankan Migrasi Database (Fresh Install).');
+        $this->line('Butuh beberapa saat mohon bersabar......');
         Artisan::call('database:migrate:fresh');
 
         $this->line('Menyuntikan User Ke Database.');
@@ -58,8 +57,22 @@ class AppSetup extends Command
         $this->line('Butuh beberapa saat mohon bersabar......');
         Artisan::call('database:role:seed');
 
+        $this->line('Membuat key Laravel......');
+        Artisan::call('key:generate');
 
+        $path = public_path().'/storage';
+        
+        $this->line('Mencoba mengecek Storange Link......');
+        
+        if (!file_exists($path)) {
+            Artisan::call('storage:link');
+            $this->line('Sorage dibuat......');
+        }
+        else
+        {
+            $this->line('Sorage Telah ada......');
+        }
 
-        $this->line('Instalasi telah selesai, Selamat Menggunakan TAHFIDZ SEMOGA Bermanfaat.');
+        $this->line('Instalasi telah selesai, Selamat Menggunakan TAHFIDZ MONITORING SEMOGA Bermanfaat.');
     }
 }
