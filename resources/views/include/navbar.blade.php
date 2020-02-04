@@ -86,3 +86,38 @@
 
 
 @endpush
+
+
+@section('modal')
+
+<div class="modal fade" id="detailNotification" role="dialog" >
+<div class="modal-dialog modal-md">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <p class="modal-title">Detail Notifikasi</p>
+    </div>
+    <div class="modal-body">
+
+    <div class="form-group">
+      <label>Judul Notifikasi</label>
+      <input disabled="true" type="text" class="form-control" value="" name="notification_title" id="notification_title">
+    </div>
+
+    <div class="form-group">
+      <label>Isi Pesan Notifikasi</label>
+      <input disabled="true" type="text" class="form-control" value="" name="notification_message" id="notification_message">
+    </div>
+
+    <div class="form-group">
+      <label>Dikeluarkan Pada Tanggal</label>
+      <input disabled="true" type="text" class="form-control" value="" name="date" id="date">
+    </div>
+
+    </div>
+    
+  </div>
+</div>
+</div>
+
+@endsection

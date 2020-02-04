@@ -41,4 +41,19 @@ class Notification extends Model
      * @var array
      */
     protected $hidden = [];
+
+     /**
+     * 
+     */
+    public static function getTypeMeaning($notification_type)
+    {
+        switch ($notification_type) {
+            case static::NOTIFICATION_TYPE_PARENT:
+               return 'Untuk Orangtua';
+            case static::NOTIFICATION_TYPE_TEACHER:
+               return 'Untuk Guru';
+            default:
+                return '';
+        }
+    }
 }

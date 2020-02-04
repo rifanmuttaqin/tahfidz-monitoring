@@ -41,7 +41,7 @@ $router->group(['prefix' => 'parent'], function () use ($router) {
 	$router->get('/create',  ['as'=>'create-parent','uses' => 'ParentController@create']);
 	$router->post('/store',  ['as'=>'store-parent','uses' => 'ParentController@store']);
 	$router->post('/update',  ['as'=>'update-parent','uses' => 'ParentController@update']);
-	$router->post('/get-siswa',  ['as'=>'get-siswa','uses' => 'ParentController@getSiswa']);
+	$router->get('/get-siswa',  ['as'=>'get-siswa','uses' => 'ParentController@getSiswa']);
 });
 
 // Untuk Class
@@ -102,7 +102,7 @@ $router->group(['prefix' => 'alquran'], function () use ($router) {
 // Untuk Profile
 $router->group(['prefix' => 'profile'], function () use ($router) {
 	$router->get('/',  ['as'=>'profile','uses' => 'ProfileController@index']);
-	$router->post('/update',  ['as'=>'profile','uses' => 'ProfileController@update']);
+	$router->post('/update',  ['as'=>'update-profile','uses' => 'ProfileController@update']);
 	$router->post('/update-password',  ['as'=>'update-password-profile','uses' => 'ProfileController@updatePassword']);
 	$router->post('/delete-image',  ['as'=>'delete-image','uses' => 'ProfileController@deleteImage']);
 });
@@ -142,4 +142,5 @@ $router->group(['prefix' => 'action-log'], function () use ($router) {
 $router->group(['prefix' => 'notification'], function () use ($router) {
 	$router->get('/',  ['as'=>'notification','uses' => 'NotificationController@index']);
 	$router->post('/store',  ['as'=>'store-notification','uses' => 'NotificationController@store']);
+	$router->post('/get-detail',  ['as'=>'notification-get-detail','uses' => 'NotificationController@getDetail']);
 });

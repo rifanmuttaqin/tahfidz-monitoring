@@ -11,6 +11,9 @@ use App\Model\ActionLog\ActionLog;
 
 use App\Model\User\User;
 
+use App\Http\Resources\Notification\NotificationResource;
+
+use Auth;
 use DB;
 
 use Carbon\Carbon;
@@ -38,10 +41,17 @@ class NotificationController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = Notification::all();
+            $data = Notification::orderBy('created_at','DESC')->get();
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->make(true);
+                    ->addColumn('notification_type', function(Notification $value) {
+                        return Notification::getTypeMeaning($value->notification_type);
+                    })
+                    ->addColumn('date', function(Notification $value) {
+                        $date =  Carbon::parse($value->date);
+                        return $date->format('d M Y');
+                    })
+            ->make(true);
         }
 
         // if($this->getUserPermission('index notification'))
@@ -56,6 +66,23 @@ class NotificationController extends Controller
         // }
     }
 
+
+    public function getDetail(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $user_notification = UserNotification::where('user_id', Auth::user()->id)->where('notification_id',$request->get('idnotification'))->where('status',UserNotification::STATUS_UNREAD)->first();
+
+            if($user_notification != null)
+            {
+                $user_notification->status = UserNotification::STATUS_READ;
+                $user_notification->save();
+            }
+
+            $notification = Notification::findOrFail($request->get('idnotification'));
+            return new NotificationResource($notification);
+        }
+    }
     
     /**
      * Store a newly created resource in storage.
@@ -81,14 +108,14 @@ class NotificationController extends Controller
             return redirect('notification')->with('alert_error', 'Gagal Disimpan');
         }
 
-        // Input ke User Notifikasi
-        $user_notification = new UserNotification();
-
         if($request->notification_type != Notification::NOTIFICATION_TYPE_PARENT)
         {
-            $all_user_teacher = User::where('account_type', User::ACCOUNT_TYPE_TEACHER)->get();
+            $all_user_teacher = User::whereNotIn('account_type', [User::ACCOUNT_TYPE_PARENT,User::ACCOUNT_TYPE_CREATOR])->get();
 
             foreach ($all_user_teacher as $user_teacher) {
+
+                // Input ke User Notifikasi
+                $user_notification = new UserNotification();
                
                 $user_notification->notification_id = $notification->id;
                 $user_notification->user_id = $user_teacher->id;
@@ -129,40 +156,5 @@ class NotificationController extends Controller
         //     $this->systemLog(true,'Gagal Menyimpan Input Notification');
         //     return redirect('notification')->with('alert_error', 'Gagal Disimpan');
         // }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\Notification\Notification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Notification $notification)
-    {
-        //
-    }
-
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Notification\Notification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Notification $notification)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\Notification\Notification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Notification $notification)
-    {
-        //
     }
 }

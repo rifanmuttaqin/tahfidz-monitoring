@@ -20,7 +20,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                    <a href="<?= URL::to('/profile'); ?>">
-                       <p>Profile</p>
+                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp Profile
                     </a>
                 </li>
                 @if($user->account_type == User::ACCOUNT_TYPE_CREATOR || $user->account_type == User::ACCOUNT_TYPE_ADMIN)
@@ -50,10 +50,7 @@
 
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <p>
-                        Laporan
-                        <b class="caret"></b>
-                      </p>
+                      <span class="glyphicon glyphicon-book" aria-hidden="true"></span> &nbsp Laporan 
                       </a>
                       <ul class="dropdown-menu">
                         <li><a href="{{route('daily-report')}}"> Laporan Harian </a></li> 
@@ -67,41 +64,47 @@
 
                 <li>
                    <a href="<?= URL::to('/notification'); ?>">
-                       <p>Notifikasi</p>
+                      <p>Buat Notifikasi</p>
                     </a>
                 </li>
                 
                 @endif
 
-                <li>
-                    <a href="<?= URL::to('/'); ?>/auth/logout">
-                        <p>Log out</p>
-                    </a>
-                </li>
-
                 @if($user->account_type != User::ACCOUNT_TYPE_CREATOR)
 
                 <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell"></i>
-
+                            
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> &nbsp Notifikasi
+                            
                             <!-- Hitung pesan notifikasi belum terbaca -->
-                            
-                            <span class="notification">5</span>
-                            
-                            <b class="caret hidden-lg hidden-md"></b>
-                            <p class="hidden-lg hidden-md">
-                                Notifications
-                                <b class="caret"></b>
-                            </p>
+                            <?php 
+                              $data_notif   = UserNotification::where('user_id', $user->id)->orderBy('created_at','DESC')->limit(5)->get();
+                              $count_notif  = UserNotification::where('user_id', $user->id)->where('status',UserNotification::STATUS_UNREAD)->get()->count(); 
+                            ?>
+
+                            @if($count_notif >= 1)
+                            <span class="notification">{{ $count_notif }}</span>
+                            @endif
+
                       </a>
+
                       <ul class="dropdown-menu">
-                        <li><a href="#">Notification 1</a></li>
-                        <li><a href="#">Notification 2</a></li>
+                        @if($data_notif != null)
+                        @foreach($data_notif as $notif)
+                          <li><a style="@if($notif->status != UserNotification::STATUS_READ) color: blue @endif" onclick="showNotif('{{$notif->notification_id}}')">{{$notif->getNotification->notification_title}}</a></li>
+                        @endforeach
+                        @endif
                       </ul>
                 </li>
 
                 @endif
+
+                <li>
+                    <a href="<?= URL::to('/'); ?>/auth/logout">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp Logout
+                    </a>
+                </li>
 				
         <li class="separator hidden-lg"></li>
             </ul>

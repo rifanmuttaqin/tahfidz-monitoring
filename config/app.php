@@ -235,6 +235,7 @@ return [
         'Notification' => App\Model\Notification\Notification::class,
         'Role' => App\Model\Helper\Role::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'UserNotification' => App\Model\UserNotification\UserNotification::class
     ],
 
 ];

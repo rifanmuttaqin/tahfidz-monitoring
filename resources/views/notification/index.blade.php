@@ -74,6 +74,7 @@
 		        <th>Title Notifikasi</th>
 		        <th>Isi Notifikasi</th>
 		        <th>Tanggal Notifikasi</th>
+		        <th>Jenis Notifikasi</th>
 		    </tr>
 		</thead>
 		<tbody>
@@ -95,11 +96,13 @@ $(function () {
           selector: 'td:nth-child(2)'
       },
       responsive: true,
+      "aaSorting": [[ 2, "desc" ]],
       ajax: "{{ route('notification') }}",
       columns: [
           {data: 'notification_title', name: 'notification_title'},
           {data: 'notification_message', name: 'notification_message'},
-          {data: 'date', name: 'date'}
+          {data: 'date', name: 'date'},
+          {data: 'notification_type', name: 'notification_type'}
       ]
   });
 });

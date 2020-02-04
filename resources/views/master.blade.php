@@ -122,7 +122,25 @@
 	<script src="<?= URL::to('/'); ?>/layout/assets/js/demo.js"></script>
 
 	<script type="text/javascript">
-    	var base_url = {!! json_encode(url('/')) !!}
+    	
+        var base_url = {!! json_encode(url('/')) !!}
+
+        function showNotif(idnotification) {
+
+            $('#detailNotification').modal('toggle');
+
+                $.ajax({
+                    type:'POST',
+                    url: base_url + '/notification/get-detail',
+                    data: { idnotification:idnotification, "_token": "{{ csrf_token() }}", },
+                        success:function(data) {
+                            $('#notification_title').val(data.data.notification_title);
+                            $('#notification_message').val(data.data.notification_message);
+                            $('#date').val(data.data.date);
+                    }
+                });
+        }
+
 	</script>
 
 </html>
