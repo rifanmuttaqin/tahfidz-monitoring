@@ -16,7 +16,7 @@ class CreateReportPrintLogTable extends Migration
         Schema::create('tbl_report_print_log', function (Blueprint $table) {
             $table->bigIncrements('id', 20);
             $table->unsignedBigInteger('print_by');
-            $table->date('date');
+            $table->dateTime('date');
             $table->text('note')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

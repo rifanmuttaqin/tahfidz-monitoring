@@ -22,6 +22,8 @@ use App\Http\Resources\Siswa\SiswaResource;
 
 use App\Http\Requests\Assessment\AssessmentRequest;
 
+use Carbon\Carbon;
+
 use DB;
 
 class AssessmentController extends Controller
@@ -98,7 +100,8 @@ class AssessmentController extends Controller
                     return $data->assessment;
                 })
                 ->addColumn('date', function(AssessmentLog $date) {
-                    return date("d M Y", strtotime($date->date));
+                    $date =  Carbon::parse($date->date);
+                    return $date->format('d M Y h:i');
                 })
                 ->rawColumns(['action'])
                 ->toJson();
@@ -146,6 +149,8 @@ class AssessmentController extends Controller
     {
         DB::beginTransaction();
 
+        $status_assessment = null;
+
         if($request->get('end') < $request->get('begin'))
         {
             return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan');
@@ -156,7 +161,7 @@ class AssessmentController extends Controller
             $assessment_log = new AssessmentLog();
             $assessment_log->siswa_id = $request->get('id_siswa');
             $assessment_log->range = $request->get('begin').'-'.$request->get('end');
-            $assessment_log->date = date("Y-m-d H:i:s");
+            $assessment_log->date = Carbon::now();
             $assessment_log->assessment = 'Surat '.Surah::findOrFail($request->get('surah_id'))->surah_name;
             $assessment_log->note = $request->get('note');
 
@@ -173,14 +178,25 @@ class AssessmentController extends Controller
                 $assessment->siswa_id = $request->get('id_siswa');
                 $assessment->surah_id = $request->get('surah_id');
                 $assessment->ayat = $ayat;
-                $assessment->date = date("Y-m-d H:i:s");
+                $assessment->date = Carbon::now();
                 $assessment->note = $request->get('note');
                 $assessment->group_ayat = $request->get('begin').'-'.$request->get('end');
 
-                if(SiswaHasSurah::AssessmentValidation($assessment->siswa_id,$assessment->surah_id,$assessment->ayat))
+                $old_data = SiswaHasSurah::AssessmentValidation($assessment->siswa_id,$assessment->surah_id,$assessment->ayat);
+
+                if($old_data != null)
                 {
-                    DB::rollBack();
-                    return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan, Siswa ini sudah menyelesaikan untuk hafalan degan Surat '.$assessment->getSurah->surah_name.' Ayat '.$assessment->ayat.'');
+                    $assessment = $old_data;
+                    $assessment->date = Carbon::now();
+                    $assessment->note = $request->get('note');
+                    $assessment->group_ayat = $request->get('begin').'-'.$request->get('end');
+                    $status_assessment = 'RENEW';
+
+                    if(!$assessment->save())
+                    {
+                        DB::rollBack();
+                        return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Diperbaharui');
+                    }
                 }
 
                 if(!$assessment->save())
@@ -195,7 +211,7 @@ class AssessmentController extends Controller
             $assessment_log = new AssessmentLog();
             $assessment_log->siswa_id = $request->get('id_siswa');
             $assessment_log->range = $request->get('begin').'-'.$request->get('end');
-            $assessment_log->date = date("Y-m-d H:i:s");
+            $assessment_log->date = Carbon::now();
             $assessment_log->assessment = 'Iqro Jilid '.Iqro::findOrFail($request->get('iqro_id'))->jilid_number;
             $assessment_log->note = $request->get('note');
 
@@ -212,14 +228,25 @@ class AssessmentController extends Controller
                 $assessment->siswa_id = $request->get('id_siswa');
                 $assessment->iqro_id = $request->get('iqro_id');
                 $assessment->page = $page;
-                $assessment->date = date("Y-m-d H:i:s");
+                $assessment->date = Carbon::now();
                 $assessment->note = $request->get('note');
                 $assessment->group_page = $request->get('begin').'-'.$request->get('end');
 
-                if(SiswaHasIqro::AssessmentValidation($assessment->siswa_id,$assessment->iqro_id,$assessment->page))
+                $old_data = SiswaHasIqro::AssessmentValidation($assessment->siswa_id,$assessment->iqro_id,$assessment->page);
+
+                if($old_data != null)
                 {
-                    DB::rollBack();
-                    return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Disimpan, Siswa ini sudah menyelesaikan untuk hafalan Iqro '.$assessment->getIqro->jilid_number.' Halaman '.$assessment->page.'');
+                    $assessment = $old_data;
+                    $assessment->date = Carbon::now();
+                    $assessment->note = $request->get('note');
+                    $assessment->group_page = $request->get('begin').'-'.$request->get('end');
+                    $status_assessment = 'RENEW';
+
+                    if(!$assessment->save())
+                    {
+                        DB::rollBack();
+                        return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_error', 'Gagal Diperbaharui');
+                    }
                 }
 
                 if(!$assessment->save())
@@ -231,10 +258,18 @@ class AssessmentController extends Controller
         }
 
         if($this->getUserPermission('create assessment'))
-        {
+        {            
             $this->systemLog(false,'Melakukan Assessment Kepada : '.$assessment->siswa_id.'');
             DB::commit();
-            return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Berhasil Disimpan');
+
+            if($status_assessment == 'RENEW')
+            {
+                return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Penilaian telah berhasil diperbaharui');
+            }
+            else
+            {
+                return redirect()->route('create-assessment', [ 'type'=> $request->get('id_siswa') ])->with('alert_success', 'Berhasil Disimpan');
+            }  
         }
         else
         {

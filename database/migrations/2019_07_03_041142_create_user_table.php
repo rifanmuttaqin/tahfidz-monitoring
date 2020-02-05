@@ -22,7 +22,9 @@ class CreateUserTable extends Migration
             $table->tinyInteger('account_type')->default(10);
             $table->string('password');
             $table->integer('status');
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

@@ -1,3 +1,11 @@
+.form-gap {
+    padding-top: 70px;
+}
+
+.logoreset {
+    background-color:#2F4F4F;
+}
+
 fieldset 
 {
 	border: 1px solid #ddd !important;

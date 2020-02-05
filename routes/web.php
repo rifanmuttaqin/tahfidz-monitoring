@@ -16,6 +16,11 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
     $router->get('/login',  ['uses' => 'LoginController@showLoginForm']);
     $router->post('/login',  ['as'=>'login', 'uses' => 'LoginController@login']);
     $router->get('/logout',  ['uses' => 'LoginController@logout']);
+
+    $router->get('/reset',  ['as'=>'show-reset','uses' => 'ForgotPasswordController@showLinkRequestForm']);
+    $router->post('/email',  ['as'=>'password.email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
+    $router->get('/reset/token/{token}',  ['as'=>'password.reset.token','uses' => 'ResetPasswordController@showResetForm']);
+    $router->post('/reset',  ['as'=>'password.reset','uses' => 'ResetPasswordController@reset']);
 });
 
 // Untuk Home
@@ -60,7 +65,7 @@ $router->group(['prefix' => 'siswa'], function () use ($router) {
 	$router->get('/',  ['as'=>'siswa','uses' => 'SiswaController@index']);
 	$router->get('/create',  ['as'=>'create-siswa','uses' => 'SiswaController@create']);
 	$router->post('/get-user-parent',  ['as'=>'get-user-parent','uses' => 'SiswaController@getUserParent']);	
-	$router->post('/get-class',  ['as'=>'get-class','uses' => 'SiswaController@getClass']);
+	$router->get('/get-class',  ['as'=>'get-class','uses' => 'SiswaController@getClass']);
 	$router->post('/store',  ['as'=>'store-siswa','uses' => 'SiswaController@store']);
 	$router->post('/delete',  ['as'=>'delete-siswa','uses' => 'SiswaController@delete']);
 	$router->post('/get-detail',  ['as'=>'detail-siswa','uses' => 'SiswaController@show']);

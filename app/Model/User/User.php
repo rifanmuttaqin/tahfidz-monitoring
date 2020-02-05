@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
+use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable
 {
     use HasRoles;
+    use Notifiable;
 
     protected $table = 'tbl_user';
     protected $guard_name = 'web';

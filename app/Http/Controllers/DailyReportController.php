@@ -83,7 +83,9 @@ class DailyReportController extends Controller
             ->leftJoin('tbl_siswa', 'tbl_siswa.id', '=', 'tbl_assessment_log.siswa_id')
             ->where('memorization_type',$request->get('memorization_type'))
             ->where('class_id',$request->get('student_class'))
-            ->orderBy('siswa_id', 'asc')->get();
+            ->orderBy('siswa_id', 'asc')
+            ->orderBy('date', 'desc')
+            ->get();
 
             // Store data in session
             $request->session()->put('start_date', $request->get('start_date'));
@@ -132,9 +134,9 @@ class DailyReportController extends Controller
                 }
                 
                 $table .= '<td>'.$assessment->assessment.'</td>';
-                $table .= '<td>'.$assessment->note.'</td>';
                 $table .= '<td>'.$assessment->range.'</td>';
-                $table .= '<td>'. date('d M Y', strtotime($assessment->date)) .'</td>';
+                $table .= '<td>'.$assessment->note.'</td>';
+                $table .= '<td>'. date('d M Y h:i', strtotime($assessment->date)) .'</td>';
                 $table .= '</tr>';
             }
             

@@ -18,7 +18,7 @@ class CreateSiswaHasIqroTable extends Migration
             $table->unsignedBigInteger('iqro_id')->nullable();
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->integer('page');
-            $table->date('date');
+            $table->dateTime('date');
             $table->text('note')->nullable();
             $table->string('group_page'); // Grup page untuk merangkum kelompok penilaian bedasarkan range
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

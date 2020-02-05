@@ -19,7 +19,7 @@ class CreateAssessmentLog extends Migration
             $table->string('assessment');
             $table->string('range');
             $table->string('note');
-            $table->date('date');
+            $table->dateTime('date');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             

@@ -125,6 +125,7 @@
             selector: 'td:nth-child(2)'
         },
         responsive: true,
+        "aaSorting": [[ 3, "desc" ]],
         ajax: url,
         columns: [
             {data: 'assessment', name: 'assessment'},

@@ -58,10 +58,10 @@ class SiswaHasSurah extends Model
 
         if($data)
         {
-            return true;
+            return $data;
         }
 
-        return false;
+        return null;
     }
 
 }

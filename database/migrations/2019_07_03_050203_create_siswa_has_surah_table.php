@@ -18,7 +18,7 @@ class CreateSiswaHasSurahTable extends Migration
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->unsignedBigInteger('surah_id')->nullable();
             $table->integer('ayat');
-            $table->date('date');
+            $table->dateTime('date');
             $table->text('note')->nullable();
             $table->string('group_ayat'); // Grup ayat untuk merangkum kelompok penilaian bedasarkan range
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

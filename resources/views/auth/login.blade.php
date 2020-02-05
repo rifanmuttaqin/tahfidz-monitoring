@@ -38,10 +38,10 @@
 
     <div class="text-center p-t-12">
         <span class="txt1">
-            Forgot
+            Lupa
         </span>
-        <a class="txt2" href="#">
-            Username / Password?
+        <a class="txt2" href="{{route('show-reset')}}">
+            Username / Password ?
         </a>
     </div>
 
@@ -51,12 +51,6 @@
         @endif
     </div>
 
-    <div class="text-center p-t-136">
-        <a class="txt2" href="#">
-            Create your Account
-            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-        </a>
-    </div>
 </form>
 
 @endsection
