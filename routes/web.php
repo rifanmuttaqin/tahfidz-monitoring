@@ -17,9 +17,11 @@ $router->group(['prefix' => 'auth', 'namespace'=>'Auth'], function () use ($rout
     $router->post('/login',  ['as'=>'login', 'uses' => 'LoginController@login']);
     $router->get('/logout',  ['uses' => 'LoginController@logout']);
 
+    // Email reset Password
     $router->get('/reset',  ['as'=>'show-reset','uses' => 'ForgotPasswordController@showLinkRequestForm']);
     $router->post('/email',  ['as'=>'password.email', 'uses' => 'ForgotPasswordController@sendResetLinkEmail']);
     $router->get('/reset/token/{token}',  ['as'=>'password.reset.token','uses' => 'ResetPasswordController@showResetForm']);
+    
     $router->post('/reset',  ['as'=>'password.reset','uses' => 'ResetPasswordController@reset']);
 });
 

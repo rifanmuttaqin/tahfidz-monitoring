@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserToken extends Model
 {
     protected $table = 'tbl_user_token';
+    protected $guard_name = 'web';
     
     /**
      * The attributes that are mass assignable.
