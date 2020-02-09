@@ -1,1 +1,0 @@
-<h1> Klik URL BERIKUT {{ $token }} </h1>

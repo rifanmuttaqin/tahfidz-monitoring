@@ -173,6 +173,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Model\SiswaHasParent\SiswaHasParent','parent_id','id');
     }
 
+    /**
+    * Hash password on save
+    * @param $value
+    */
+    public function setPasswordAttribute($value) 
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
     /**
      * Send the password reset notification.
