@@ -36,7 +36,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username','address', 'full_name','account_type','password','status','profile_picture'
+        'username','address', 'full_name','account_type','password','status','profile_picture', 'last_login_at',
+        'last_login_ip'
     ];
 
 
@@ -56,7 +57,7 @@ class User extends Authenticatable
         'address' => 'string',
         'full_name' => 'required | string',
         'account_type' => 'required | integer',
-        'status' => 'required | integer'
+        'status' => 'required | integer',
     ];
 
      /**

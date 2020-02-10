@@ -2,9 +2,10 @@
 
 - Penambahan NOTE / NILAI Pada Report (done)
 - Murid dan kelas harus sesuai yang diampu guru (done)
-- Penambahan Notification (ToDO)
+- Penambahan Notification (done)
 - Mengganti semua Aset yang masih CDN ke Lokal Server (done)
-- Penambahan Forgot Password (Reset Token)
+- Penambahan Forgot Password (done)
 - List table notifikasi kurang info jenis notifikasi
+- Last Login
 - Informasi User pada Home (Last Login)
 - Penambahan key:generate pada aplikasi (done)

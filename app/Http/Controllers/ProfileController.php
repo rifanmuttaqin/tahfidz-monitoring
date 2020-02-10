@@ -84,7 +84,8 @@ class ProfileController extends Controller
             });
 
             $img->stream();
-            Storage::disk('local')->put('public/profile_picture/'.$fileName, $img, 'public');
+
+            Storage::disk('public_uploads')->put('profile/'.$fileName, $img);
 
             $user->profile_picture = $fileName;
         }
@@ -169,7 +170,7 @@ class ProfileController extends Controller
                 if($user_data->save())
                 {
                     $this->systemLog(false,'Berhasil memperbaharui gambar profile');
-                    Storage::disk('local')->delete('public/profile_picture/'.$picture_backup);
+                    Storage::disk('public_uploads')->delete('profile/'.$picture_backup);
                     DB::commit();
                     return $this->getResponse(true,200,'','Gambar berhasil dihapus'); 
                 }

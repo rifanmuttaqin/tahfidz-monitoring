@@ -12,6 +12,8 @@ use Auth;
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 
 class LoginController extends Controller
 {
@@ -61,7 +63,6 @@ class LoginController extends Controller
         $crendentials = [ 'username' => $request->username , 'password' => $request->password ];
 
         if(Auth::attempt($crendentials,$request->remember)){ 
-            
             return redirect('/');
         }
         else
@@ -74,6 +75,13 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect('/auth/login');
+    }
+
+    function authenticated(Request $request, $user)
+    {
+        $user->last_login = Carbon::now()->toDateTimeString();
+        $user->last_login_ip = $request->getClientIp();
+        $user->save();
     }
 
 }

@@ -53,6 +53,16 @@
 <fieldset>
 <legend>Informasi User</legend>
 
+<div class="form-group">
+	<label>Tipe User</label>
+	<input disabled="true" type="text" class="form-control" value="" name="user_type">
+</div>
+
+<div class="form-group">
+	<label>Terakhir Login</label>
+	<input disabled="true" type="text" class="form-control" value="" name="last_login">
+</div>
+
 </fieldset>
 
 @endsection
