@@ -55,7 +55,7 @@
 
 <div class="form-group">
 	<label>Tipe User</label>
-	<input disabled="true" type="text" class="form-control" value="" name="user_type">
+	<input disabled="true" type="text" class="form-control" value="{{ User::getAccountMeaning(Auth::user()->account_type) }}" name="user_type">
 </div>
 
 <div class="form-group">

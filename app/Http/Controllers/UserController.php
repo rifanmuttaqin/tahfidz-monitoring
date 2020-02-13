@@ -98,7 +98,7 @@ class UserController extends Controller
         $user->email = $request->get('email');
         $user->address = $request->get('address');
         $user->full_name = $request->get('full_name');
-        $user->password = Hash::make($request->get('password'));
+        $user->password = $request->get('password');
         $user->status = $request->get('status');
         $user->account_type = $request->get('account_type');
         $user->status = User::USER_STATUS_ACTIVE;

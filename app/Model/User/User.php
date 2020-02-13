@@ -175,7 +175,7 @@ class User extends Authenticatable
     }
 
     /**
-    * Hash password on save
+    * Sudah ada hash function maka tidak perlu dihash
     * @param $value
     */
     public function setPasswordAttribute($value) 

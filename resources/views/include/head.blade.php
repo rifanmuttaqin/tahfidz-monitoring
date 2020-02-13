@@ -89,6 +89,7 @@
 
                       </a>
 
+                      @if($count_notif >= 1)
                       <ul class="dropdown-menu">
                         @if($data_notif != null)
                         @foreach($data_notif as $notif)
@@ -96,6 +97,8 @@
                         @endforeach
                         @endif
                       </ul>
+                      @endif
+                      
                 </li>
 
                 @endif
