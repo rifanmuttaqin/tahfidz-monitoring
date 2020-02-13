@@ -10,6 +10,10 @@ use App\Model\User\User;
 use App\Model\StudentClass\StudentClass;
 use App\Model\AssessmentLog\AssessmentLog;
 
+use App\Model\User\UserLoginHistory;
+
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -42,10 +46,18 @@ class HomeController extends Controller
                 $class = StudentClass::count();
             }           
 
-            $hafalan = AssessmentLog::where('date',date("Y-m-d"))->count();
+            $hafalan    = AssessmentLog::where('date',date("Y-m-d"))->count();
+            $last_login = UserLoginHistory::findLastlogin();
 
+            if($last_login != null)
+            {
+                $last_login = Carbon::parse($last_login->date);
+                $last_login = $last_login->format('d M Y');
+            }
+                
             $this->systemLog(false,'Mengakses Halaman Home');
-            return view('home.index', ['active'=>'home', 'siswa'=>$siswa, 'class'=>$class, 'hafalan'=>$hafalan]);
+
+            return view('home.index', ['last_login' => $last_login, 'active'=>'home', 'siswa'=>$siswa, 'class'=>$class, 'hafalan'=>$hafalan]);
         }
         else
         {

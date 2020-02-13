@@ -10,6 +10,8 @@ use App\Model\Siswa\Siswa;
 
 use App\Model\AssessmentLog\AssessmentLog;
 
+use Carbon\Carbon;
+
 class DailyReportController extends Controller
 {
     /**

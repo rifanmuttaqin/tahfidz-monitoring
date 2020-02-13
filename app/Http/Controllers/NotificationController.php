@@ -14,6 +14,7 @@ use App\Model\User\User;
 use App\Http\Resources\Notification\NotificationResource;
 
 use Auth;
+
 use DB;
 
 use Carbon\Carbon;
@@ -54,16 +55,16 @@ class NotificationController extends Controller
             ->make(true);
         }
 
-        // if($this->getUserPermission('index notification'))
-        // {
+        if($this->getUserPermission('index notification'))
+        {
             $this->systemLog(false,'Mengakses Halaman Notifikasi');
             return view('notification.index', ['active'=>'notification']);
-        // }
-        // else
-        // {
-        //     $this->systemLog(true,'Gagal Mengakses Halaman Notification');
-        //     return view('error.unauthorized', ['active'=>'notification']);
-        // }
+        }
+        else
+        {
+            $this->systemLog(true,'Gagal Mengakses Halaman Notification');
+            return view('error.unauthorized', ['active'=>'notification']);
+        }
     }
 
 
@@ -144,17 +145,17 @@ class NotificationController extends Controller
             }
         }
 
-        // if($this->getUserPermission('create notification'))
-        // {
+        if($this->getUserPermission('create notification'))
+        {
             DB::commit();
             $this->systemLog(false,'Berhasil Menyimpan Input Notification');
             return redirect('notification')->with('alert_success', 'Berhasil Disimpan');
-        // }
-        // else
-        // {
-        //     DB::rollBack();
-        //     $this->systemLog(true,'Gagal Menyimpan Input Notification');
-        //     return redirect('notification')->with('alert_error', 'Gagal Disimpan');
-        // }
+        }
+        else
+        {
+            DB::rollBack();
+            $this->systemLog(true,'Gagal Menyimpan Input Notification');
+            return redirect('notification')->with('alert_error', 'Gagal Disimpan');
+        }
     }
 }

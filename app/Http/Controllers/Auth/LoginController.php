@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Support\Facades\Redirect;
 
+use App\Model\User\UserLoginHistory;
+
 use Auth;
 
 use Illuminate\Http\Request;
@@ -62,8 +64,22 @@ class LoginController extends Controller
 
         $crendentials = [ 'username' => $request->username , 'password' => $request->password ];
 
-        if(Auth::attempt($crendentials,$request->remember)){ 
-            return redirect('/');
+        if(Auth::attempt($crendentials,$request->remember)){
+
+            // Log UserLoginHistory
+            $user_login_history = new UserLoginHistory();
+            $user_login_history->user_id = Auth::user()->id;
+            $user_login_history->last_login_ip =  $request->ip();
+            $user_login_history->date = Carbon::now();  
+
+            if($user_login_history->save())
+            {
+                return redirect('/');
+            }
+            else
+            {
+                return Redirect::back()->withErrors(['Terjadi kegagalan sistem', 'error_login']);
+            }      
         }
         else
         {

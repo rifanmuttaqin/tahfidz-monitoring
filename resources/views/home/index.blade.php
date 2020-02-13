@@ -60,7 +60,7 @@
 
 <div class="form-group">
 	<label>Terakhir Login</label>
-	<input disabled="true" type="text" class="form-control" value="" name="last_login">
+	<input disabled="true" type="text" class="form-control" value="{{ $last_login }}" name="last_login">
 </div>
 
 </fieldset>

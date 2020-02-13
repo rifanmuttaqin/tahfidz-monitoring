@@ -17,7 +17,6 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-
     	// Get First User at first time 
     	$user = User::all()->first();
 
@@ -30,19 +29,17 @@ class RoleTableSeeder extends Seeder
 	        $this->createPermission();
 	     	        
 	        // create roles and assign created permissions
-
-	        // this can be done as separate statements
 	        $role_admin 	= Role::create(['name' => 'Admin']);
 	        $role_creator 	= Role::create(['name' => 'Creator']);
 	        $role_guru 		= Role::create(['name' => 'Guru']);
 	        	     
-	        // Assigning User to ROLE
+	        // Assigning User to ROLE first time
 	        $user->assignRole('Creator');
 
 	        // Assign All Permission to creator role
 	        $role_creator->givePermissionTo(Permission::all());
             $role_admin->givePermissionTo(Permission::all());
-
+                
             // Assign Default Permission to Teacher
             $role_guru->givePermissionTo('index home');
             $role_guru->givePermissionTo('all report');
@@ -117,5 +114,9 @@ class RoleTableSeeder extends Seeder
         // --------- Profile ---------------------
         Permission::create(['name' => 'index profile']);
         Permission::create(['name' => 'update profile']);
+
+        // ----------- Notification -----------------
+        Permission::create(['name' => 'index notification']);
+        Permission::create(['name' => 'create notification']);
     }
 }
