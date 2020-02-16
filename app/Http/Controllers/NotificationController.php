@@ -12,6 +12,8 @@ use App\Model\ActionLog\ActionLog;
 use App\Model\User\User;
 
 use App\Http\Resources\Notification\NotificationResource;
+use App\Http\Requests\Notification\StoreNotificationRequest;
+
 
 use Auth;
 
@@ -91,15 +93,16 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNotificationRequest $request)
     {
         DB::beginTransaction();
 
         $notification = new Notification();
 
-        $notification->notification_type = $request->get('notification_type');
-        $notification->notification_title = $request->get('notification_title');
+        $notification->notification_type    = $request->get('notification_type');
+        $notification->notification_title   = $request->get('notification_title');
         $notification->notification_message = $request->get('notification_message');
+        
         $notification->date = Carbon::now();
 
         if(!$notification->save())
