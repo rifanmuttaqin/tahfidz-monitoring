@@ -54,7 +54,7 @@
 
     <div class="form-group col-md-6" style="padding-left: 0px">
       <label>Mulai Halaman</label>
-        <input class="form-control" type="number" id="begin" name="begin">
+        <input class="form-control" id="begin" name="begin">
         @if ($errors->has('begin'))
           <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('begin') }}</p></div>
         @endif
@@ -62,7 +62,7 @@
 
     <div class="form-group col-md-6" style="padding-left: 0px">
       <label>Sampai Halaman</label>
-        <input class="form-control" type="number" id="end" name="end">
+        <input class="form-control" id="end" name="end">
         @if ($errors->has('end'))
           <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('end') }}</p></div>
         @endif
@@ -160,19 +160,19 @@ $(document).ready(function() {
       });
     });
 
-  $('#begin').on('input', function () {
-    var value = $(this).val();
-    if ((value !== '') && (value.indexOf('.') === -1)) {
-        $(this).val(Math.max(Math.min(value, total_page), 0));
-    }
-  });
+  // $('#begin').on('input', function () {
+  //   var value = $(this).val();
+  //   if ((value !== '') && (value.indexOf('.') === -1)) {
+  //       $(this).val(Math.max(Math.min(value, total_page), 0));
+  //   }
+  // });
 
-  $('#end').on('input', function () {
-    var value = $(this).val();
-    if ((value !== '') && (value.indexOf('.') === -1)) {
-        $(this).val(Math.max(Math.min(value, total_page), 0));
-    }
-  });
+  // $('#end').on('input', function () {
+  //   var value = $(this).val();
+  //   if ((value !== '') && (value.indexOf('.') === -1)) {
+  //       $(this).val(Math.max(Math.min(value, total_page), 0));
+  //   }
+  // });
 
 })
 

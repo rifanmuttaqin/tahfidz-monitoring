@@ -42,7 +42,6 @@
 <table class="table table-bordered data-table display nowrap" style="width:100%">
     <thead>
         <tr>
-            <th>Juz</th>
             <th>Nama Surah</th>
             <th>Total Ayat</th>
             <th width="100px">Action</th>
@@ -65,11 +64,6 @@
       <p class="modal-title">Detail Alquran</p>
     </div>
     <div class="modal-body">
-
-    <div class="form-group">
-      <label>Juz</label>
-      <input type="text" class="form-control" value="" name="juz" id="juz">
-    </div>
 
     <div class="form-group">
       <label>Nama Surat</label>
@@ -109,7 +103,6 @@ $(function () {
       responsive: true,
       ajax: "{{ route('alquran') }}",
       columns: [
-          {data: 'juz', name: 'juz'},
           {data: 'surah_name', name: 'surah_name'},
           {data: 'total_ayat', name: 'total_ayat'},
           {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -170,7 +163,6 @@ function btnUbah(id)
      success:function(data) {
         $('#detailModal').modal('toggle');
         $('#surah_name').val(data.data.surah_name);
-        $('#juz').val(data.data.juz);
         $('#total_ayat').val(data.data.total_ayat);
      }
   });
@@ -183,7 +175,6 @@ function btnUbah(id)
   $('#update_data').click(function() {
 
     var surah_name = $('#surah_name').val();
-    var juz = $('#juz').val();
     var total_ayat = $('#total_ayat').val();
     
     $.ajax({
@@ -193,7 +184,6 @@ function btnUbah(id)
             idsurah:idsurah, 
             "_token": "{{ csrf_token() }}",
             surah_name : surah_name,
-            juz : juz,
             total_ayat : total_ayat
       },
      success:function(data) {

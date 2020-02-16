@@ -25,7 +25,6 @@ class StoreSurahRequest extends FormRequest
     {
         return [
             'surah_name'      => 'unique:tbl_surah|required|string',
-            'juz'             => 'required|integer',
             'total_ayat'      => 'required|integer',
         ];
     }
@@ -40,8 +39,6 @@ class StoreSurahRequest extends FormRequest
         return [
             'surah_name.required' => 'Surat tidak boleh dikosongkan',
             'surah_name.unique'   => 'Nama Surat sudah ada sebelumnya',
-            'juz.integer' => 'Juz harus berupa angka',
-            'juz.required' => 'Juz tidak boleh dikosongkan',
             'total_ayat.integer' => 'Total Ayat Jilid harus berupa angka',
             'total_ayat.required' => 'Total Ayat tidak boleh dikosongkan',
         ];

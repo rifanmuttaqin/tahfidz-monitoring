@@ -7,14 +7,6 @@
 	<form method="post" action="{{route('store-alquran')}}">
 
 		@csrf
-
-		<div class="form-group">
-			<label>Juz</label>
-			<input type="text" class="form-control" value="" name="juz">
-			@if ($errors->has('juz'))
-			    <div class="error"><p style="color: red"><span>&#42;</span> {{ $errors->first('juz') }}</p></div>
-			@endif
-		</div>
 		
 		<div class="form-group">
 			<label>Nama Surat</label>

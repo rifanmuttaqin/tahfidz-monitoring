@@ -16,7 +16,6 @@ class SurahResource extends JsonResource
     {
         return [
             'surah_name' => $this->surah_name,
-            'juz' => $this->juz,
             'total_ayat' => $this->total_ayat,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

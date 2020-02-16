@@ -89,7 +89,6 @@ class AlquranController extends Controller
    
         $surah = new Surah();
 
-       	$surah->juz = $request->get('juz');
        	$surah->surah_name = $request->get('surah_name');
        	$surah->total_ayat = $request->get('total_ayat');
 
@@ -125,7 +124,6 @@ class AlquranController extends Controller
 
         $surah_backup = $request->get('idsurah');
 
-       	$surah->juz = $request->get('juz');
        	$surah->surah_name = $request->get('surah_name');
        	$surah->total_ayat = $request->get('total_ayat');
 

@@ -16,7 +16,6 @@ class CreateSurahTable extends Migration
         Schema::create('tbl_surah', function (Blueprint $table) {
             $table->bigIncrements('id', 20);
             $table->string('surah_name');
-            $table->integer('juz');
             $table->integer('total_ayat');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

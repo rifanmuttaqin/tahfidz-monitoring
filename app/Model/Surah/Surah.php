@@ -17,13 +17,11 @@ class Surah extends Model
      */
     protected $fillable = [
         'surah_name', 
-        'juz', 
         'total_ayat'
     ];
 
     public static $rules = [
         'surah_name' => 'required',
-        'juz' => 'required | interger',
         'total_ayat' => 'required | interger'
     ];
 

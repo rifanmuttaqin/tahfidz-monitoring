@@ -326,7 +326,7 @@ class AssessmentController extends Controller
 
                 foreach ($data_surah as $data) {
                     $arr_data[$key]['id'] = $data->id;
-                    $arr_data[$key]['text'] = $data->surah_name .' (Juz '.$data->juz.')';
+                    $arr_data[$key]['text'] = $data->surah_name;
                     $key++;
                 }
             }
