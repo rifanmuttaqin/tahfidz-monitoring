@@ -47,11 +47,13 @@ class AssessmentController extends Controller
     {
         if ($request->ajax()) {
             
-            $data = Siswa::all();
-
             if($this->getUserLogin()->account_type == User::ACCOUNT_TYPE_TEACHER)
             {
-                $data = Siswa::where('teacher_id',$this->getUserLogin()->id)->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id');
+                $data = Siswa::where('teacher_id',$this->getUserLogin()->id)->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id')->get(['tbl_siswa.id','siswa_name','memorization_type','class_id']);
+            }
+            else
+            {
+                $data = Siswa::all();
             }
 
 			return Datatables::of($data)
