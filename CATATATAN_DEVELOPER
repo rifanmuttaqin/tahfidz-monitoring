@@ -1,10 +1,4 @@
 -------- Catatan Kekurangan Aplikasi --------
 
-- Penambahan NOTE / NILAI Pada Report (done)
-- Penambahan Notification (done)
-- Mengganti semua Aset yang masih CDN ke Lokal Server (done)
-- Penambahan Forgot Password (done)
-- List table notifikasi kurang info jenis notifikasi
-- Last Login
-- Informasi User pada Home (Last Login)
-- Penambahan key:generate pada aplikasi (done)
+- Student Report Masih Belum Fix (404 Not Found POST) (DONE)
+- Notifikasi dengan notif panjang error masuk

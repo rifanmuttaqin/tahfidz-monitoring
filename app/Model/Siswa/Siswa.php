@@ -88,10 +88,12 @@ class Siswa extends Model
 
         if($user->account_type == User::ACCOUNT_TYPE_TEACHER)
         {
-            return self::where('siswa_name', 'like', '%'.$search.'%')->where('teacher_id',$user->id)->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id')->get();
+            return self::where('siswa_name', 'like', '%'.$search.'%')->join('tbl_class', 'tbl_siswa.class_id', '=', 'tbl_class.id')->select('tbl_siswa.id', 'tbl_siswa.siswa_name','tbl_siswa.memorization_type','tbl_siswa.class_id')->where('teacher_id',$user->id)->get();
         }
-
-        return self::where('siswa_name', 'like', '%'.$search.'%')->get();
+        else
+        {
+            return self::where('siswa_name', 'like', '%'.$search.'%')->get();
+        }
     }
 
     /**
