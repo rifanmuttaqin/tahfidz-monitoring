@@ -81,7 +81,11 @@ class DailyReportController extends Controller
     {
         if ($request->ajax()) {
             
-            $data = AssessmentLog::whereBetween('date', [$request->get('start_date'), $request->get('end_date')])
+            $date_from = Carbon::parse($request->get('start_date'))->startOfDay();
+            $date_to = Carbon::parse($request->input('end_date'))->endOfDay();
+
+            $data = AssessmentLog::whereDate('date', '>=', $date_from)
+            ->whereDate('date', '<=', $date_to)
             ->leftJoin('tbl_siswa', 'tbl_siswa.id', '=', 'tbl_assessment_log.siswa_id')
             ->where('memorization_type',$request->get('memorization_type'))
             ->where('class_id',$request->get('student_class'))
@@ -89,12 +93,12 @@ class DailyReportController extends Controller
             ->orderBy('date', 'desc')
             ->get();
 
+            
             // Store data in session
             $request->session()->put('start_date', $request->get('start_date'));
             $request->session()->put('end_date', $request->get('end_date'));
             $request->session()->put('class_id', StudentClass::findOrFail($request->get('student_class'))->class_name);
             $request->session()->put('data_assessment_log', $data);
-
 
             if($data->isEmpty())
             {

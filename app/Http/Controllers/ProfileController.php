@@ -123,7 +123,7 @@ class ProfileController extends Controller
             if(User::passwordChangeValidation($request->get('old_password'),Auth::user()->password))
             {
                 $user = User::findOrFail(Auth::user()->id);
-                $user->password = Hash::make($request->get('password'));
+                $user->password = $request->get('password');
 
                 if(!$user->save())
                 {

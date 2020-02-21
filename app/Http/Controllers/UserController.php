@@ -236,7 +236,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = User::findOrFail($request->iduser);
-            $user->password = Hash::make($request->password);
+            $user->password = $request->password;
 
             if(!$user->save())
             {

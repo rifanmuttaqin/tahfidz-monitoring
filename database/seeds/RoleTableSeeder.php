@@ -7,7 +7,6 @@ use Spatie\Permission\Models\Permission;
 
 use App\Model\User\User;
 
-
 class RoleTableSeeder extends Seeder
 {
     /**
@@ -46,7 +45,8 @@ class RoleTableSeeder extends Seeder
             $role_guru->givePermissionTo('index profile');
             $role_guru->givePermissionTo('update profile');
             $role_guru->givePermissionTo('index assessment');
-            $role_guru->givePermissionTo('create assessment');   
+            $role_guru->givePermissionTo('create assessment');
+            $role_guru->givePermissionTo('change password');   
     	}
     }
 

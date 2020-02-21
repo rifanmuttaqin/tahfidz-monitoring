@@ -8,6 +8,8 @@ use App\Model\Siswa\Siswa;
 
 use App\Model\AssessmentLog\AssessmentLog;
 
+use Carbon\Carbon;
+
 class StudentReportController extends Controller
 {
     /**
@@ -72,7 +74,11 @@ class StudentReportController extends Controller
     {
         if ($request->ajax()) {
             
-            $data = AssessmentLog::whereBetween('date', [$request->get('start_date'), $request->get('end_date')])
+            $date_from = Carbon::parse($request->get('start_date'))->startOfDay();
+            $date_to = Carbon::parse($request->input('end_date'))->endOfDay();
+
+            $data = AssessmentLog::whereDate('date', '>=', $date_from)
+            ->whereDate('date', '<=', $date_to)
             ->leftJoin('tbl_siswa', 'tbl_siswa.id', '=', 'tbl_assessment_log.siswa_id')
             ->where('tbl_siswa.id',$request->get('siswa'))
             ->orderBy('tbl_assessment_log.created_at', 'asc')->get();
